@@ -1,0 +1,28 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Copiar package.json y package-lock.json primero para aprovechar cache de Docker
+COPY package*.json ./
+
+# Instalar dependencias del proyecto con reintentos y configuración de red
+RUN npm config set fetch-retry-mintimeout 20000 && \
+    npm config set fetch-retry-maxtimeout 120000 && \
+    npm config set fetch-retries 5 && \
+    npm install --legacy-peer-deps --verbose
+
+# Copiar el resto del código
+COPY . .
+
+# Crear directorio .next
+RUN mkdir -p .next
+
+# Configurar variables de entorno para desarrollo
+ENV NODE_ENV=development
+ENV NEXT_TELEMETRY_DISABLED=1
+
+# Exponer el puerto
+EXPOSE 3000
+
+# Comando por defecto (se puede sobrescribir en docker-compose)
+CMD ["npm", "run", "dev"]

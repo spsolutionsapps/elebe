@@ -1,0 +1,43 @@
+{
+  "name": "fashion-style-crm",
+  "version": "1.0.0",
+  "description": "Sistema CRM para Fashion Style con frontend Next.js y backend NestJS",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run start:dev",
+    "build": "npm run build:backend && npm run build:frontend",
+    "build:frontend": "cd frontend && npm run build",
+    "build:backend": "cd backend && npm run build",
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:frontend": "cd frontend && npm run start",
+    "start:backend": "cd backend && npm run start:prod",
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install",
+    "clean": "rimraf frontend/node_modules backend/node_modules node_modules",
+    "db:generate": "cd backend && npm run db:generate",
+    "db:migrate": "cd backend && npm run db:migrate",
+    "db:seed": "cd backend && npm run db:seed"
+  },
+  "keywords": [
+    "crm",
+    "fashion",
+    "nextjs",
+    "nestjs",
+    "typescript",
+    "postgresql"
+  ],
+  "author": "Fashion Style Team",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "rimraf": "^5.0.10"
+  },
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "dependencies": {
+    "axios": "^1.12.1"
+  }
+}

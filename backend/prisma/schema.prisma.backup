@@ -1,0 +1,161 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  role          String    @default("admin")
+  accounts      Account[]
+  sessions      Session[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Slide {
+  id          String   @id @default(cuid())
+  title       String?
+  subtitle    String?
+  description String?
+  image       String
+  order       Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  image       String?  // Imagen principal
+  images      String[] // Array de imágenes adicionales (máximo 5)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  inquiries   InquiryProduct[]
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  image       String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model About {
+  id          String   @id @default(cuid())
+  title       String
+  content     String   @db.Text
+  images      String[] // Array of image paths
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Inquiry {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  message   String?
+  status    String   @default("pending") // pending, contacted, closed
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  products  InquiryProduct[]
+}
+
+model InquiryProduct {
+  id         String   @id @default(cuid())
+  inquiryId  String
+  productId  String
+  quantity   Int      @default(1)
+  inquiry    Inquiry  @relation(fields: [inquiryId], references: [id], onDelete: Cascade)
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+
+  @@unique([inquiryId, productId])
+}
+
+model Client {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  address   String?
+  city      String?
+  country   String?
+  notes     String?  @db.Text
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Reminder {
+  id           String   @id @default(cuid())
+  title        String
+  description  String?  @db.Text
+  date         DateTime
+  time         String
+  type         String   @default("general") // appointment, follow_up, payment, general
+  priority     String   @default("medium") // low, medium, high
+  isCompleted  Boolean  @default(false)
+  clientId     String?
+  clientName   String?
+  alertMinutes Int      @default(15) // Minutos antes para alertar
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}

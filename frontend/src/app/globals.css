@@ -1,0 +1,352 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Fuentes Gotham para el sitio público */
+/* NOTA: Coloca los archivos de fuente en /public/fonts/ */
+@font-face {
+  font-family: 'Gotham';
+  src: local('Gotham Book'),
+       url('/fonts/GothamBook.woff2') format('woff2'),
+       url('/fonts/GothamBook.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Gotham';
+  src: local('Gotham Medium'),
+       url('/fonts/GothamMedium.woff2') format('woff2'),
+       url('/fonts/GothamMedium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Gotham';
+  src: local('Gotham Black Italic'),
+       url('/fonts/GothamBlackItalic.woff2') format('woff2'),
+       url('/fonts/GothamBlackItalic.woff') format('woff');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+    
+    /* Tipografías - Gotham para sitio público con fallbacks */
+    --font-heading: 'Gotham', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    --font-body: 'Gotham', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  
+  /* Tipografías personalizadas - Gotham para sitio público */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 500; /* Gotham Medium para encabezados */
+  }
+  
+  p, span, div, a, button, input, textarea, label {
+    font-family: var(--font-body);
+    font-weight: 400; /* Gotham Book para texto del body */
+  }
+  
+  /* Aplicar tipografías a elementos específicos */
+  .font-heading {
+    font-family: var(--font-heading);
+    font-weight: 500; /* Gotham Medium */
+  }
+  
+  .font-body {
+    font-family: var(--font-body);
+    font-weight: 400; /* Gotham Book */
+  }
+  
+  /* Clase para usar Gotham Black Italic */
+  .font-black-italic {
+    font-family: var(--font-heading);
+    font-weight: 900;
+    font-style: italic;
+  }
+  
+  /* Forzar tipografías en elementos específicos */
+  .font-heading, h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading) !important;
+    font-weight: 500 !important; /* Gotham Medium */
+  }
+  
+  .font-body, p, span, div, a, button, input, textarea, label {
+    font-family: var(--font-body) !important;
+    font-weight: 400 !important; /* Gotham Book */
+  }
+  
+  /* Quitar bullets de las listas */
+  ul, ol {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+  
+  /* Asegurar que no aparezcan bullets en ningún lugar */
+  li {
+    list-style: none;
+  }
+}
+
+.radius20 {
+  border-radius: 20px;
+}
+
+.bg-darkGray {
+  background-color: #0e1721;
+}
+
+.border-white {border: 1px solid white;}
+
+.font-blue {
+  color: #004CAC;
+}
+
+.paddingZero {padding: 0;}
+
+.height38 {
+  height: 38px;
+}
+
+@media (min-width: 1024px) {
+  .shape1 {
+    position: absolute;
+    left: -41%;
+    top: 246px;
+    z-index: 0;
+  }
+  
+  .shape2 {
+    position: absolute;
+    right: -568px;
+    top: -134px;
+    z-index: 0;
+  }
+  .padding120Desk {padding: 120px 0;}
+  .paddingDesktop82 {
+    padding-top: 82px;
+  }
+}
+
+.p20 {padding: 0 26px;}
+
+.card-slides {	
+  border-radius: 20px;
+    background: #eaeefe;
+}
+
+
+.white-text {
+  color: white;
+}
+@media (max-width: 1024px) {
+
+.shape1, .shape2 {
+  display: none;
+}
+
+  .text18Mobile {
+    font-size: 18px;
+  }
+
+  p {
+    font-size: 18px;
+  }
+}
+
+/* Animación para el slider de marcas */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 20s linear infinite;
+}
+
+.animate-scroll:hover {
+  animation-play-state: paused;
+}
+
+/* Estilos personalizados para scroll elegante */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f1f5f9;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:active {
+  background: #64748b;
+}
+
+/* Scroll suave para el modal de historial */
+.history-scroll {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.history-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.history-scroll::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 4px 0;
+}
+
+.history-scroll::-webkit-scrollbar-thumb {
+  background: #8b5cf6;
+  border-radius: 2px;
+  transition: background 0.2s ease;
+  margin: 4px 0;
+}
+
+.history-scroll::-webkit-scrollbar-thumb:hover {
+  background: #7c3aed;
+}
+
+/* Animación para elementos del historial */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mejoras adicionales para el scroll */
+.history-scroll::-webkit-scrollbar-corner {
+  background: #f3f4f6;
+}
+
+/* Estilos para el timeline */
+.timeline-item {
+  position: relative;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: 16px;
+  top: 32px;
+  bottom: -24px;
+  width: 2px;
+  background: #e5e7eb;
+}
+
+.timeline-item:last-child::before {
+  display: none;
+}
+
+.timeline-icon {
+  position: relative;
+  z-index: 10;
+  background: white;
+  border: 2px solid #8b5cf6;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.timeline-icon:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s ease;
+}
+
+.bgElebe {
+  background-color: #F3E9CD;
+}
+
+/* shapes */
+.shapeAmarilloIzq {
+  position: absolute;
+  bottom: -5px;
+  left: -36px;
+}
+
+.shapeAmarilloDer {
+  position: absolute;
+  right: -33px;
+  bottom: -5px;
+}

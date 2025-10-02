@@ -1,0 +1,74 @@
+services:
+  # Base de datos PostgreSQL
+  postgres:
+    image: postgres:15-alpine
+    container_name: lb-premium-db-dev
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-lb_premium}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres123}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data_dev:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend NestJS - Modo Desarrollo
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    container_name: lb-premium-backend-dev
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=${DATABASE_URL:-postgresql://postgres:postgres123@postgres:5432/lb_premium}
+      - JWT_SECRET=${JWT_SECRET:-your-super-secret-jwt-key-change-this-in-production}
+      - PORT=${PORT:-3001}
+      - FRONTEND_URL=${FRONTEND_URL:-http://localhost:3000}
+      - ADMIN_URL=${ADMIN_URL:-http://localhost:3002}
+    ports:
+      - "${PORT:-3001}:${PORT:-3001}"
+    volumes:
+      - ./backend:/app
+      - backend_node_modules:/app/node_modules
+      - ./backend/uploads:/app/uploads
+      - /app/node_modules/.cache
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    command: sh -c "npx prisma generate && npx prisma db push && npm run start:dev"
+
+  # Frontend Next.js - Modo Desarrollo
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: lb-premium-frontend-dev
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://localhost:3001/api
+      - NEXT_PUBLIC_BACKEND_URL=http://localhost:3001
+      - NEXT_PUBLIC_ENV=development
+    ports:
+      - "${FRONTEND_PORT:-3000}:3000"
+    volumes:
+      - ./frontend:/app
+      - frontend_node_modules:/app/node_modules
+      - frontend_next:/app/.next
+      - /app/node_modules/.cache
+    depends_on:
+      - backend
+    restart: unless-stopped
+    command: npm run dev
+
+volumes:
+  postgres_data_dev:
+  frontend_node_modules:
+  frontend_next:
+  backend_node_modules:

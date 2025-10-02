@@ -1,0 +1,27 @@
+FROM node:18-alpine
+
+# Instalar dependencias del sistema necesarias para Prisma
+RUN apk add --no-cache openssl
+
+WORKDIR /app
+
+# Copiar package.json y package-lock.json primero para aprovechar cache de Docker
+COPY package*.json ./
+
+# Instalar dependencias del proyecto
+RUN npm install
+
+# Copiar el resto del código
+COPY . .
+
+# Generar cliente de Prisma
+RUN npx prisma generate
+
+# Crear directorio de uploads si no existe
+RUN mkdir -p uploads
+
+# Exponer el puerto
+EXPOSE 3001
+
+# Comando por defecto (se puede sobrescribir en docker-compose)
+CMD ["npm", "run", "start:dev"]

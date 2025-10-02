@@ -1,0 +1,125 @@
+/* Custom styles for LB Premium */
+
+/* Input styles */
+.input-custom {
+  border: 1px solid #2a2a2a;
+  background: transparent;
+}
+
+.input-custom:focus {
+  outline: none;
+  ring: 2px;
+  ring-color: #0d6efd;
+}
+
+/* Header padding */
+.py-header {
+  padding: 15px 0;
+}
+
+/* Custom font sizes */
+.text-5xl {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+/* Contact title spacing */
+.contact-title {
+  margin-top: 150px;
+  margin-bottom: 60px;
+}
+
+/* Contact header overlay */
+.contact-header-overlay {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+}
+
+/* Dark theme backgrounds */
+.bg-dark {
+  background-color: #121212;
+}
+
+.bg-darkGray {
+  background-color: #000;
+}
+
+/* Contact form background */
+.contact-form-bg {
+  background-color: rgb(23, 23, 23);
+}
+
+/* Contact page background */
+.contact-page-bg {
+  background-color: #000;
+  background-image: url('/images/hero-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+/* Home hero background */
+.home-hero-bg {
+  background-color: #000;
+  background-image: url('/images/hero-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+}
+
+/* Input border color */
+.border-inputBorder {
+  border-color: #2a2a2a;
+}
+
+/* Full width container */
+.full-width-container {
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+}
+
+/* Footer styles */
+.footer-social-icon {
+  transition: all 0.3s ease;
+}
+
+.footer-social-icon:hover {
+  transform: translateY(-2px);
+}
+
+.footer-link {
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: #0d6efd;
+}
+
+/* Newsletter input */
+.newsletter-input {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #374151;
+  color: white;
+  transition: border-color 0.3s ease;
+}
+
+.newsletter-input:focus {
+  outline: none;
+  border-bottom-color: #0d6efd;
+}
+
+.newsletter-input::placeholder {
+  color: #9ca3af;
+}

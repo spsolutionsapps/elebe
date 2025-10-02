@@ -1,0 +1,252 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  role          String    @default("admin")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  accounts      Account[]
+  sessions      Session[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Slide {
+  id         String   @id @default(cuid())
+  title      String?
+  subtitle   String?
+  image      String
+  order      Int      @default(0)
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  buttonText String?
+  buttonLink String?
+}
+
+model Product {
+  id                  String           @id @default(cuid())
+  name                String
+  description         String
+  image               String?
+  images              String[]
+  price               Float?
+  isActive            Boolean          @default(true)
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
+  category            String           @default("General")
+  individualPackaging String?
+  packagingHeight     Float?
+  packagingLength     Float?
+  packagingWeight     Float?
+  packagingWidth      Float?
+  printingTypes       String[]
+  productHeight       Float?
+  productLength       Float?
+  productWeight       Float?
+  productWidth        Float?
+  unitsPerBox         Int?
+  featuredOrder       Int?
+  isFeatured          Boolean          @default(false)
+  views               Int              @default(0)
+  inquiries           InquiryProduct[]
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  description String
+  image       String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  order       Int      @default(0)
+  title       String
+}
+
+model About {
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  images    String[]
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Inquiry {
+  id                  String            @id @default(cuid())
+  name                String
+  email               String
+  phone               String?
+  message             String?
+  status              String            @default("new")
+  priority            String            @default("medium")
+  source              String            @default("website")
+  assignedTo          String?
+  lastContactDate     DateTime?
+  nextFollowUpDate    DateTime?
+  followUpNotes       String?
+  tags                String[]
+  estimatedValue      Float?
+  isConvertedToClient Boolean           @default(false)
+  clientId            String?
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  followUpHistory     FollowUpHistory[]
+  products            InquiryProduct[]
+}
+
+model InquiryProduct {
+  id        String   @id @default(cuid())
+  inquiryId String
+  productId String
+  quantity  Int      @default(1)
+  createdAt DateTime @default(now())
+  inquiry   Inquiry  @relation(fields: [inquiryId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([inquiryId, productId])
+}
+
+model FollowUpHistory {
+  id          String   @id @default(cuid())
+  inquiryId   String
+  type        String
+  description String
+  outcome     String?
+  nextAction  String?
+  createdAt   DateTime @default(now())
+  inquiry     Inquiry  @relation(fields: [inquiryId], references: [id], onDelete: Cascade)
+
+  @@index([inquiryId])
+}
+
+model Client {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  address   String?
+  city      String?
+  country   String?
+  notes     String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Reminder {
+  id           String   @id @default(cuid())
+  title        String
+  description  String?
+  date         DateTime
+  time         String
+  type         String   @default("general")
+  priority     String   @default("medium")
+  isCompleted  Boolean  @default(false)
+  clientId     String?
+  clientName   String?
+  alertMinutes Int      @default(15)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Task {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  status      String    @default("todo")
+  priority    String    @default("medium")
+  dueDate     DateTime?
+  assignedTo  String?
+  clientId    String?
+  inquiryId   String?
+  tags        String[]
+  order       Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Brand {
+  id        String   @id @default(cuid())
+  name      String
+  logo      String?
+  website   String?
+  isActive  Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Cart {
+  id        String     @id @default(cuid())
+  sessionId String     @unique
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  items     CartItem[]
+
+  @@map("carts")
+}
+
+model CartItem {
+  id          String   @id @default(cuid())
+  cartId      String
+  productId   String
+  name        String
+  description String
+  image       String?
+  price       Float?
+  quantity    Int      @default(1)
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  addedAt     DateTime @default(now())
+  cart        Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+
+  @@unique([cartId, productId])
+  @@map("cart_items")
+}

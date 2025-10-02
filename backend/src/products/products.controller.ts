@@ -1,0 +1,428 @@
+import { Controller, Get, Post, Put, Delete, Patch, Param, Body, NotFoundException } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
+
+@Controller('products')
+export class ProductsController {
+  constructor(private prisma: PrismaService) {}
+  
+  @Get()
+  async findAll() {
+    const products = await this.prisma.product.findMany({
+      orderBy: { createdAt: 'desc' },
+    });
+    return products;
+  }
+
+  @Get('featured')
+  async findFeatured() {
+    const featuredProducts = await this.prisma.product.findMany({
+      where: { 
+        isActive: true,
+        isFeatured: true
+      },
+      orderBy: { featuredOrder: 'asc' },
+    });
+    console.log('Productos destacados encontrados:', featuredProducts.length);
+    return featuredProducts;
+  }
+
+  @Get('popular')
+  async findPopular() {
+    const popularProducts = await this.prisma.product.findMany({
+      where: { isActive: true },
+      orderBy: { views: 'desc' },
+      take: 10,
+    });
+    console.log('Productos populares encontrados:', popularProducts.length);
+    return popularProducts;
+  }
+
+  // Endpoint de debug para verificar productos
+  @Get('debug/all')
+  async debugAll() {
+    const allProducts = await this.prisma.product.findMany({
+      orderBy: { createdAt: 'desc' },
+    });
+    console.log('=== DEBUG: TODOS LOS PRODUCTOS ===');
+    console.log('Total productos:', allProducts.length);
+    allProducts.forEach((product, index) => {
+      console.log(`${index + 1}. ID: ${product.id}, Nombre: ${product.name}, Activo: ${product.isActive}`);
+    });
+    return allProducts;
+  }
+
+  @Get('slug/:slug')
+  async findBySlug(@Param('slug') slug: string) {
+    console.log('🔍 Buscando producto con slug:', slug);
+    console.log('⏰ Timestamp:', new Date().toISOString());
+    
+    // Buscar todos los productos activos
+    const products = await this.prisma.product.findMany({
+      where: { isActive: true },
+    });
+    
+    // Función para generar slug
+    const generateSlug = (text: string): string => {
+      return text
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '') // Remover acentos
+        .replace(/[^a-z0-9\s-]/g, '') // Remover caracteres especiales
+        .replace(/\s+/g, '-') // Reemplazar espacios con guiones
+        .replace(/-+/g, '-') // Remover guiones múltiples
+        .trim()
+    }
+    
+    // Buscar producto que coincida con el slug
+    const product = products.find(p => generateSlug(p.name) === slug);
+    
+    console.log('Producto encontrado por slug:', product);
+    
+    if (!product) {
+      throw new NotFoundException('Producto no encontrado');
+    }
+
+    // Incrementar contador de visitas con debounce para evitar incrementos duplicados
+    console.log('📈 Incrementando vistas para producto:', product.name, 'ID:', product.id);
+    
+    // Verificar si ya se incrementó recientemente (últimos 5 segundos)
+    const now = new Date();
+    const fiveSecondsAgo = new Date(now.getTime() - 5000);
+    
+    // Obtener el producto actual para verificar la última actualización
+    const currentProduct = await this.prisma.product.findUnique({
+      where: { id: product.id }
+    });
+    
+    // Solo incrementar si la última actualización fue hace más de 5 segundos
+    if (!currentProduct.updatedAt || currentProduct.updatedAt < fiveSecondsAgo) {
+      await this.prisma.product.update({
+        where: { id: product.id },
+        data: { views: { increment: 1 } }
+      });
+      console.log('✅ Vistas incrementadas');
+    } else {
+      console.log('⏭️ Incremento omitido (demasiado reciente)');
+    }
+
+    // Obtener el producto actualizado con las nuevas vistas
+    const updatedProduct = await this.prisma.product.findUnique({
+      where: { id: product.id }
+    });
+
+    console.log('📊 Vistas finales:', updatedProduct?.views);
+    return updatedProduct;
+  }
+
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    console.log('Buscando producto con ID:', id);
+    
+    // Incrementar contador de visitas con debounce para evitar incrementos duplicados
+    console.log('📈 Incrementando vistas para producto ID:', id);
+    
+    // Verificar si ya se incrementó recientemente (últimos 5 segundos)
+    const now = new Date();
+    const fiveSecondsAgo = new Date(now.getTime() - 5000);
+    
+    // Obtener el producto actual para verificar la última actualización
+    const currentProduct = await this.prisma.product.findUnique({
+      where: { id: id }
+    });
+    
+    if (!currentProduct) {
+      throw new NotFoundException('Producto no encontrado');
+    }
+    
+    // Solo incrementar si la última actualización fue hace más de 5 segundos
+    if (!currentProduct.updatedAt || currentProduct.updatedAt < fiveSecondsAgo) {
+      await this.prisma.product.update({
+        where: { id: id },
+        data: { views: { increment: 1 } }
+      });
+      console.log('✅ Vistas incrementadas (por ID)');
+    } else {
+      console.log('⏭️ Incremento omitido (demasiado reciente) - ID');
+    }
+    
+    const product = await this.prisma.product.findUnique({
+      where: { id: id },
+    });
+    
+    console.log('Producto encontrado:', product);
+    
+    if (!product) {
+      throw new NotFoundException('Producto no encontrado');
+    }
+
+    return product;
+  }
+
+  @Post()
+  async create(@Body() createProductDto: any) {
+    try {
+      console.log('Datos recibidos para crear producto:', createProductDto);
+      
+      const product = await this.prisma.product.create({
+        data: {
+          name: createProductDto.name,
+          description: createProductDto.description,
+          category: createProductDto.category || 'General',
+          image: createProductDto.image || null,
+          images: createProductDto.images || [],
+          price: createProductDto.price ? parseFloat(createProductDto.price) : null,
+          isActive: true,
+          // Especificaciones técnicas
+          printingTypes: createProductDto.printingTypes || [],
+          productHeight: createProductDto.productHeight ? parseFloat(createProductDto.productHeight) : null,
+          productLength: createProductDto.productLength ? parseFloat(createProductDto.productLength) : null,
+          productWidth: createProductDto.productWidth ? parseFloat(createProductDto.productWidth) : null,
+          productWeight: createProductDto.productWeight ? parseFloat(createProductDto.productWeight) : null,
+          packagingHeight: createProductDto.packagingHeight ? parseFloat(createProductDto.packagingHeight) : null,
+          packagingLength: createProductDto.packagingLength ? parseFloat(createProductDto.packagingLength) : null,
+          packagingWidth: createProductDto.packagingWidth ? parseFloat(createProductDto.packagingWidth) : null,
+          packagingWeight: createProductDto.packagingWeight ? parseFloat(createProductDto.packagingWeight) : null,
+          unitsPerBox: createProductDto.unitsPerBox ? parseInt(createProductDto.unitsPerBox) : null,
+          individualPackaging: createProductDto.individualPackaging || null,
+        },
+      });
+
+      console.log('Producto creado:', product);
+      return {
+        message: 'Producto creado correctamente',
+        product,
+      };
+    } catch (error) {
+      console.error('Error creando producto:', error);
+      throw new Error('Error al crear el producto');
+    }
+  }
+
+  @Put(':id')
+  async update(@Param('id') id: string, @Body() updateProductDto: any) {
+    try {
+      console.log('=== ACTUALIZANDO PRODUCTO ===');
+      console.log('ID recibido:', id);
+      console.log('Datos recibidos para actualizar producto:', updateProductDto);
+      
+      // Verificar que el producto existe
+      const existingProduct = await this.prisma.product.findUnique({
+        where: { id: id },
+      });
+
+      console.log('Producto encontrado en BD:', existingProduct);
+
+      if (!existingProduct) {
+        console.log('ERROR: Producto no encontrado con ID:', id);
+        throw new NotFoundException(`Producto no encontrado con ID: ${id}`);
+      }
+
+      const product = await this.prisma.product.update({
+        where: { id: id },
+        data: {
+          name: updateProductDto.name,
+          description: updateProductDto.description,
+          category: updateProductDto.category || 'General',
+          image: updateProductDto.image || null,
+          images: updateProductDto.images || [],
+          price: updateProductDto.price ? parseFloat(updateProductDto.price) : null,
+          isActive: updateProductDto.isActive,
+          updatedAt: new Date(),
+          // Especificaciones técnicas
+          printingTypes: updateProductDto.printingTypes || [],
+          productHeight: updateProductDto.productHeight ? parseFloat(updateProductDto.productHeight) : null,
+          productLength: updateProductDto.productLength ? parseFloat(updateProductDto.productLength) : null,
+          productWidth: updateProductDto.productWidth ? parseFloat(updateProductDto.productWidth) : null,
+          productWeight: updateProductDto.productWeight ? parseFloat(updateProductDto.productWeight) : null,
+          packagingHeight: updateProductDto.packagingHeight ? parseFloat(updateProductDto.packagingHeight) : null,
+          packagingLength: updateProductDto.packagingLength ? parseFloat(updateProductDto.packagingLength) : null,
+          packagingWidth: updateProductDto.packagingWidth ? parseFloat(updateProductDto.packagingWidth) : null,
+          packagingWeight: updateProductDto.packagingWeight ? parseFloat(updateProductDto.packagingWeight) : null,
+          unitsPerBox: updateProductDto.unitsPerBox ? parseInt(updateProductDto.unitsPerBox) : null,
+          individualPackaging: updateProductDto.individualPackaging || null,
+        },
+      });
+
+      console.log('Producto actualizado:', product);
+      return {
+        message: 'Producto actualizado correctamente',
+        product,
+      };
+    } catch (error) {
+      console.error('Error actualizando producto:', error);
+      throw new Error('Error al actualizar el producto');
+    }
+  }
+
+  @Delete(':id')
+  async remove(@Param('id') id: string) {
+    try {
+      // Verificar que el producto existe
+      const existingProduct = await this.prisma.product.findUnique({
+        where: { id: id },
+      });
+
+      if (!existingProduct) {
+        throw new NotFoundException('Producto no encontrado');
+      }
+
+      // Eliminar el producto realmente
+      await this.prisma.product.delete({
+        where: { id: id },
+      });
+
+      console.log('Producto eliminado:', id);
+      return {
+        message: 'Producto eliminado correctamente',
+      };
+    } catch (error) {
+      console.error('Error eliminando producto:', error);
+      throw new Error('Error al eliminar el producto');
+    }
+  }
+
+  // Endpoints para productos destacados
+  @Post(':id/feature')
+  async addToFeatured(@Param('id') id: string) {
+    try {
+      // Verificar que el producto existe
+      const existingProduct = await this.prisma.product.findUnique({
+        where: { id: id },
+      });
+
+      if (!existingProduct) {
+        throw new NotFoundException('Producto no encontrado');
+      }
+
+      // Contar productos destacados actuales
+      const featuredCount = await this.prisma.product.count({
+        where: { isFeatured: true },
+      });
+
+      if (featuredCount > 8) {
+        throw new Error('Ya tienes 8 productos destacados. Remueve uno para agregar otro.');
+      }
+
+      // Agregar a destacados
+      const updatedProduct = await this.prisma.product.update({
+        where: { id: id },
+        data: { 
+          isFeatured: true,
+          featuredOrder: featuredCount + 1
+        },
+      });
+
+      console.log('Producto agregado a destacados:', updatedProduct.name);
+      return {
+        message: 'Producto agregado a destacados correctamente',
+        product: updatedProduct,
+      };
+    } catch (error) {
+      console.error('Error agregando producto a destacados:', error);
+      throw new Error(error.message || 'Error al agregar producto a destacados');
+    }
+  }
+
+  @Delete(':id/unfeature')
+  async removeFromFeatured(@Param('id') id: string) {
+    try {
+      // Verificar que el producto existe
+      const existingProduct = await this.prisma.product.findUnique({
+        where: { id: id },
+      });
+
+      if (!existingProduct) {
+        throw new NotFoundException('Producto no encontrado');
+      }
+
+      // Remover de destacados
+      const updatedProduct = await this.prisma.product.update({
+        where: { id: id },
+        data: { 
+          isFeatured: false,
+          featuredOrder: null
+        },
+      });
+
+      // Reordenar los productos destacados restantes
+      await this.reorderFeaturedProducts();
+
+      console.log('Producto removido de destacados:', updatedProduct.name);
+      return {
+        message: 'Producto removido de destacados correctamente',
+        product: updatedProduct,
+      };
+    } catch (error) {
+      console.error('Error removiendo producto de destacados:', error);
+      throw new Error('Error al remover producto de destacados');
+    }
+  }
+
+  @Patch(':id/feature-order')
+  async updateFeaturedOrder(@Param('id') id: string, @Body() body: { order: number }) {
+    try {
+      // Verificar que el producto existe
+      const existingProduct = await this.prisma.product.findUnique({
+        where: { id: id },
+      });
+
+      if (!existingProduct) {
+        throw new NotFoundException('Producto no encontrado');
+      }
+
+      // Actualizar el orden
+      const updatedProduct = await this.prisma.product.update({
+        where: { id: id },
+        data: { featuredOrder: body.order },
+      });
+
+      console.log('Orden de producto destacado actualizado:', updatedProduct.name, 'orden:', body.order);
+      return {
+        message: 'Orden actualizado correctamente',
+        product: updatedProduct,
+      };
+    } catch (error) {
+      console.error('Error actualizando orden:', error);
+      throw new Error('Error al actualizar el orden');
+    }
+  }
+
+  @Patch('update-featured-order')
+  async updateFeaturedOrderBulk(@Body() body: { featuredProducts: { id: string; order: number }[] }) {
+    try {
+      const { featuredProducts } = body;
+      
+      // Actualizar el orden de todos los productos destacados
+      for (const item of featuredProducts) {
+        await this.prisma.product.update({
+          where: { id: item.id },
+          data: { featuredOrder: item.order },
+        });
+      }
+
+      console.log('Orden de productos destacados actualizado en lote');
+      return {
+        message: 'Orden de productos destacados actualizado correctamente',
+      };
+    } catch (error) {
+      console.error('Error actualizando orden en lote:', error);
+      throw new Error('Error al actualizar el orden de productos destacados');
+    }
+  }
+
+  // Método privado para reordenar productos destacados
+  private async reorderFeaturedProducts() {
+    const featuredProducts = await this.prisma.product.findMany({
+      where: { isFeatured: true },
+      orderBy: { featuredOrder: 'asc' },
+    });
+
+    // Reasignar órdenes secuenciales
+    for (let i = 0; i < featuredProducts.length; i++) {
+      await this.prisma.product.update({
+        where: { id: featuredProducts[i].id },
+        data: { featuredOrder: i + 1 },
+      });
+    }
+  }
+}
