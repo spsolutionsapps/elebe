@@ -1,23 +1,51 @@
 import { Controller, Get, Post, Put, Delete, Param, Body, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { CacheService } from '../cache/cache.service';
 
 @Controller('services')
 export class ServicesController {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private cacheService: CacheService
+  ) {}
   
   @Get()
   async findAll() {
-    return await this.prisma.service.findMany({
+    const cacheKey = 'services:all:active';
+    const cached = this.cacheService.get(cacheKey);
+    
+    if (cached) {
+      return cached;
+    }
+
+    const services = await this.prisma.service.findMany({
       where: { isActive: true },
       orderBy: { order: 'asc' },
     });
+
+    // Cache for 10 minutes
+    this.cacheService.set(cacheKey, services, 10 * 60 * 1000);
+    
+    return services;
   }
 
   @Get('admin')
   async findAllForAdmin() {
-    return await this.prisma.service.findMany({
+    const cacheKey = 'services:all:admin';
+    const cached = this.cacheService.get(cacheKey);
+    
+    if (cached) {
+      return cached;
+    }
+
+    const services = await this.prisma.service.findMany({
       orderBy: { order: 'asc' },
     });
+
+    // Cache for 5 minutes
+    this.cacheService.set(cacheKey, services, 5 * 60 * 1000);
+    
+    return services;
   }
 
   @Get(':id')
@@ -40,7 +68,7 @@ export class ServicesController {
     image?: string;
     order?: number;
   }) {
-    return await this.prisma.service.create({
+    const service = await this.prisma.service.create({
       data: {
         title: data.title,
         description: data.description,
@@ -49,6 +77,12 @@ export class ServicesController {
         isActive: true,
       },
     });
+
+    // Invalidate cache
+    this.cacheService.delete('services:all:active');
+    this.cacheService.delete('services:all:admin');
+    
+    return service;
   }
 
   @Put(':id')
@@ -67,7 +101,7 @@ export class ServicesController {
       throw new NotFoundException('Servicio no encontrado');
     }
 
-    return await this.prisma.service.update({
+    const updatedService = await this.prisma.service.update({
       where: { id: id },
       data: {
         title: data.title,
@@ -77,6 +111,13 @@ export class ServicesController {
         isActive: data.isActive !== undefined ? data.isActive : service.isActive,
       },
     });
+
+    // Invalidate cache
+    this.cacheService.delete('services:all:active');
+    this.cacheService.delete('services:all:admin');
+    this.cacheService.delete(`services:${id}`);
+    
+    return updatedService;
   }
 
   @Delete(':id')
@@ -89,8 +130,15 @@ export class ServicesController {
       throw new NotFoundException('Servicio no encontrado');
     }
 
-    return await this.prisma.service.delete({
+    const deletedService = await this.prisma.service.delete({
       where: { id: id },
     });
+
+    // Invalidate cache
+    this.cacheService.delete('services:all:active');
+    this.cacheService.delete('services:all:admin');
+    this.cacheService.delete(`services:${id}`);
+    
+    return deletedService;
   }
 }

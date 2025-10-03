@@ -1,19 +1,34 @@
 import { Controller, Get, Post, Put, Delete, Param, Body, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { CacheService } from '../cache/cache.service';
 
 @Controller('slides')
 export class SlidesController {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private cacheService: CacheService
+  ) {}
   
   @Get()
   async findAll() {
+    const cacheKey = 'slides:all:active';
+    const cached = this.cacheService.get(cacheKey);
+    
+    if (cached) {
+      return cached;
+    }
+
     try {
       console.log('🔍 Fetching slides...');
       const slides = await this.prisma.slide.findMany({
         where: { isActive: true },
         orderBy: { order: 'asc' },
       });
-      console.log('📊 Slides found:', slides.length, slides);
+      console.log('📊 Slides found:', slides.length);
+      
+      // Cache for 15 minutes
+      this.cacheService.set(cacheKey, slides, 15 * 60 * 1000);
+      
       return slides;
     } catch (error) {
       console.error('❌ Error fetching slides:', error);

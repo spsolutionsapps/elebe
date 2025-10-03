@@ -1,10 +1,14 @@
 import { Controller, Get, Post, Put, Delete, Body, Param, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateInquiryDto } from './dto/create-inquiry.dto';
+import { CacheService } from '../cache/cache.service';
 
 @Controller('inquiries')
 export class InquiriesController {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private cacheService: CacheService
+  ) {}
 
   // Función para generar tags automáticos
   private generateTags(inquiryData: CreateInquiryDto): string[] {
@@ -56,6 +60,13 @@ export class InquiriesController {
 
   @Get()
   async findAll() {
+    const cacheKey = 'inquiries:all';
+    const cached = this.cacheService.get(cacheKey);
+    
+    if (cached) {
+      return cached;
+    }
+
     try {
       console.log('Fetching inquiries...');
       const inquiries = await this.prisma.inquiry.findMany({
@@ -71,7 +82,12 @@ export class InquiriesController {
           createdAt: 'desc',
         },
       });
+      
       console.log('Inquiries fetched successfully:', inquiries.length);
+      
+      // Cache for 5 minutes (inquiries change frequently)
+      this.cacheService.set(cacheKey, inquiries, 5 * 60 * 1000);
+      
       return inquiries;
     } catch (error) {
       console.error('Error fetching inquiries:', error);
@@ -158,6 +174,9 @@ export class InquiriesController {
         }
       }
 
+      // Invalidate cache
+      this.cacheService.delete('inquiries:all');
+      
       return {
         message: 'Consulta enviada correctamente',
         inquiry: {
@@ -204,6 +223,11 @@ export class InquiriesController {
     });
 
     console.log('Consulta actualizada:', inquiry);
+    
+    // Invalidate cache
+    this.cacheService.delete('inquiries:all');
+    this.cacheService.delete(`inquiries:${id}`);
+    
     return {
       message: 'Consulta actualizada correctamente',
       inquiry,
@@ -228,6 +252,10 @@ export class InquiriesController {
       });
 
       console.log('Consulta eliminada:', id);
+
+      // Invalidate cache
+      this.cacheService.delete('inquiries:all');
+      this.cacheService.delete(`inquiries:${id}`);
 
       return {
         message: 'Consulta eliminada correctamente',

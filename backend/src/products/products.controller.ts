@@ -1,20 +1,42 @@
 import { Controller, Get, Post, Put, Delete, Patch, Param, Body, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { CacheService } from '../cache/cache.service';
 
 @Controller('products')
 export class ProductsController {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private cacheService: CacheService
+  ) {}
   
   @Get()
   async findAll() {
+    const cacheKey = 'products:all';
+    const cached = this.cacheService.get(cacheKey);
+    
+    if (cached) {
+      return cached;
+    }
+
     const products = await this.prisma.product.findMany({
       orderBy: { createdAt: 'desc' },
     });
+
+    // Cache for 10 minutes
+    this.cacheService.set(cacheKey, products, 10 * 60 * 1000);
+    
     return products;
   }
 
   @Get('featured')
   async findFeatured() {
+    const cacheKey = 'products:featured';
+    const cached = this.cacheService.get(cacheKey);
+    
+    if (cached) {
+      return cached;
+    }
+
     const featuredProducts = await this.prisma.product.findMany({
       where: { 
         isActive: true,
@@ -22,18 +44,35 @@ export class ProductsController {
       },
       orderBy: { featuredOrder: 'asc' },
     });
+    
     console.log('Productos destacados encontrados:', featuredProducts.length);
+    
+    // Cache for 15 minutes
+    this.cacheService.set(cacheKey, featuredProducts, 15 * 60 * 1000);
+    
     return featuredProducts;
   }
 
   @Get('popular')
   async findPopular() {
+    const cacheKey = 'products:popular';
+    const cached = this.cacheService.get(cacheKey);
+    
+    if (cached) {
+      return cached;
+    }
+
     const popularProducts = await this.prisma.product.findMany({
       where: { isActive: true },
       orderBy: { views: 'desc' },
       take: 10,
     });
+    
     console.log('Productos populares encontrados:', popularProducts.length);
+    
+    // Cache for 5 minutes (popular products change more frequently)
+    this.cacheService.set(cacheKey, popularProducts, 5 * 60 * 1000);
+    
     return popularProducts;
   }
 
@@ -188,6 +227,12 @@ export class ProductsController {
       });
 
       console.log('Producto creado:', product);
+      
+      // Invalidate cache
+      this.cacheService.delete('products:all');
+      this.cacheService.delete('products:featured');
+      this.cacheService.delete('products:popular');
+      
       return {
         message: 'Producto creado correctamente',
         product,
@@ -244,6 +289,13 @@ export class ProductsController {
       });
 
       console.log('Producto actualizado:', product);
+      
+      // Invalidate cache
+      this.cacheService.delete('products:all');
+      this.cacheService.delete('products:featured');
+      this.cacheService.delete('products:popular');
+      this.cacheService.delete(`products:${id}`);
+      
       return {
         message: 'Producto actualizado correctamente',
         product,
@@ -272,6 +324,13 @@ export class ProductsController {
       });
 
       console.log('Producto eliminado:', id);
+      
+      // Invalidate cache
+      this.cacheService.delete('products:all');
+      this.cacheService.delete('products:featured');
+      this.cacheService.delete('products:popular');
+      this.cacheService.delete(`products:${id}`);
+      
       return {
         message: 'Producto eliminado correctamente',
       };

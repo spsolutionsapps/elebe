@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaModule } from './prisma/prisma.module';
+import { CacheModule } from './cache/cache.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ProductsModule } from './products/products.module';
@@ -15,6 +16,7 @@ import { UploadModule } from './upload/upload.module';
 import { TestModule } from './test/test.module';
 import { BrandsModule } from './brands/brands.module';
 import { CartModule } from './cart/cart.module';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
@@ -22,6 +24,7 @@ import { CartModule } from './cart/cart.module';
       isGlobal: true,
     }),
     PrismaModule,
+    CacheModule,
     AuthModule,
     UsersModule,
     ProductsModule,
@@ -36,6 +39,7 @@ import { CartModule } from './cart/cart.module';
     TestModule,
     BrandsModule,
     CartModule,
+    HealthModule,
   ],
 })
 export class AppModule {}
