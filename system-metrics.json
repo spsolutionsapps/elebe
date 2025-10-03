@@ -1,0 +1,1738 @@
+[
+  {
+    "timestamp": "2025-10-03T17:25:11.229Z",
+    "system": {
+      "timestamp": 1759512311226,
+      "cpu": {
+        "usage": 9,
+        "cores": 24,
+        "model": "AMD Ryzen 9 7845HX with Radeon Graphics        ",
+        "speed": 2994
+      },
+      "memory": {
+        "total": 33514647552,
+        "free": 18075181056,
+        "used": 15439466496,
+        "usagePercent": 46.06781698075367,
+        "available": 18075181056
+      },
+      "loadAverage": [
+        0,
+        0,
+        0
+      ],
+      "uptime": 1323.984,
+      "platform": "win32",
+      "arch": "x64"
+    },
+    "performance": {
+      "timestamp": 1759512311226,
+      "processMemory": {
+        "rss": 36032512,
+        "heapTotal": 6340608,
+        "heapUsed": 4718200,
+        "external": 1602511,
+        "arrayBuffers": 10539
+      },
+      "processUptime": 2.0230939,
+      "nodeVersion": "v24.4.1",
+      "pid": 39752
+    },
+    "network": {
+      "timestamp": 1759512311226,
+      "activeConnections": {
+        "estimated": 16,
+        "note": "Estimación basada en uso de CPU (implementar netstat para datos reales)"
+      },
+      "networkInterfaces": {
+        "Wi-Fi": [
+          {
+            "address": "2803:9800:90b8:841e:e439:9fab:10f5:74d5",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "2803:9800:90b8:841e:e439:9fab:10f5:74d5/64",
+            "scopeid": 0
+          },
+          {
+            "address": "2803:9800:90b8:841e:49f3:d239:fd96:4cbc",
+            "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "2803:9800:90b8:841e:49f3:d239:fd96:4cbc/128",
+            "scopeid": 0
+          },
+          {
+            "address": "fe80::4334:2445:5ebb:b4ba",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "fe80::4334:2445:5ebb:b4ba/64",
+            "scopeid": 13
+          },
+          {
+            "address": "192.168.1.13",
+            "netmask": "255.255.255.0",
+            "family": "IPv4",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "192.168.1.13/24"
+          }
+        ],
+        "Loopback Pseudo-Interface 1": [
+          {
+            "address": "::1",
+            "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+            "family": "IPv6",
+            "mac": "00:00:00:00:00:00",
+            "internal": true,
+            "cidr": "::1/128",
+            "scopeid": 0
+          },
+          {
+            "address": "127.0.0.1",
+            "netmask": "255.0.0.0",
+            "family": "IPv4",
+            "mac": "00:00:00:00:00:00",
+            "internal": true,
+            "cidr": "127.0.0.1/8"
+          }
+        ],
+        "vEthernet (WSL (Hyper-V firewall))": [
+          {
+            "address": "fe80::5474:1b04:6643:77e5",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "00:15:5d:fd:e3:a0",
+            "internal": false,
+            "cidr": "fe80::5474:1b04:6643:77e5/64",
+            "scopeid": 34
+          },
+          {
+            "address": "172.27.224.1",
+            "netmask": "255.255.240.0",
+            "family": "IPv4",
+            "mac": "00:15:5d:fd:e3:a0",
+            "internal": false,
+            "cidr": "172.27.224.1/20"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "timestamp": "2025-10-03T17:25:13.229Z",
+    "system": {
+      "timestamp": 1759512313226,
+      "cpu": {
+        "usage": 9,
+        "cores": 24,
+        "model": "AMD Ryzen 9 7845HX with Radeon Graphics        ",
+        "speed": 2994
+      },
+      "memory": {
+        "total": 33514647552,
+        "free": 18072907776,
+        "used": 15441739776,
+        "usagePercent": 46.07459992542427,
+        "available": 18072907776
+      },
+      "loadAverage": [
+        0,
+        0,
+        0
+      ],
+      "uptime": 1325.968,
+      "platform": "win32",
+      "arch": "x64"
+    },
+    "performance": {
+      "timestamp": 1759512313226,
+      "processMemory": {
+        "rss": 36741120,
+        "heapTotal": 6340608,
+        "heapUsed": 4821544,
+        "external": 1602511,
+        "arrayBuffers": 10539
+      },
+      "processUptime": 4.0228048,
+      "nodeVersion": "v24.4.1",
+      "pid": 39752
+    },
+    "network": {
+      "timestamp": 1759512313226,
+      "activeConnections": {
+        "estimated": 14,
+        "note": "Estimación basada en uso de CPU (implementar netstat para datos reales)"
+      },
+      "networkInterfaces": {
+        "Wi-Fi": [
+          {
+            "address": "2803:9800:90b8:841e:e439:9fab:10f5:74d5",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "2803:9800:90b8:841e:e439:9fab:10f5:74d5/64",
+            "scopeid": 0
+          },
+          {
+            "address": "2803:9800:90b8:841e:49f3:d239:fd96:4cbc",
+            "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "2803:9800:90b8:841e:49f3:d239:fd96:4cbc/128",
+            "scopeid": 0
+          },
+          {
+            "address": "fe80::4334:2445:5ebb:b4ba",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "fe80::4334:2445:5ebb:b4ba/64",
+            "scopeid": 13
+          },
+          {
+            "address": "192.168.1.13",
+            "netmask": "255.255.255.0",
+            "family": "IPv4",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "192.168.1.13/24"
+          }
+        ],
+        "Loopback Pseudo-Interface 1": [
+          {
+            "address": "::1",
+            "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+            "family": "IPv6",
+            "mac": "00:00:00:00:00:00",
+            "internal": true,
+            "cidr": "::1/128",
+            "scopeid": 0
+          },
+          {
+            "address": "127.0.0.1",
+            "netmask": "255.0.0.0",
+            "family": "IPv4",
+            "mac": "00:00:00:00:00:00",
+            "internal": true,
+            "cidr": "127.0.0.1/8"
+          }
+        ],
+        "vEthernet (WSL (Hyper-V firewall))": [
+          {
+            "address": "fe80::5474:1b04:6643:77e5",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "00:15:5d:fd:e3:a0",
+            "internal": false,
+            "cidr": "fe80::5474:1b04:6643:77e5/64",
+            "scopeid": 34
+          },
+          {
+            "address": "172.27.224.1",
+            "netmask": "255.255.240.0",
+            "family": "IPv4",
+            "mac": "00:15:5d:fd:e3:a0",
+            "internal": false,
+            "cidr": "172.27.224.1/20"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "timestamp": "2025-10-03T17:25:15.229Z",
+    "system": {
+      "timestamp": 1759512315225,
+      "cpu": {
+        "usage": 9,
+        "cores": 24,
+        "model": "AMD Ryzen 9 7845HX with Radeon Graphics        ",
+        "speed": 2994
+      },
+      "memory": {
+        "total": 33514647552,
+        "free": 17984503808,
+        "used": 15530143744,
+        "usagePercent": 46.33837703321822,
+        "available": 17984503808
+      },
+      "loadAverage": [
+        0,
+        0,
+        0
+      ],
+      "uptime": 1327.968,
+      "platform": "win32",
+      "arch": "x64"
+    },
+    "performance": {
+      "timestamp": 1759512315225,
+      "processMemory": {
+        "rss": 37380096,
+        "heapTotal": 6340608,
+        "heapUsed": 4874448,
+        "external": 1602511,
+        "arrayBuffers": 10539
+      },
+      "processUptime": 6.0225486,
+      "nodeVersion": "v24.4.1",
+      "pid": 39752
+    },
+    "network": {
+      "timestamp": 1759512315225,
+      "activeConnections": {
+        "estimated": 11,
+        "note": "Estimación basada en uso de CPU (implementar netstat para datos reales)"
+      },
+      "networkInterfaces": {
+        "Wi-Fi": [
+          {
+            "address": "2803:9800:90b8:841e:e439:9fab:10f5:74d5",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "2803:9800:90b8:841e:e439:9fab:10f5:74d5/64",
+            "scopeid": 0
+          },
+          {
+            "address": "2803:9800:90b8:841e:49f3:d239:fd96:4cbc",
+            "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "2803:9800:90b8:841e:49f3:d239:fd96:4cbc/128",
+            "scopeid": 0
+          },
+          {
+            "address": "fe80::4334:2445:5ebb:b4ba",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "fe80::4334:2445:5ebb:b4ba/64",
+            "scopeid": 13
+          },
+          {
+            "address": "192.168.1.13",
+            "netmask": "255.255.255.0",
+            "family": "IPv4",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "192.168.1.13/24"
+          }
+        ],
+        "Loopback Pseudo-Interface 1": [
+          {
+            "address": "::1",
+            "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+            "family": "IPv6",
+            "mac": "00:00:00:00:00:00",
+            "internal": true,
+            "cidr": "::1/128",
+            "scopeid": 0
+          },
+          {
+            "address": "127.0.0.1",
+            "netmask": "255.0.0.0",
+            "family": "IPv4",
+            "mac": "00:00:00:00:00:00",
+            "internal": true,
+            "cidr": "127.0.0.1/8"
+          }
+        ],
+        "vEthernet (WSL (Hyper-V firewall))": [
+          {
+            "address": "fe80::5474:1b04:6643:77e5",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "00:15:5d:fd:e3:a0",
+            "internal": false,
+            "cidr": "fe80::5474:1b04:6643:77e5/64",
+            "scopeid": 34
+          },
+          {
+            "address": "172.27.224.1",
+            "netmask": "255.255.240.0",
+            "family": "IPv4",
+            "mac": "00:15:5d:fd:e3:a0",
+            "internal": false,
+            "cidr": "172.27.224.1/20"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "timestamp": "2025-10-03T17:25:17.231Z",
+    "system": {
+      "timestamp": 1759512317226,
+      "cpu": {
+        "usage": 9,
+        "cores": 24,
+        "model": "AMD Ryzen 9 7845HX with Radeon Graphics        ",
+        "speed": 2994
+      },
+      "memory": {
+        "total": 33514647552,
+        "free": 17962262528,
+        "used": 15552385024,
+        "usagePercent": 46.40473989729277,
+        "available": 17962262528
+      },
+      "loadAverage": [
+        0,
+        0,
+        0
+      ],
+      "uptime": 1329.984,
+      "platform": "win32",
+      "arch": "x64"
+    },
+    "performance": {
+      "timestamp": 1759512317226,
+      "processMemory": {
+        "rss": 37453824,
+        "heapTotal": 6340608,
+        "heapUsed": 4930888,
+        "external": 1602511,
+        "arrayBuffers": 10539
+      },
+      "processUptime": 8.0235056,
+      "nodeVersion": "v24.4.1",
+      "pid": 39752
+    },
+    "network": {
+      "timestamp": 1759512317226,
+      "activeConnections": {
+        "estimated": 9,
+        "note": "Estimación basada en uso de CPU (implementar netstat para datos reales)"
+      },
+      "networkInterfaces": {
+        "Wi-Fi": [
+          {
+            "address": "2803:9800:90b8:841e:e439:9fab:10f5:74d5",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "2803:9800:90b8:841e:e439:9fab:10f5:74d5/64",
+            "scopeid": 0
+          },
+          {
+            "address": "2803:9800:90b8:841e:49f3:d239:fd96:4cbc",
+            "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "2803:9800:90b8:841e:49f3:d239:fd96:4cbc/128",
+            "scopeid": 0
+          },
+          {
+            "address": "fe80::4334:2445:5ebb:b4ba",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "fe80::4334:2445:5ebb:b4ba/64",
+            "scopeid": 13
+          },
+          {
+            "address": "192.168.1.13",
+            "netmask": "255.255.255.0",
+            "family": "IPv4",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "192.168.1.13/24"
+          }
+        ],
+        "Loopback Pseudo-Interface 1": [
+          {
+            "address": "::1",
+            "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+            "family": "IPv6",
+            "mac": "00:00:00:00:00:00",
+            "internal": true,
+            "cidr": "::1/128",
+            "scopeid": 0
+          },
+          {
+            "address": "127.0.0.1",
+            "netmask": "255.0.0.0",
+            "family": "IPv4",
+            "mac": "00:00:00:00:00:00",
+            "internal": true,
+            "cidr": "127.0.0.1/8"
+          }
+        ],
+        "vEthernet (WSL (Hyper-V firewall))": [
+          {
+            "address": "fe80::5474:1b04:6643:77e5",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "00:15:5d:fd:e3:a0",
+            "internal": false,
+            "cidr": "fe80::5474:1b04:6643:77e5/64",
+            "scopeid": 34
+          },
+          {
+            "address": "172.27.224.1",
+            "netmask": "255.255.240.0",
+            "family": "IPv4",
+            "mac": "00:15:5d:fd:e3:a0",
+            "internal": false,
+            "cidr": "172.27.224.1/20"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "timestamp": "2025-10-03T17:25:19.230Z",
+    "system": {
+      "timestamp": 1759512319226,
+      "cpu": {
+        "usage": 9,
+        "cores": 24,
+        "model": "AMD Ryzen 9 7845HX with Radeon Graphics        ",
+        "speed": 2994
+      },
+      "memory": {
+        "total": 33514647552,
+        "free": 17996709888,
+        "used": 15517937664,
+        "usagePercent": 46.30195689786975,
+        "available": 17996709888
+      },
+      "loadAverage": [
+        0,
+        0,
+        0
+      ],
+      "uptime": 1331.968,
+      "platform": "win32",
+      "arch": "x64"
+    },
+    "performance": {
+      "timestamp": 1759512319226,
+      "processMemory": {
+        "rss": 37806080,
+        "heapTotal": 6340608,
+        "heapUsed": 5014592,
+        "external": 1602511,
+        "arrayBuffers": 10539
+      },
+      "processUptime": 10.0229771,
+      "nodeVersion": "v24.4.1",
+      "pid": 39752
+    },
+    "network": {
+      "timestamp": 1759512319226,
+      "activeConnections": {
+        "estimated": 12,
+        "note": "Estimación basada en uso de CPU (implementar netstat para datos reales)"
+      },
+      "networkInterfaces": {
+        "Wi-Fi": [
+          {
+            "address": "2803:9800:90b8:841e:e439:9fab:10f5:74d5",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "2803:9800:90b8:841e:e439:9fab:10f5:74d5/64",
+            "scopeid": 0
+          },
+          {
+            "address": "2803:9800:90b8:841e:49f3:d239:fd96:4cbc",
+            "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "2803:9800:90b8:841e:49f3:d239:fd96:4cbc/128",
+            "scopeid": 0
+          },
+          {
+            "address": "fe80::4334:2445:5ebb:b4ba",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "fe80::4334:2445:5ebb:b4ba/64",
+            "scopeid": 13
+          },
+          {
+            "address": "192.168.1.13",
+            "netmask": "255.255.255.0",
+            "family": "IPv4",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "192.168.1.13/24"
+          }
+        ],
+        "Loopback Pseudo-Interface 1": [
+          {
+            "address": "::1",
+            "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+            "family": "IPv6",
+            "mac": "00:00:00:00:00:00",
+            "internal": true,
+            "cidr": "::1/128",
+            "scopeid": 0
+          },
+          {
+            "address": "127.0.0.1",
+            "netmask": "255.0.0.0",
+            "family": "IPv4",
+            "mac": "00:00:00:00:00:00",
+            "internal": true,
+            "cidr": "127.0.0.1/8"
+          }
+        ],
+        "vEthernet (WSL (Hyper-V firewall))": [
+          {
+            "address": "fe80::5474:1b04:6643:77e5",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "00:15:5d:fd:e3:a0",
+            "internal": false,
+            "cidr": "fe80::5474:1b04:6643:77e5/64",
+            "scopeid": 34
+          },
+          {
+            "address": "172.27.224.1",
+            "netmask": "255.255.240.0",
+            "family": "IPv4",
+            "mac": "00:15:5d:fd:e3:a0",
+            "internal": false,
+            "cidr": "172.27.224.1/20"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "timestamp": "2025-10-03T17:25:21.231Z",
+    "system": {
+      "timestamp": 1759512321225,
+      "cpu": {
+        "usage": 9,
+        "cores": 24,
+        "model": "AMD Ryzen 9 7845HX with Radeon Graphics        ",
+        "speed": 2994
+      },
+      "memory": {
+        "total": 33514647552,
+        "free": 17955291136,
+        "used": 15559356416,
+        "usagePercent": 46.42554092761596,
+        "available": 17955291136
+      },
+      "loadAverage": [
+        0,
+        0,
+        0
+      ],
+      "uptime": 1333.984,
+      "platform": "win32",
+      "arch": "x64"
+    },
+    "performance": {
+      "timestamp": 1759512321225,
+      "processMemory": {
+        "rss": 38600704,
+        "heapTotal": 6340608,
+        "heapUsed": 4520528,
+        "external": 1602511,
+        "arrayBuffers": 10539
+      },
+      "processUptime": 12.0228719,
+      "nodeVersion": "v24.4.1",
+      "pid": 39752
+    },
+    "network": {
+      "timestamp": 1759512321225,
+      "activeConnections": {
+        "estimated": 14,
+        "note": "Estimación basada en uso de CPU (implementar netstat para datos reales)"
+      },
+      "networkInterfaces": {
+        "Wi-Fi": [
+          {
+            "address": "2803:9800:90b8:841e:e439:9fab:10f5:74d5",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "2803:9800:90b8:841e:e439:9fab:10f5:74d5/64",
+            "scopeid": 0
+          },
+          {
+            "address": "2803:9800:90b8:841e:49f3:d239:fd96:4cbc",
+            "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "2803:9800:90b8:841e:49f3:d239:fd96:4cbc/128",
+            "scopeid": 0
+          },
+          {
+            "address": "fe80::4334:2445:5ebb:b4ba",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "fe80::4334:2445:5ebb:b4ba/64",
+            "scopeid": 13
+          },
+          {
+            "address": "192.168.1.13",
+            "netmask": "255.255.255.0",
+            "family": "IPv4",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "192.168.1.13/24"
+          }
+        ],
+        "Loopback Pseudo-Interface 1": [
+          {
+            "address": "::1",
+            "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+            "family": "IPv6",
+            "mac": "00:00:00:00:00:00",
+            "internal": true,
+            "cidr": "::1/128",
+            "scopeid": 0
+          },
+          {
+            "address": "127.0.0.1",
+            "netmask": "255.0.0.0",
+            "family": "IPv4",
+            "mac": "00:00:00:00:00:00",
+            "internal": true,
+            "cidr": "127.0.0.1/8"
+          }
+        ],
+        "vEthernet (WSL (Hyper-V firewall))": [
+          {
+            "address": "fe80::5474:1b04:6643:77e5",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "00:15:5d:fd:e3:a0",
+            "internal": false,
+            "cidr": "fe80::5474:1b04:6643:77e5/64",
+            "scopeid": 34
+          },
+          {
+            "address": "172.27.224.1",
+            "netmask": "255.255.240.0",
+            "family": "IPv4",
+            "mac": "00:15:5d:fd:e3:a0",
+            "internal": false,
+            "cidr": "172.27.224.1/20"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "timestamp": "2025-10-03T17:25:23.229Z",
+    "system": {
+      "timestamp": 1759512323226,
+      "cpu": {
+        "usage": 9,
+        "cores": 24,
+        "model": "AMD Ryzen 9 7845HX with Radeon Graphics        ",
+        "speed": 2994
+      },
+      "memory": {
+        "total": 33514647552,
+        "free": 17980731392,
+        "used": 15533916160,
+        "usagePercent": 46.34963305491484,
+        "available": 17980731392
+      },
+      "loadAverage": [
+        0,
+        0,
+        0
+      ],
+      "uptime": 1335.984,
+      "platform": "win32",
+      "arch": "x64"
+    },
+    "performance": {
+      "timestamp": 1759512323226,
+      "processMemory": {
+        "rss": 38727680,
+        "heapTotal": 6340608,
+        "heapUsed": 4624048,
+        "external": 1602511,
+        "arrayBuffers": 10539
+      },
+      "processUptime": 14.023113,
+      "nodeVersion": "v24.4.1",
+      "pid": 39752
+    },
+    "network": {
+      "timestamp": 1759512323226,
+      "activeConnections": {
+        "estimated": 2,
+        "note": "Estimación basada en uso de CPU (implementar netstat para datos reales)"
+      },
+      "networkInterfaces": {
+        "Wi-Fi": [
+          {
+            "address": "2803:9800:90b8:841e:e439:9fab:10f5:74d5",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "2803:9800:90b8:841e:e439:9fab:10f5:74d5/64",
+            "scopeid": 0
+          },
+          {
+            "address": "2803:9800:90b8:841e:49f3:d239:fd96:4cbc",
+            "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "2803:9800:90b8:841e:49f3:d239:fd96:4cbc/128",
+            "scopeid": 0
+          },
+          {
+            "address": "fe80::4334:2445:5ebb:b4ba",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "fe80::4334:2445:5ebb:b4ba/64",
+            "scopeid": 13
+          },
+          {
+            "address": "192.168.1.13",
+            "netmask": "255.255.255.0",
+            "family": "IPv4",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "192.168.1.13/24"
+          }
+        ],
+        "Loopback Pseudo-Interface 1": [
+          {
+            "address": "::1",
+            "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+            "family": "IPv6",
+            "mac": "00:00:00:00:00:00",
+            "internal": true,
+            "cidr": "::1/128",
+            "scopeid": 0
+          },
+          {
+            "address": "127.0.0.1",
+            "netmask": "255.0.0.0",
+            "family": "IPv4",
+            "mac": "00:00:00:00:00:00",
+            "internal": true,
+            "cidr": "127.0.0.1/8"
+          }
+        ],
+        "vEthernet (WSL (Hyper-V firewall))": [
+          {
+            "address": "fe80::5474:1b04:6643:77e5",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "00:15:5d:fd:e3:a0",
+            "internal": false,
+            "cidr": "fe80::5474:1b04:6643:77e5/64",
+            "scopeid": 34
+          },
+          {
+            "address": "172.27.224.1",
+            "netmask": "255.255.240.0",
+            "family": "IPv4",
+            "mac": "00:15:5d:fd:e3:a0",
+            "internal": false,
+            "cidr": "172.27.224.1/20"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "timestamp": "2025-10-03T17:25:25.230Z",
+    "system": {
+      "timestamp": 1759512325226,
+      "cpu": {
+        "usage": 9,
+        "cores": 24,
+        "model": "AMD Ryzen 9 7845HX with Radeon Graphics        ",
+        "speed": 2994
+      },
+      "memory": {
+        "total": 33514647552,
+        "free": 17977982976,
+        "used": 15536664576,
+        "usagePercent": 46.35783369612921,
+        "available": 17977982976
+      },
+      "loadAverage": [
+        0,
+        0,
+        0
+      ],
+      "uptime": 1337.984,
+      "platform": "win32",
+      "arch": "x64"
+    },
+    "performance": {
+      "timestamp": 1759512325226,
+      "processMemory": {
+        "rss": 38920192,
+        "heapTotal": 6340608,
+        "heapUsed": 4721760,
+        "external": 1602511,
+        "arrayBuffers": 10539
+      },
+      "processUptime": 16.0236307,
+      "nodeVersion": "v24.4.1",
+      "pid": 39752
+    },
+    "network": {
+      "timestamp": 1759512325226,
+      "activeConnections": {
+        "estimated": 4,
+        "note": "Estimación basada en uso de CPU (implementar netstat para datos reales)"
+      },
+      "networkInterfaces": {
+        "Wi-Fi": [
+          {
+            "address": "2803:9800:90b8:841e:e439:9fab:10f5:74d5",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "2803:9800:90b8:841e:e439:9fab:10f5:74d5/64",
+            "scopeid": 0
+          },
+          {
+            "address": "2803:9800:90b8:841e:49f3:d239:fd96:4cbc",
+            "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "2803:9800:90b8:841e:49f3:d239:fd96:4cbc/128",
+            "scopeid": 0
+          },
+          {
+            "address": "fe80::4334:2445:5ebb:b4ba",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "fe80::4334:2445:5ebb:b4ba/64",
+            "scopeid": 13
+          },
+          {
+            "address": "192.168.1.13",
+            "netmask": "255.255.255.0",
+            "family": "IPv4",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "192.168.1.13/24"
+          }
+        ],
+        "Loopback Pseudo-Interface 1": [
+          {
+            "address": "::1",
+            "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+            "family": "IPv6",
+            "mac": "00:00:00:00:00:00",
+            "internal": true,
+            "cidr": "::1/128",
+            "scopeid": 0
+          },
+          {
+            "address": "127.0.0.1",
+            "netmask": "255.0.0.0",
+            "family": "IPv4",
+            "mac": "00:00:00:00:00:00",
+            "internal": true,
+            "cidr": "127.0.0.1/8"
+          }
+        ],
+        "vEthernet (WSL (Hyper-V firewall))": [
+          {
+            "address": "fe80::5474:1b04:6643:77e5",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "00:15:5d:fd:e3:a0",
+            "internal": false,
+            "cidr": "fe80::5474:1b04:6643:77e5/64",
+            "scopeid": 34
+          },
+          {
+            "address": "172.27.224.1",
+            "netmask": "255.255.240.0",
+            "family": "IPv4",
+            "mac": "00:15:5d:fd:e3:a0",
+            "internal": false,
+            "cidr": "172.27.224.1/20"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "timestamp": "2025-10-03T17:25:27.230Z",
+    "system": {
+      "timestamp": 1759512327226,
+      "cpu": {
+        "usage": 9,
+        "cores": 24,
+        "model": "AMD Ryzen 9 7845HX with Radeon Graphics        ",
+        "speed": 2994
+      },
+      "memory": {
+        "total": 33514647552,
+        "free": 17980846080,
+        "used": 15533801472,
+        "usagePercent": 46.349290852300825,
+        "available": 17980846080
+      },
+      "loadAverage": [
+        0,
+        0,
+        0
+      ],
+      "uptime": 1339.984,
+      "platform": "win32",
+      "arch": "x64"
+    },
+    "performance": {
+      "timestamp": 1759512327226,
+      "processMemory": {
+        "rss": 39030784,
+        "heapTotal": 6602752,
+        "heapUsed": 4883592,
+        "external": 1602511,
+        "arrayBuffers": 10539
+      },
+      "processUptime": 18.0236608,
+      "nodeVersion": "v24.4.1",
+      "pid": 39752
+    },
+    "network": {
+      "timestamp": 1759512327226,
+      "activeConnections": {
+        "estimated": 11,
+        "note": "Estimación basada en uso de CPU (implementar netstat para datos reales)"
+      },
+      "networkInterfaces": {
+        "Wi-Fi": [
+          {
+            "address": "2803:9800:90b8:841e:e439:9fab:10f5:74d5",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "2803:9800:90b8:841e:e439:9fab:10f5:74d5/64",
+            "scopeid": 0
+          },
+          {
+            "address": "2803:9800:90b8:841e:49f3:d239:fd96:4cbc",
+            "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "2803:9800:90b8:841e:49f3:d239:fd96:4cbc/128",
+            "scopeid": 0
+          },
+          {
+            "address": "fe80::4334:2445:5ebb:b4ba",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "fe80::4334:2445:5ebb:b4ba/64",
+            "scopeid": 13
+          },
+          {
+            "address": "192.168.1.13",
+            "netmask": "255.255.255.0",
+            "family": "IPv4",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "192.168.1.13/24"
+          }
+        ],
+        "Loopback Pseudo-Interface 1": [
+          {
+            "address": "::1",
+            "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+            "family": "IPv6",
+            "mac": "00:00:00:00:00:00",
+            "internal": true,
+            "cidr": "::1/128",
+            "scopeid": 0
+          },
+          {
+            "address": "127.0.0.1",
+            "netmask": "255.0.0.0",
+            "family": "IPv4",
+            "mac": "00:00:00:00:00:00",
+            "internal": true,
+            "cidr": "127.0.0.1/8"
+          }
+        ],
+        "vEthernet (WSL (Hyper-V firewall))": [
+          {
+            "address": "fe80::5474:1b04:6643:77e5",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "00:15:5d:fd:e3:a0",
+            "internal": false,
+            "cidr": "fe80::5474:1b04:6643:77e5/64",
+            "scopeid": 34
+          },
+          {
+            "address": "172.27.224.1",
+            "netmask": "255.255.240.0",
+            "family": "IPv4",
+            "mac": "00:15:5d:fd:e3:a0",
+            "internal": false,
+            "cidr": "172.27.224.1/20"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "timestamp": "2025-10-03T17:25:29.230Z",
+    "system": {
+      "timestamp": 1759512329227,
+      "cpu": {
+        "usage": 9,
+        "cores": 24,
+        "model": "AMD Ryzen 9 7845HX with Radeon Graphics        ",
+        "speed": 2994
+      },
+      "memory": {
+        "total": 33514647552,
+        "free": 17983660032,
+        "used": 15530987520,
+        "usagePercent": 46.34089466673559,
+        "available": 17983660032
+      },
+      "loadAverage": [
+        0,
+        0,
+        0
+      ],
+      "uptime": 1341.984,
+      "platform": "win32",
+      "arch": "x64"
+    },
+    "performance": {
+      "timestamp": 1759512329227,
+      "processMemory": {
+        "rss": 39239680,
+        "heapTotal": 6602752,
+        "heapUsed": 5014176,
+        "external": 1602511,
+        "arrayBuffers": 10539
+      },
+      "processUptime": 20.0240624,
+      "nodeVersion": "v24.4.1",
+      "pid": 39752
+    },
+    "network": {
+      "timestamp": 1759512329227,
+      "activeConnections": {
+        "estimated": 6,
+        "note": "Estimación basada en uso de CPU (implementar netstat para datos reales)"
+      },
+      "networkInterfaces": {
+        "Wi-Fi": [
+          {
+            "address": "2803:9800:90b8:841e:e439:9fab:10f5:74d5",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "2803:9800:90b8:841e:e439:9fab:10f5:74d5/64",
+            "scopeid": 0
+          },
+          {
+            "address": "2803:9800:90b8:841e:49f3:d239:fd96:4cbc",
+            "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "2803:9800:90b8:841e:49f3:d239:fd96:4cbc/128",
+            "scopeid": 0
+          },
+          {
+            "address": "fe80::4334:2445:5ebb:b4ba",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "fe80::4334:2445:5ebb:b4ba/64",
+            "scopeid": 13
+          },
+          {
+            "address": "192.168.1.13",
+            "netmask": "255.255.255.0",
+            "family": "IPv4",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "192.168.1.13/24"
+          }
+        ],
+        "Loopback Pseudo-Interface 1": [
+          {
+            "address": "::1",
+            "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+            "family": "IPv6",
+            "mac": "00:00:00:00:00:00",
+            "internal": true,
+            "cidr": "::1/128",
+            "scopeid": 0
+          },
+          {
+            "address": "127.0.0.1",
+            "netmask": "255.0.0.0",
+            "family": "IPv4",
+            "mac": "00:00:00:00:00:00",
+            "internal": true,
+            "cidr": "127.0.0.1/8"
+          }
+        ],
+        "vEthernet (WSL (Hyper-V firewall))": [
+          {
+            "address": "fe80::5474:1b04:6643:77e5",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "00:15:5d:fd:e3:a0",
+            "internal": false,
+            "cidr": "fe80::5474:1b04:6643:77e5/64",
+            "scopeid": 34
+          },
+          {
+            "address": "172.27.224.1",
+            "netmask": "255.255.240.0",
+            "family": "IPv4",
+            "mac": "00:15:5d:fd:e3:a0",
+            "internal": false,
+            "cidr": "172.27.224.1/20"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "timestamp": "2025-10-03T17:25:31.231Z",
+    "system": {
+      "timestamp": 1759512331227,
+      "cpu": {
+        "usage": 9,
+        "cores": 24,
+        "model": "AMD Ryzen 9 7845HX with Radeon Graphics        ",
+        "speed": 2994
+      },
+      "memory": {
+        "total": 33514647552,
+        "free": 17892732928,
+        "used": 15621914624,
+        "usagePercent": 46.612200232037814,
+        "available": 17892732928
+      },
+      "loadAverage": [
+        0,
+        0,
+        0
+      ],
+      "uptime": 1343.984,
+      "platform": "win32",
+      "arch": "x64"
+    },
+    "performance": {
+      "timestamp": 1759512331227,
+      "processMemory": {
+        "rss": 39313408,
+        "heapTotal": 6602752,
+        "heapUsed": 5140816,
+        "external": 1602511,
+        "arrayBuffers": 10539
+      },
+      "processUptime": 22.0242784,
+      "nodeVersion": "v24.4.1",
+      "pid": 39752
+    },
+    "network": {
+      "timestamp": 1759512331227,
+      "activeConnections": {
+        "estimated": 18,
+        "note": "Estimación basada en uso de CPU (implementar netstat para datos reales)"
+      },
+      "networkInterfaces": {
+        "Wi-Fi": [
+          {
+            "address": "2803:9800:90b8:841e:e439:9fab:10f5:74d5",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "2803:9800:90b8:841e:e439:9fab:10f5:74d5/64",
+            "scopeid": 0
+          },
+          {
+            "address": "2803:9800:90b8:841e:49f3:d239:fd96:4cbc",
+            "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "2803:9800:90b8:841e:49f3:d239:fd96:4cbc/128",
+            "scopeid": 0
+          },
+          {
+            "address": "fe80::4334:2445:5ebb:b4ba",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "fe80::4334:2445:5ebb:b4ba/64",
+            "scopeid": 13
+          },
+          {
+            "address": "192.168.1.13",
+            "netmask": "255.255.255.0",
+            "family": "IPv4",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "192.168.1.13/24"
+          }
+        ],
+        "Loopback Pseudo-Interface 1": [
+          {
+            "address": "::1",
+            "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+            "family": "IPv6",
+            "mac": "00:00:00:00:00:00",
+            "internal": true,
+            "cidr": "::1/128",
+            "scopeid": 0
+          },
+          {
+            "address": "127.0.0.1",
+            "netmask": "255.0.0.0",
+            "family": "IPv4",
+            "mac": "00:00:00:00:00:00",
+            "internal": true,
+            "cidr": "127.0.0.1/8"
+          }
+        ],
+        "vEthernet (WSL (Hyper-V firewall))": [
+          {
+            "address": "fe80::5474:1b04:6643:77e5",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "00:15:5d:fd:e3:a0",
+            "internal": false,
+            "cidr": "fe80::5474:1b04:6643:77e5/64",
+            "scopeid": 34
+          },
+          {
+            "address": "172.27.224.1",
+            "netmask": "255.255.240.0",
+            "family": "IPv4",
+            "mac": "00:15:5d:fd:e3:a0",
+            "internal": false,
+            "cidr": "172.27.224.1/20"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "timestamp": "2025-10-03T17:25:33.230Z",
+    "system": {
+      "timestamp": 1759512333227,
+      "cpu": {
+        "usage": 9,
+        "cores": 24,
+        "model": "AMD Ryzen 9 7845HX with Radeon Graphics        ",
+        "speed": 2994
+      },
+      "memory": {
+        "total": 33514647552,
+        "free": 17963393024,
+        "used": 15551254528,
+        "usagePercent": 46.40136675724037,
+        "available": 17963393024
+      },
+      "loadAverage": [
+        0,
+        0,
+        0
+      ],
+      "uptime": 1345.984,
+      "platform": "win32",
+      "arch": "x64"
+    },
+    "performance": {
+      "timestamp": 1759512333227,
+      "processMemory": {
+        "rss": 39804928,
+        "heapTotal": 6602752,
+        "heapUsed": 4596176,
+        "external": 1602511,
+        "arrayBuffers": 10539
+      },
+      "processUptime": 24.0237784,
+      "nodeVersion": "v24.4.1",
+      "pid": 39752
+    },
+    "network": {
+      "timestamp": 1759512333227,
+      "activeConnections": {
+        "estimated": 11,
+        "note": "Estimación basada en uso de CPU (implementar netstat para datos reales)"
+      },
+      "networkInterfaces": {
+        "Wi-Fi": [
+          {
+            "address": "2803:9800:90b8:841e:e439:9fab:10f5:74d5",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "2803:9800:90b8:841e:e439:9fab:10f5:74d5/64",
+            "scopeid": 0
+          },
+          {
+            "address": "2803:9800:90b8:841e:49f3:d239:fd96:4cbc",
+            "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "2803:9800:90b8:841e:49f3:d239:fd96:4cbc/128",
+            "scopeid": 0
+          },
+          {
+            "address": "fe80::4334:2445:5ebb:b4ba",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "fe80::4334:2445:5ebb:b4ba/64",
+            "scopeid": 13
+          },
+          {
+            "address": "192.168.1.13",
+            "netmask": "255.255.255.0",
+            "family": "IPv4",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "192.168.1.13/24"
+          }
+        ],
+        "Loopback Pseudo-Interface 1": [
+          {
+            "address": "::1",
+            "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+            "family": "IPv6",
+            "mac": "00:00:00:00:00:00",
+            "internal": true,
+            "cidr": "::1/128",
+            "scopeid": 0
+          },
+          {
+            "address": "127.0.0.1",
+            "netmask": "255.0.0.0",
+            "family": "IPv4",
+            "mac": "00:00:00:00:00:00",
+            "internal": true,
+            "cidr": "127.0.0.1/8"
+          }
+        ],
+        "vEthernet (WSL (Hyper-V firewall))": [
+          {
+            "address": "fe80::5474:1b04:6643:77e5",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "00:15:5d:fd:e3:a0",
+            "internal": false,
+            "cidr": "fe80::5474:1b04:6643:77e5/64",
+            "scopeid": 34
+          },
+          {
+            "address": "172.27.224.1",
+            "netmask": "255.255.240.0",
+            "family": "IPv4",
+            "mac": "00:15:5d:fd:e3:a0",
+            "internal": false,
+            "cidr": "172.27.224.1/20"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "timestamp": "2025-10-03T17:25:35.230Z",
+    "system": {
+      "timestamp": 1759512335227,
+      "cpu": {
+        "usage": 9,
+        "cores": 24,
+        "model": "AMD Ryzen 9 7845HX with Radeon Graphics        ",
+        "speed": 2994
+      },
+      "memory": {
+        "total": 33514647552,
+        "free": 17993498624,
+        "used": 15521148928,
+        "usagePercent": 46.3115385710621,
+        "available": 17993498624
+      },
+      "loadAverage": [
+        0,
+        0,
+        0
+      ],
+      "uptime": 1347.984,
+      "platform": "win32",
+      "arch": "x64"
+    },
+    "performance": {
+      "timestamp": 1759512335227,
+      "processMemory": {
+        "rss": 39858176,
+        "heapTotal": 6602752,
+        "heapUsed": 4760040,
+        "external": 1602511,
+        "arrayBuffers": 10539
+      },
+      "processUptime": 26.024101,
+      "nodeVersion": "v24.4.1",
+      "pid": 39752
+    },
+    "network": {
+      "timestamp": 1759512335227,
+      "activeConnections": {
+        "estimated": 5,
+        "note": "Estimación basada en uso de CPU (implementar netstat para datos reales)"
+      },
+      "networkInterfaces": {
+        "Wi-Fi": [
+          {
+            "address": "2803:9800:90b8:841e:e439:9fab:10f5:74d5",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "2803:9800:90b8:841e:e439:9fab:10f5:74d5/64",
+            "scopeid": 0
+          },
+          {
+            "address": "2803:9800:90b8:841e:49f3:d239:fd96:4cbc",
+            "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "2803:9800:90b8:841e:49f3:d239:fd96:4cbc/128",
+            "scopeid": 0
+          },
+          {
+            "address": "fe80::4334:2445:5ebb:b4ba",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "fe80::4334:2445:5ebb:b4ba/64",
+            "scopeid": 13
+          },
+          {
+            "address": "192.168.1.13",
+            "netmask": "255.255.255.0",
+            "family": "IPv4",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "192.168.1.13/24"
+          }
+        ],
+        "Loopback Pseudo-Interface 1": [
+          {
+            "address": "::1",
+            "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+            "family": "IPv6",
+            "mac": "00:00:00:00:00:00",
+            "internal": true,
+            "cidr": "::1/128",
+            "scopeid": 0
+          },
+          {
+            "address": "127.0.0.1",
+            "netmask": "255.0.0.0",
+            "family": "IPv4",
+            "mac": "00:00:00:00:00:00",
+            "internal": true,
+            "cidr": "127.0.0.1/8"
+          }
+        ],
+        "vEthernet (WSL (Hyper-V firewall))": [
+          {
+            "address": "fe80::5474:1b04:6643:77e5",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "00:15:5d:fd:e3:a0",
+            "internal": false,
+            "cidr": "fe80::5474:1b04:6643:77e5/64",
+            "scopeid": 34
+          },
+          {
+            "address": "172.27.224.1",
+            "netmask": "255.255.240.0",
+            "family": "IPv4",
+            "mac": "00:15:5d:fd:e3:a0",
+            "internal": false,
+            "cidr": "172.27.224.1/20"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "timestamp": "2025-10-03T17:25:37.232Z",
+    "system": {
+      "timestamp": 1759512337227,
+      "cpu": {
+        "usage": 9,
+        "cores": 24,
+        "model": "AMD Ryzen 9 7845HX with Radeon Graphics        ",
+        "speed": 2994
+      },
+      "memory": {
+        "total": 33514647552,
+        "free": 17969741824,
+        "used": 15544905728,
+        "usagePercent": 46.38242339825039,
+        "available": 17969741824
+      },
+      "loadAverage": [
+        0,
+        0,
+        0
+      ],
+      "uptime": 1349.984,
+      "platform": "win32",
+      "arch": "x64"
+    },
+    "performance": {
+      "timestamp": 1759512337227,
+      "processMemory": {
+        "rss": 39862272,
+        "heapTotal": 6602752,
+        "heapUsed": 4959232,
+        "external": 1602511,
+        "arrayBuffers": 10539
+      },
+      "processUptime": 28.0245196,
+      "nodeVersion": "v24.4.1",
+      "pid": 39752
+    },
+    "network": {
+      "timestamp": 1759512337227,
+      "activeConnections": {
+        "estimated": 11,
+        "note": "Estimación basada en uso de CPU (implementar netstat para datos reales)"
+      },
+      "networkInterfaces": {
+        "Wi-Fi": [
+          {
+            "address": "2803:9800:90b8:841e:e439:9fab:10f5:74d5",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "2803:9800:90b8:841e:e439:9fab:10f5:74d5/64",
+            "scopeid": 0
+          },
+          {
+            "address": "2803:9800:90b8:841e:49f3:d239:fd96:4cbc",
+            "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "2803:9800:90b8:841e:49f3:d239:fd96:4cbc/128",
+            "scopeid": 0
+          },
+          {
+            "address": "fe80::4334:2445:5ebb:b4ba",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "fe80::4334:2445:5ebb:b4ba/64",
+            "scopeid": 13
+          },
+          {
+            "address": "192.168.1.13",
+            "netmask": "255.255.255.0",
+            "family": "IPv4",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "192.168.1.13/24"
+          }
+        ],
+        "Loopback Pseudo-Interface 1": [
+          {
+            "address": "::1",
+            "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+            "family": "IPv6",
+            "mac": "00:00:00:00:00:00",
+            "internal": true,
+            "cidr": "::1/128",
+            "scopeid": 0
+          },
+          {
+            "address": "127.0.0.1",
+            "netmask": "255.0.0.0",
+            "family": "IPv4",
+            "mac": "00:00:00:00:00:00",
+            "internal": true,
+            "cidr": "127.0.0.1/8"
+          }
+        ],
+        "vEthernet (WSL (Hyper-V firewall))": [
+          {
+            "address": "fe80::5474:1b04:6643:77e5",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "00:15:5d:fd:e3:a0",
+            "internal": false,
+            "cidr": "fe80::5474:1b04:6643:77e5/64",
+            "scopeid": 34
+          },
+          {
+            "address": "172.27.224.1",
+            "netmask": "255.255.240.0",
+            "family": "IPv4",
+            "mac": "00:15:5d:fd:e3:a0",
+            "internal": false,
+            "cidr": "172.27.224.1/20"
+          }
+        ]
+      }
+    }
+  }
+]

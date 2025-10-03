@@ -1,0 +1,149 @@
+{
+  "summary": {
+    "duration": 30006,
+    "totalMinutes": "0.50",
+    "samples": 14,
+    "cpu": {
+      "avg": 9,
+      "max": 9,
+      "min": 9
+    },
+    "memory": {
+      "avg": 46.33701520648898,
+      "max": 46.612200232037814,
+      "min": 46.06781698075367
+    },
+    "loadAverage": {
+      "avg": 0,
+      "max": 0
+    },
+    "alerts": 0,
+    "errors": 0
+  },
+  "alerts": [],
+  "errors": [],
+  "baseline": {
+    "system": {
+      "timestamp": 1759512309220,
+      "cpu": {
+        "usage": 9,
+        "cores": 24,
+        "model": "AMD Ryzen 9 7845HX with Radeon Graphics        ",
+        "speed": 2994
+      },
+      "memory": {
+        "total": 33514647552,
+        "free": 18078109696,
+        "used": 15436537856,
+        "usagePercent": 46.05907859257442,
+        "available": 18078040064
+      },
+      "loadAverage": [
+        0,
+        0,
+        0
+      ],
+      "uptime": 1321.968,
+      "platform": "win32",
+      "arch": "x64"
+    },
+    "performance": {
+      "timestamp": 1759512309220,
+      "processMemory": {
+        "rss": 34803712,
+        "heapTotal": 6078464,
+        "heapUsed": 4662792,
+        "external": 1602471,
+        "arrayBuffers": 10539
+      },
+      "processUptime": 0.0169993,
+      "nodeVersion": "v24.4.1",
+      "pid": 39752
+    },
+    "network": {
+      "timestamp": 1759512309220,
+      "activeConnections": {
+        "estimated": 7,
+        "note": "Estimación basada en uso de CPU (implementar netstat para datos reales)"
+      },
+      "networkInterfaces": {
+        "Wi-Fi": [
+          {
+            "address": "2803:9800:90b8:841e:e439:9fab:10f5:74d5",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "2803:9800:90b8:841e:e439:9fab:10f5:74d5/64",
+            "scopeid": 0
+          },
+          {
+            "address": "2803:9800:90b8:841e:49f3:d239:fd96:4cbc",
+            "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "2803:9800:90b8:841e:49f3:d239:fd96:4cbc/128",
+            "scopeid": 0
+          },
+          {
+            "address": "fe80::4334:2445:5ebb:b4ba",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "fe80::4334:2445:5ebb:b4ba/64",
+            "scopeid": 13
+          },
+          {
+            "address": "192.168.1.13",
+            "netmask": "255.255.255.0",
+            "family": "IPv4",
+            "mac": "e8:65:38:b8:a9:1f",
+            "internal": false,
+            "cidr": "192.168.1.13/24"
+          }
+        ],
+        "Loopback Pseudo-Interface 1": [
+          {
+            "address": "::1",
+            "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+            "family": "IPv6",
+            "mac": "00:00:00:00:00:00",
+            "internal": true,
+            "cidr": "::1/128",
+            "scopeid": 0
+          },
+          {
+            "address": "127.0.0.1",
+            "netmask": "255.0.0.0",
+            "family": "IPv4",
+            "mac": "00:00:00:00:00:00",
+            "internal": true,
+            "cidr": "127.0.0.1/8"
+          }
+        ],
+        "vEthernet (WSL (Hyper-V firewall))": [
+          {
+            "address": "fe80::5474:1b04:6643:77e5",
+            "netmask": "ffff:ffff:ffff:ffff::",
+            "family": "IPv6",
+            "mac": "00:15:5d:fd:e3:a0",
+            "internal": false,
+            "cidr": "fe80::5474:1b04:6643:77e5/64",
+            "scopeid": 34
+          },
+          {
+            "address": "172.27.224.1",
+            "netmask": "255.255.240.0",
+            "family": "IPv4",
+            "mac": "00:15:5d:fd:e3:a0",
+            "internal": false,
+            "cidr": "172.27.224.1/20"
+          }
+        ]
+      }
+    }
+  },
+  "timestamp": "2025-10-03T17:25:39.227Z"
+}
