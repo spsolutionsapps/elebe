@@ -395,6 +395,14 @@ export class ProductsController {
       });
 
       console.log('Producto agregado a destacados:', updatedProduct.name);
+      
+      // Invalidate cache
+      console.log('🗑️ Backend: Invalidando cache después de agregar a destacados...');
+      this.cacheService.delete('products:all');
+      this.cacheService.delete('products:featured');
+      this.cacheService.delete('products:popular');
+      console.log('✅ Backend: Cache invalidado');
+      
       return {
         message: 'Producto agregado a destacados correctamente',
         product: updatedProduct,
@@ -430,6 +438,14 @@ export class ProductsController {
       await this.reorderFeaturedProducts();
 
       console.log('Producto removido de destacados:', updatedProduct.name);
+      
+      // Invalidate cache
+      console.log('🗑️ Backend: Invalidando cache después de remover de destacados...');
+      this.cacheService.delete('products:all');
+      this.cacheService.delete('products:featured');
+      this.cacheService.delete('products:popular');
+      console.log('✅ Backend: Cache invalidado');
+      
       return {
         message: 'Producto removido de destacados correctamente',
         product: updatedProduct,
@@ -483,6 +499,14 @@ export class ProductsController {
       }
 
       console.log('Orden de productos destacados actualizado en lote');
+      
+      // Invalidate cache
+      console.log('🗑️ Backend: Invalidando cache después de actualizar orden...');
+      this.cacheService.delete('products:all');
+      this.cacheService.delete('products:featured');
+      this.cacheService.delete('products:popular');
+      console.log('✅ Backend: Cache invalidado');
+      
       return {
         message: 'Orden de productos destacados actualizado correctamente',
       };

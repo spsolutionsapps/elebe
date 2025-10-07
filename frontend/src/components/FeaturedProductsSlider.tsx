@@ -29,6 +29,9 @@ interface FeaturedProductsSliderProps {
 }
 
 export function FeaturedProductsSlider({ products }: FeaturedProductsSliderProps) {
+  console.log('🎠 FeaturedProductsSlider: Received products:', products?.length || 0)
+  console.log('🎠 FeaturedProductsSlider: Products data:', products)
+  
   const [isMobile, setIsMobile] = useState(false)
   const [isClient, setIsClient] = useState(false)
   const [emblaRef, emblaApi] = useEmblaCarousel({ 

@@ -62,10 +62,18 @@ export default function HomePage() {
         }
 
         // Fetch featured products
+        console.log('🌐 Home: Fetching featured products from:', `${apiUrl}/products/featured`)
         const productsResponse = await fetch(`${apiUrl}/products/featured`)
+        console.log('📡 Home: Featured products response status:', productsResponse.status)
+        
         if (productsResponse.ok) {
           const productsData = await productsResponse.json()
-          setFeaturedProducts(productsData.filter((product: Product) => product.isActive))
+          console.log('📦 Home: Featured products data:', productsData)
+          const activeProducts = productsData.filter((product: Product) => product.isActive)
+          console.log('✅ Home: Active featured products:', activeProducts.length)
+          setFeaturedProducts(activeProducts)
+        } else {
+          console.error('❌ Home: Error fetching featured products:', productsResponse.status)
         }
       } catch (error) {
         // Error fetching data silently handled
