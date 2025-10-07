@@ -238,6 +238,12 @@ export default function InquiriesPage() {
         
         showSuccess(successMessage)
         fetchInquiries() // Refrescar la lista
+        
+        // Si hay una consulta seleccionada, actualizarla también
+        if (selectedInquiry && selectedInquiry.id === inquiryForFollowUp.id) {
+          fetchInquiryDetails(inquiryForFollowUp.id)
+        }
+        
         handleFollowUpCancel()
       } else {
         const errorText = await response.text()

@@ -76,7 +76,11 @@ export class InquiriesController {
               product: true,
             },
           },
-          followUpHistory: true,
+          followUpHistory: {
+          orderBy: {
+            createdAt: 'desc'
+          }
+        },
         },
         orderBy: {
           createdAt: 'desc',
@@ -105,7 +109,11 @@ export class InquiriesController {
             product: true,
           },
         },
-        followUpHistory: true,
+        followUpHistory: {
+          orderBy: {
+            createdAt: 'desc'
+          }
+        },
       },
     });
     
@@ -218,7 +226,11 @@ export class InquiriesController {
             product: true,
           },
         },
-        followUpHistory: true,
+        followUpHistory: {
+          orderBy: {
+            createdAt: 'desc'
+          }
+        },
       },
     });
 
@@ -322,6 +334,10 @@ export class InquiriesController {
         data: updateData,
       });
 
+      // Invalidate cache to ensure fresh data
+      this.cacheService.delete('inquiries:all');
+      this.cacheService.delete(`inquiries:${id}`);
+
       return {
         message: 'Seguimiento agregado correctamente',
         followUp,
@@ -344,7 +360,11 @@ export class InquiriesController {
             product: true,
           },
         },
-        followUpHistory: true,
+        followUpHistory: {
+          orderBy: {
+            createdAt: 'desc'
+          }
+        },
       },
       orderBy: {
         createdAt: 'desc',
@@ -363,7 +383,11 @@ export class InquiriesController {
             product: true,
           },
         },
-        followUpHistory: true,
+        followUpHistory: {
+          orderBy: {
+            createdAt: 'desc'
+          }
+        },
       },
       orderBy: {
         createdAt: 'desc',
@@ -390,7 +414,11 @@ export class InquiriesController {
             product: true,
           },
         },
-        followUpHistory: true,
+        followUpHistory: {
+          orderBy: {
+            createdAt: 'desc'
+          }
+        },
       },
       orderBy: {
         nextFollowUpDate: 'asc',
