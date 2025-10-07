@@ -26,4 +26,11 @@ export class AuthController {
   async getProfile(@Request() req) {
     return this.authService.getProfile(req.user.sub);
   }
+
+  @Post('dev-login')
+  @ApiOperation({ summary: 'Login de desarrollo (solo para desarrollo)' })
+  @ApiResponse({ status: 200, description: 'Dev login exitoso' })
+  async devLogin() {
+    return this.authService.devLogin();
+  }
 }

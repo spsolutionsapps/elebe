@@ -51,10 +51,9 @@ export class SlidesController {
 
   @Post()
   async create(@Body() data: any) {
-    return await this.prisma.slide.create({
+    const slide = await this.prisma.slide.create({
       data: {
         title: data.title,
-        subtitle: data.subtitle,
         buttonText: data.buttonText,
         buttonLink: data.buttonLink,
         image: data.image,
@@ -62,6 +61,11 @@ export class SlidesController {
         isActive: data.isActive !== undefined ? data.isActive : true,
       },
     });
+
+    // Clear cache after creating slide
+    this.cacheService.delete('slides:all:active');
+    
+    return slide;
   }
 
   @Put(':id')
@@ -74,11 +78,10 @@ export class SlidesController {
       throw new NotFoundException('Slide no encontrado');
     }
 
-    return await this.prisma.slide.update({
+    const updatedSlide = await this.prisma.slide.update({
       where: { id: id },
       data: {
         title: data.title,
-        subtitle: data.subtitle,
         buttonText: data.buttonText,
         buttonLink: data.buttonLink,
         image: data.image,
@@ -86,6 +89,11 @@ export class SlidesController {
         isActive: data.isActive,
       },
     });
+
+    // Clear cache after updating slide
+    this.cacheService.delete('slides:all:active');
+
+    return updatedSlide;
   }
 
   @Delete(':id')
@@ -98,8 +106,13 @@ export class SlidesController {
       throw new NotFoundException('Slide no encontrado');
     }
 
-    return await this.prisma.slide.delete({
+    const deletedSlide = await this.prisma.slide.delete({
       where: { id: id },
     });
+
+    // Clear cache after deleting slide
+    this.cacheService.delete('slides:all:active');
+
+    return deletedSlide;
   }
 }

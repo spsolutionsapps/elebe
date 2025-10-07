@@ -174,21 +174,23 @@ export function useProducts(): UseProductsReturn {
   // Funciones de operaciones
   const fetchProducts = async () => {
     try {
-      console.log('🔄 Fetching products...')
+      setLoading(true)
       
-      const response = await fetch(`http://localhost:3001/api/products?t=${Date.now()}`)
-      const data = await response.json()
-      
-      console.log('📦 Products fetched:', data.length, 'products')
-      console.log('📊 All products status:')
-      data.forEach((product: Product, index: number) => {
-        console.log(`${index + 1}. ${product.name}: ${product.isActive ? 'ACTIVO' : 'INACTIVO'} | Vistas: ${product.views || 0}`)
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api'
+      const response = await fetch(`${apiUrl}/products?t=${Date.now()}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
       })
       
-      const totalViews = data.reduce((sum: number, product: Product) => sum + (product.views || 0), 0)
-      console.log('👁️ Total de vistas:', totalViews)
-      
-      setProducts(Array.isArray(data) ? data : [])
+      if (response.ok) {
+        const data = await response.json()
+        setProducts(Array.isArray(data) ? data : [])
+      } else {
+        console.error('Error fetching products:', response.status)
+        setProducts([])
+      }
     } catch (error) {
       console.error('Error fetching products:', error)
       setProducts([])

@@ -13,22 +13,31 @@ export default function DevLoginBypass() {
     setIsLoading(true)
     
     try {
-      // Crear un token temporal para desarrollo
-      const devToken = 'dev-token-' + Date.now()
-      
-      // Guardar en localStorage
-      localStorage.setItem('access_token', devToken)
-      localStorage.setItem('user', JSON.stringify({
-        id: 'dev-user',
-        email: 'admin@fashionstyle.com',
-        name: 'Admin Dev',
-        role: 'admin'
-      }))
+      // Llamar al endpoint de dev-login del backend
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api'
+      const response = await fetch(`${apiUrl}/health/dev-login`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
 
-      // Redirigir al admin
-      router.push('/admin')
+      if (response.ok) {
+        const data = await response.json()
+        
+        // Guardar token y usuario en localStorage
+        localStorage.setItem('access_token', data.access_token)
+        localStorage.setItem('user', JSON.stringify(data.user))
+
+        // Forzar recarga de la página para asegurar que el layout se actualice
+        window.location.href = '/admin'
+      } else {
+        console.error('Error en dev login:', response.status)
+        alert('Error al hacer login de desarrollo')
+      }
     } catch (error) {
       console.error('Error en dev login:', error)
+      alert('Error de conexión')
     } finally {
       setIsLoading(false)
     }

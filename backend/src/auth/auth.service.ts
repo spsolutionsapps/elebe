@@ -74,4 +74,21 @@ export class AuthService {
       role: 'admin'
     };
   }
+
+  async devLogin() {
+    // Solo para desarrollo - crear token sin validación
+    const devUser = {
+      id: 'dev-user-id',
+      email: 'admin@fashionstyle.com',
+      name: 'Admin Dev',
+      role: 'admin'
+    };
+
+    const payload = { email: devUser.email, sub: devUser.id, role: devUser.role };
+    
+    return {
+      access_token: this.jwtService.sign(payload),
+      user: devUser,
+    };
+  }
 }

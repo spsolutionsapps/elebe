@@ -29,7 +29,7 @@ export function Footer() {
             </div>
             
             {/* Texto de copyright */}
-            <p className="text-gray-600 mb-6 leading-relaxed font-kanit">
+            <p className="text-gray-600 mb-6 leading-relaxed font-body">
               LB Premium Todos los Derechos Reservados. Diseñado con pasión, 
               creemos algo increíble juntos.
             </p>
@@ -65,27 +65,27 @@ export function Footer() {
 
           {/* Sección 2: Enlaces rápidos */}
           <div>
-            <h3 className="text-base font-bold uppercase tracking-wider mb-6 text-gray-900 font-kanit">
+            <h3 className="text-base font-bold uppercase tracking-wider mb-6 text-gray-900 font-body">
               Enlaces Rápidos
             </h3>
             <ul className="space-y-3">
               <li>
-                <a href="/nosotros" className="text-gray-600 hover:text-gray-900 transition-colors duration-300 footer-link font-kanit">
+                <a href="/nosotros" className="text-gray-600 hover:text-gray-900 transition-colors duration-300 footer-link font-body">
                   Acerca de Nosotros
                 </a>
               </li>
               <li>
-                <a href="/servicios" className="text-gray-600 hover:text-gray-900 transition-colors duration-300 footer-link font-kanit">
+                <a href="/servicios" className="text-gray-600 hover:text-gray-900 transition-colors duration-300 footer-link font-body">
                   Nuestros Servicios
                 </a>
               </li>
               <li>
-                <a href="/productos" className="text-gray-600 hover:text-gray-900 transition-colors duration-300 footer-link font-kanit">
+                <a href="/productos" className="text-gray-600 hover:text-gray-900 transition-colors duration-300 footer-link font-body">
                   Nuestros Productos
                 </a>
               </li>
               <li>
-                <a href="/contacto" className="text-gray-600 hover:text-gray-900 transition-colors duration-300 footer-link font-kanit">
+                <a href="/contacto" className="text-gray-600 hover:text-gray-900 transition-colors duration-300 footer-link font-body">
                   Contáctanos
                 </a>
               </li>
@@ -94,13 +94,13 @@ export function Footer() {
 
           {/* Sección 3: Información de oficina */}
           <div>
-            <h3 className="text-base font-bold uppercase tracking-wider mb-6 text-gray-900 font-kanit">
+            <h3 className="text-base font-bold uppercase tracking-wider mb-6 text-gray-900 font-body">
               Oficina
             </h3>
             <div className="space-y-4">
               <div className="flex items-start">
                 <MapPin className="h-5 w-5 text-gray-600 mt-0.5 mr-3 flex-shrink-0" />
-                <p className="text-gray-600 font-kanit">
+                <p className="text-gray-600 font-body">
                   Av. Principal 1234<br />
                   Ciudad, Buenos Aires 1000
                 </p>
@@ -109,7 +109,7 @@ export function Footer() {
                 <Phone className="h-5 w-5 text-gray-600 mr-3" />
                 <a 
                   href="tel:+54123456789" 
-                  className="text-gray-600 hover:text-gray-900 transition-colors duration-300 footer-link underline font-kanit"
+                  className="text-gray-600 hover:text-gray-900 transition-colors duration-300 footer-link underline font-body"
                 >
                   +54 11 1234-5678
                 </a>
@@ -118,7 +118,7 @@ export function Footer() {
                 <Mail className="h-5 w-5 text-gray-600 mr-3" />
                 <a 
                   href="mailto:info@lbpremium.com" 
-                  className="text-gray-600 hover:text-gray-900 transition-colors duration-300 footer-link font-kanit"
+                  className="text-gray-600 hover:text-gray-900 transition-colors duration-300 footer-link font-body"
                 >
                   info@lbpremium.com
                 </a>
@@ -128,7 +128,7 @@ export function Footer() {
 
           {/* Sección 4: Suscripción al newsletter */}
           <div>
-            <h3 className="text-base font-bold uppercase tracking-wider mb-6 text-gray-900 font-kanit">
+            <h3 className="text-base font-bold uppercase tracking-wider mb-6 text-gray-900 font-body">
               Suscríbete a Nuestro<br />
               Newsletter
             </h3>
@@ -139,13 +139,13 @@ export function Footer() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Ingresa tu email"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-500 font-kanit"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-500 font-body"
                   required
                 />
               </div>
               <button
                 type="submit"
-                className="w-full bg-gray-900 hover:bg-blue-600 p-3 rounded-lg transition-colors duration-300 flex items-center justify-center font-kanit"
+                className="w-full bg-gray-900 hover:bg-blue-600 p-3 rounded-lg transition-colors duration-300 flex items-center justify-center font-body"
               >
                 <Send className="h-5 w-5 text-white" />
               </button>

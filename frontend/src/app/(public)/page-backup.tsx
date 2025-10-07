@@ -162,7 +162,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Título principal centrado */}
          
-            <p className="text-[54px] text-center text18Mobile font-kanit text-white leading-tight mx-auto mb-12">
+            <p className="text-[54px] text-center text18Mobile font-body text-white leading-tight mx-auto mb-12">
               Nos Especializamos en el Diseño y <br /> Producción de Artículos Personalizados
             </p>
       
@@ -350,7 +350,7 @@ export default function HomePage() {
           
           {/* Top Section - Get Started */}
           <div className="mb-8 flex items-center justify-center">
-            <p className="text-white text-lg font-kanit mr-3">
+            <p className="text-white text-lg font-body mr-3">
               ¿Empezamos un Proyecto?
             </p>
             <div className="w-6 h-6 flex items-center justify-center">
@@ -361,7 +361,7 @@ export default function HomePage() {
           </div>
 
           {/* Main Heading */}
-          <h2 className="text-6xl md:text-7xl lg:text-8xl font-bold text-white uppercase tracking-tight mb-12 font-kanit">
+          <h2 className="text-6xl md:text-7xl lg:text-8xl font-bold text-white uppercase tracking-tight mb-12 font-body">
             HABLEMOS
           </h2>
 
@@ -370,7 +370,7 @@ export default function HomePage() {
             <div className="bg-black border border-white/20 rounded-full px-8 py-4 hover:border-white/40 transition-colors duration-300">
               <a 
                 href="mailto:info@lbpremium.com" 
-                className="text-white text-xl font-kanit hover:text-gray-300 transition-colors duration-300"
+                className="text-white text-xl font-body hover:text-gray-300 transition-colors duration-300"
               >
                 info@lbpremium.com
               </a>

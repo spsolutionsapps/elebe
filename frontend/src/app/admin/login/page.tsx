@@ -23,25 +23,36 @@ export default function LoginPage() {
     setError('')
 
     try {
+      console.log('🔐 Intentando login con:', { email, password })
+      
       const response = await apiClient.post('/auth/login', {
         email,
         password,
       })
 
+      console.log('✅ Login exitoso:', response.data)
+
       // Guardar token en localStorage
       localStorage.setItem('access_token', response.data.access_token)
       localStorage.setItem('user', JSON.stringify(response.data.user))
 
+      console.log('💾 Datos guardados en localStorage')
+
       // Mostrar mensaje de éxito y redirigir
       showSuccess('¡Inicio de sesión exitoso!')
-      router.push('/admin')
-               } catch (err: any) {
-             const errorMessage = err.response?.data?.message || 'Error al iniciar sesión'
-             setError(errorMessage)
-             showError(errorMessage)
-           } finally {
-             setIsLoading(false)
-           }
+      
+      // Pequeño delay para asegurar que el estado se actualice
+      setTimeout(() => {
+        router.push('/admin')
+      }, 100)
+    } catch (err: any) {
+      console.error('❌ Error en login:', err)
+      const errorMessage = err.response?.data?.message || 'Error al iniciar sesión'
+      setError(errorMessage)
+      showError(errorMessage)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (

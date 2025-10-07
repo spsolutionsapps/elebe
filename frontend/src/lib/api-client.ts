@@ -29,6 +29,7 @@ apiClient.interceptors.response.use(
       // Token expirado o inválido
       if (typeof window !== 'undefined') {
         localStorage.removeItem('access_token')
+        localStorage.removeItem('user')
         window.location.href = '/admin/login'
       }
     }

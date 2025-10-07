@@ -15,16 +15,15 @@ interface Service {
 
 async function getServices(): Promise<Service[]> {
   try {
-    // Usar localhost para el fetch desde el cliente
-    const apiUrl = 'http://localhost:3001/api'
+    // Usar variable de entorno para el build
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api'
     
-    console.log('🔍 Fetching services from:', apiUrl)
     const response = await fetch(`${apiUrl}/services`, { 
-      cache: 'no-store' // Para evitar caché durante desarrollo
+      next: { revalidate: 3600 } // Revalidar cada hora
     })
+    
     if (response.ok) {
       const data = await response.json()
-      console.log('📊 Services data:', data)
       return data
     } else {
       console.error('❌ Error response:', response.status, response.statusText)

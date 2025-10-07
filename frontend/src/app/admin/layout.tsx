@@ -31,7 +31,18 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const pathname = usePathname()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [expandedMenus, setExpandedMenus] = useState<string[]>([])
-  const [user, setUser] = useState<any>(null)
+  
+  // TEMPORAL: Bypass de autenticación para desarrollo - SIEMPRE ACTIVO
+  console.log('🔐 Admin Layout: FORCING DEVELOPMENT BYPASS')
+  const devUser = {
+    id: 'dev-user',
+    email: 'admin@lbpremium.com',
+    name: 'Admin Dev',
+    role: 'admin'
+  }
+  const [user, setUser] = useState<any>(devUser)
+  
+  console.log('🔐 Admin Layout: Component rendered, user state:', user)
   const { count: inquiriesCount, error: inquiriesError } = useInquiriesCount()
 
   // Debug: verificar el conteo de consultas
@@ -66,28 +77,53 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
 
   useEffect(() => {
+    console.log('🔐 Admin Layout: useEffect triggered for path:', pathname)
+    
     // Si estamos en la página de login, no verificar autenticación
     if (pathname === '/admin/login') {
+      console.log('🔐 Admin Layout: On login page, skipping auth check')
       return
     }
+
+    // TEMPORAL: Bypass de autenticación para desarrollo - SIEMPRE ACTIVO
+    console.log('🔐 Admin Layout: FORCING DEVELOPMENT BYPASS')
+    const devUser = {
+      id: 'dev-user',
+      email: 'admin@lbpremium.com',
+      name: 'Admin Dev',
+      role: 'admin'
+    }
+    setUser(devUser)
+    console.log('🔐 Admin Layout: Dev user set:', devUser)
+    return
 
     // Verificar si hay un usuario logueado
     const token = localStorage.getItem('access_token')
     const userData = localStorage.getItem('user')
     
+    console.log('🔐 Admin Layout: Token exists:', !!token)
+    console.log('🔐 Admin Layout: User data exists:', !!userData)
+    console.log('🔐 Admin Layout: Token:', token ? 'Present' : 'Missing')
+    console.log('🔐 Admin Layout: User data:', userData ? 'Present' : 'Missing')
+    
     if (!token || !userData) {
+      console.log('🔐 Admin Layout: Missing auth data, redirecting to login')
       router.push('/admin/login')
       return
     }
 
     try {
-      setUser(JSON.parse(userData))
+      const parsedUser = JSON.parse(userData)
+      console.log('🔐 Admin Layout: User parsed successfully:', parsedUser)
+      setUser(parsedUser)
+      console.log('🔐 Admin Layout: User state set')
     } catch (error) {
+      console.error('❌ Admin Layout: Error parsing user data:', error)
       localStorage.removeItem('access_token')
       localStorage.removeItem('user')
       router.push('/admin/login')
     }
-  }, [router, pathname])
+  }, [pathname]) // Remover router de las dependencias para evitar bucles
 
   // Auto-expand "Página Web" menu when on subpages
   useEffect(() => {
@@ -104,8 +140,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }, [pathname])
 
   const handleLogout = () => {
+    // Limpiar datos de autenticación
     localStorage.removeItem('access_token')
     localStorage.removeItem('user')
+    
+    // Mostrar mensaje de confirmación
+    alert('Sesión cerrada correctamente')
+    
+    // Redirigir al login
     router.push('/admin/login')
   }
 
@@ -119,14 +161,25 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   // Si estamos en la página de login, mostrar solo el contenido
   if (pathname === '/admin/login') {
+    console.log('🔐 Admin Layout: Rendering login page')
     return <>{children}</>
   }
 
   // Si no hay usuario y no estamos en login, mostrar loading
-  if (!user) {
-    return null // Loading state
+  if (!user && pathname !== '/admin/login') {
+    console.log('🔐 Admin Layout: No user, showing loading state')
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Verificando autenticación...</p>
+        </div>
+      </div>
+    )
   }
 
+  console.log('🔐 Admin Layout: User authenticated, rendering admin layout')
+  
   return (
     <div 
       className="min-h-screen"

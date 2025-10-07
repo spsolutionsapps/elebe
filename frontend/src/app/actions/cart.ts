@@ -227,6 +227,11 @@ export async function clearCart(sessionId?: string) {
 
 export async function getCartItems(sessionId?: string): Promise<CartItem[]> {
   try {
+    // Durante el build, retornar carrito vacío para evitar errores de conexión
+    if (process.env.NODE_ENV === 'production' && !process.env.BACKEND_URL) {
+      return []
+    }
+    
     // Generar sessionId si no se proporciona
     const userSessionId = sessionId || `anonymous_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
     

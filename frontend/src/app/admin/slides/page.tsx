@@ -33,11 +33,17 @@ export default function SlidesPage() {
 
   const fetchSlides = async () => {
     try {
+      console.log('🔄 Frontend: Fetching slides...')
       const response = await fetch(`http://localhost:3001/api/slides`)
+      console.log('📡 Frontend: Response status:', response.status)
+      
       const data = await response.json()
+      console.log('📊 Frontend: Slides data:', data)
+      
       setSlides(Array.isArray(data) ? data : [])
+      console.log('✅ Frontend: Slides updated in state')
     } catch (error) {
-      console.error('Error fetching slides:', error)
+      console.error('❌ Frontend: Error fetching slides:', error)
       setSlides([])
     } finally {
       setLoading(false)
@@ -46,6 +52,9 @@ export default function SlidesPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    console.log('🚀 Frontend: Form submitted')
+    console.log('📝 Frontend: Form data:', formData)
+    console.log('✏️ Frontend: Editing slide:', editingSlide ? editingSlide.id : 'New slide')
     
     try {
       const url = editingSlide 
@@ -53,6 +62,9 @@ export default function SlidesPage() {
         : `http://localhost:3001/api/slides`
       
       const method = editingSlide ? 'PUT' : 'POST'
+      
+      console.log('🌐 Frontend: Making request to:', url)
+      console.log('🔧 Frontend: Method:', method)
       
       const response = await fetch(url, {
         method,
@@ -62,18 +74,30 @@ export default function SlidesPage() {
         body: JSON.stringify(formData),
       })
 
+      console.log('📡 Frontend: Response status:', response.status)
+      console.log('📡 Frontend: Response ok:', response.ok)
+
       if (response.ok) {
+        console.log('✅ Frontend: Slide saved successfully')
         setShowForm(false)
         setEditingSlide(null)
         setFormData({ title: '', buttonText: '', buttonLink: '', image: '', order: 1 })
+        console.log('🔄 Frontend: Refreshing slides list...')
         fetchSlides()
+      } else {
+        console.error('❌ Frontend: Error response:', response.status, response.statusText)
+        const errorText = await response.text()
+        console.error('❌ Frontend: Error details:', errorText)
       }
     } catch (error) {
-      console.error('Error saving slide:', error)
+      console.error('❌ Frontend: Error saving slide:', error)
     }
   }
 
   const handleEdit = (slide: Slide) => {
+    console.log('✏️ Frontend: Edit button clicked for slide:', slide.id)
+    console.log('📝 Frontend: Slide data:', slide)
+    
     setEditingSlide(slide)
     setFormData({
       title: slide.title || '',
@@ -83,34 +107,56 @@ export default function SlidesPage() {
       order: slide.order || 1
     })
     setShowForm(true)
+    console.log('✅ Frontend: Edit form opened')
   }
 
   const handleDelete = async (id: string) => {
-    if (!confirm('¿Estás seguro de que quieres eliminar este slide?')) return
+    console.log('🗑️ Frontend: Delete button clicked for slide:', id)
+    
+    if (!confirm('¿Estás seguro de que quieres eliminar este slide?')) {
+      console.log('❌ Frontend: Delete cancelled by user')
+      return
+    }
+
+    console.log('✅ Frontend: Delete confirmed by user')
 
     try {
-      const response = await fetch(`http://localhost:3001/api/slides/${id}`, {
+      const url = `http://localhost:3001/api/slides/${id}`
+      console.log('🌐 Frontend: Making DELETE request to:', url)
+      
+      const response = await fetch(url, {
         method: 'DELETE',
       })
 
+      console.log('📡 Frontend: DELETE response status:', response.status)
+      console.log('📡 Frontend: DELETE response ok:', response.ok)
+
       if (response.ok) {
+        console.log('✅ Frontend: Slide deleted successfully')
+        console.log('🔄 Frontend: Refreshing slides list...')
         fetchSlides()
+      } else {
+        console.error('❌ Frontend: DELETE error response:', response.status, response.statusText)
+        const errorText = await response.text()
+        console.error('❌ Frontend: DELETE error details:', errorText)
       }
     } catch (error) {
-      console.error('Error deleting slide:', error)
+      console.error('❌ Frontend: Error deleting slide:', error)
     }
   }
 
   const resetForm = () => {
     setShowForm(false)
     setEditingSlide(null)
-    setFormData({ title: '', description: '', buttonText: '', buttonLink: '', image: '', order: 1 })
+    setFormData({ title: '', buttonText: '', buttonLink: '', image: '', order: 1 })
   }
 
   const handleNewSlide = () => {
-    setFormData({ title: '', description: '', buttonText: '', buttonLink: '', image: '', order: 1 })
+    console.log('➕ Frontend: New slide button clicked')
+    setFormData({ title: '', buttonText: '', buttonLink: '', image: '', order: 1 })
     setEditingSlide(null)
     setShowForm(true)
+    console.log('✅ Frontend: New slide form opened')
   }
 
   if (loading) {

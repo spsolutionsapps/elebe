@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import Link from 'next/link'
 import { Package } from 'lucide-react'
 import { getImageUrl, getApiUrl } from '@/lib/config'
@@ -30,7 +30,7 @@ interface Product {
   updatedAt: Date
 }
 
-export default function CatalogoPage() {
+function CatalogoContent() {
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
@@ -191,5 +191,22 @@ export default function CatalogoPage() {
         )}
       </div>
     </div>
+  )
+}
+
+export default function CatalogoPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-50 py-8">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto"></div>
+            <p className="mt-4 text-gray-600">Cargando catálogo...</p>
+          </div>
+        </div>
+      </div>
+    }>
+      <CatalogoContent />
+    </Suspense>
   )
 }
