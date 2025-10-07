@@ -62,28 +62,31 @@ export function CatalogMegaMenu({ isOpen, onClose }: CatalogMegaMenuProps) {
     <AnimatePresence>
       {isOpen && (
         <motion.div 
-          className="fixed left-0 right-0 w-full backdrop-blur-md shadow-2xl border-t border-gray-700 z-[99999] top-16 md:top-[95px]"
-          style={{ 
-            backgroundColor: 'rgb(0 0 0 / 0.8)'
-          }}
+          className="fixed left-0 right-0 w-full z-[99999] top-16 md:top-[95px] flex justify-center"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.2 }}
         >
-          <div className="max-w-8xl mx-auto px-8 py-10">
-            <div className="grid grid-cols-2 gap-12">
+          <div 
+            className="w-[620px] shadow-lg p-6 -mt-px"
+            style={{ 
+              backgroundColor: '#0ea5e9',
+              borderRadius: '0 0 8px 8px'
+            }}
+          >
+            <div className="grid grid-cols-2 gap-6">
               {categories.map((column, columnIndex) => (
                 <motion.div 
                   key={columnIndex} 
-                  className="space-y-2"
+                  className="space-y-3"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3, delay: columnIndex * 0.1 }}
                 >
                   {/* Título de la columna */}
-                  <div className="mb-4">
-                    <h3 className="text-xs font-bold text-gray-300 uppercase tracking-wider">
+                  <div className="mb-3">
+                    <h3 className="text-[16px] font-bold text-white uppercase tracking-wider">
                       {columnIndex === 0 ? 'Categorías Principales' : 
                        columnIndex === 1 ? 'Más Categorías' :
                        columnIndex === 2 ? 'Productos Especializados' :
@@ -96,11 +99,11 @@ export function CatalogMegaMenu({ isOpen, onClose }: CatalogMegaMenuProps) {
                     <NextLink
                       key={index}
                       href={category.href}
-                      className="flex items-center space-x-3 py-2 px-3 rounded-md hover:bg-white/10 transition-all duration-200 group"
+                      className="flex items-center space-x-3 py-2 px-3 rounded-md hover:bg-white/20 transition-all duration-200 group"
                       onClick={onClose}
                     >
-                      <category.icon className="h-4 w-4 text-blue transition-colors duration-200 flex-shrink-0" />
-                      <span className="text-sm text-gray-200 group-hover:text-white transition-colors duration-200">
+                      <category.icon className="h-4 w-4 text-white transition-colors duration-200 flex-shrink-0" />
+                      <span className="text-[16px] text-white group-hover:text-blue-100 transition-colors duration-200">
                         {category.name}
                       </span>
                     </NextLink>

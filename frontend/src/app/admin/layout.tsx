@@ -210,7 +210,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                             : [...prev, item.name]
                         )
                       }}
-                      className="group flex items-center w-full px-3 py-3 text-base font-medium text-[#212121] hover:bg-gray-50 hover:text-[#000] transition-colors"
+                      className="group flex items-center w-full px-3 py-3 text-[16px] font-medium text-[#212121] hover:bg-gray-50 hover:text-[#000] transition-colors"
                     >
                       <item.icon className="mr-3 h-5 w-5" />
                       {item.name}
@@ -227,7 +227,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                             <Link
                               key={child.name}
                               href={child.href}
-                                                             className={`group flex items-center px-3 py-3 text-base transition-colors ${
+                                                             className={`group flex items-center px-3 py-3 text-[16px] transition-colors ${
                                  isActiveLink(child.href)
                                    ? 'text-[#165cff] bg-[#165cff]/10 font-medium border-r-4 border-r-[#165cff]'
                                    : 'text-[#212121] hover:bg-gray-50 hover:text-[#000] font-light'
@@ -246,7 +246,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                                     item.href ? (
                                       <Link
                                         href={item.href}
-                                        className={`group flex items-center px-3 py-3 text-base transition-colors relative ${
+                                        className={`group flex items-center px-3 py-3 text-[16px] transition-colors relative ${
                                           isActiveLink(item.href)
                                             ? 'text-[#165cff] bg-[#165cff]/10 font-medium border-r-4 border-r-[#165cff]'
                                             : 'text-[#212121] hover:bg-gray-50 hover:text-[#000] font-light'
@@ -299,7 +299,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                             : [...prev, item.name]
                         )
                       }}
-                      className="group flex items-center w-full px-3 py-3 text-base font-medium text-[#212121] hover:bg-gray-50 hover:text-[#000] transition-colors"
+                      className="group flex items-center w-full px-3 py-3 text-[16px] font-medium text-[#212121] hover:bg-gray-50 hover:text-[#000] transition-colors"
                     >
                       <item.icon className="mr-3 h-5 w-5" />
                       {item.name}
@@ -316,7 +316,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                                 <Link
                                   key={child.name}
                                   href={child.href}
-                                                                   className={`group flex items-center px-3 py-3 text-base transition-colors ${
+                                                                   className={`group flex items-center px-3 py-3 text-[16px] transition-colors ${
                                    isActiveLink(child.href)
                                      ? 'text-[#165cff] bg-[#165cff]/10 font-medium border-r-4 border-r-[#165cff]'
                                      : 'text-[#212121] hover:bg-gray-50 hover:text-[#000] font-light'
@@ -334,7 +334,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                                    item.href ? (
                                      <Link
                                        href={item.href}
-                                                                                                                       className={`group flex items-center px-3 py-3 text-base transition-colors relative ${
+                                                                                                                       className={`group flex items-center px-3 py-3 text-[16px] transition-colors relative ${
                                           isActiveLink(item.href)
                                             ? 'text-[#165cff] bg-[#165cff]/10 font-medium border-r-4 border-r-[#165cff]'
                                             : 'text-[#212121] hover:bg-gray-50 hover:text-[#000] font-light'

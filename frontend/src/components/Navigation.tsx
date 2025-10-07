@@ -16,6 +16,8 @@ export function Navigation() {
   const [catalogHoverTimeout, setCatalogHoverTimeout] = useState<NodeJS.Timeout | null>(null)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true)
+  const [lastScrollY, setLastScrollY] = useState(0)
   const router = useRouter()
   
   // Usar el hook del carrito
@@ -29,6 +31,27 @@ export function Navigation() {
       }
     }
   }, [catalogHoverTimeout])
+
+  // Controlar la visibilidad del header basado en el scroll
+  useEffect(() => {
+    const controlHeader = () => {
+      const currentScrollY = window.scrollY
+      
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // Scrolling down - hide header and close catalog menu
+        setIsHeaderVisible(false)
+        setIsCatalogMenuOpen(false)
+      } else {
+        // Scrolling up - show header
+        setIsHeaderVisible(true)
+      }
+      
+      setLastScrollY(currentScrollY)
+    }
+
+    window.addEventListener('scroll', controlHeader)
+    return () => window.removeEventListener('scroll', controlHeader)
+  }, [lastScrollY])
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
@@ -48,7 +71,12 @@ export function Navigation() {
   ]
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-[9999] py-header" style={{ backgroundColor: '#F3E9CD' }}>
+    <nav 
+      className={`fixed top-0 left-0 right-0 z-[9999] py-header transition-transform duration-300 ease-in-out ${
+        isHeaderVisible ? 'translate-y-0' : '-translate-y-full'
+      }`} 
+      style={{ backgroundColor: '#F3E9CD' }}
+    >
       <div className="max-w-8xl mx-auto px-4 md:px-0">
         <div className="flex items-center justify-between h-16">
           {/* Logo - Izquierda */}

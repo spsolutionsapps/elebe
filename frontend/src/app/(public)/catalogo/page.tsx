@@ -104,6 +104,20 @@ function CatalogoContent() {
     )
   }
 
+  // Definir las categorías con sus iconos
+  const categories = [
+    { name: 'Todas', icon: '📦', href: '/catalogo' },
+    { name: 'Oficina', icon: '✏️', href: '/catalogo?category=oficina' },
+    { name: 'Deporte', icon: '⚽', href: '/catalogo?category=deporte' },
+    { name: 'Viajes', icon: '🧳', href: '/catalogo?category=viajes' },
+    { name: 'Moda', icon: '👔', href: '/catalogo?category=moda' },
+    { name: 'Uniformes', icon: '👕', href: '/catalogo?category=uniformes' },
+    { name: 'Bebidas', icon: '☕', href: '/catalogo?category=bebidas' },
+    { name: 'Imprenta', icon: '📚', href: '/catalogo?category=imprenta' },
+    { name: 'Merch', icon: '🎁', href: '/catalogo?category=merch' },
+    { name: 'Tecnología', icon: '📱', href: '/catalogo?category=tecnologia' }
+  ]
+
   return (
     <div className="min-h-screen bg-transparent py-12 paddingDesktop82">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -128,6 +142,38 @@ function CatalogoContent() {
             </Link>
           )}
         </div>
+
+        {/* Categories Grid - Solo mostrar si no hay búsqueda o categoría seleccionada */}
+        {!categoryParam && !searchParam && (
+          <div className="mb-16">
+            <h2 className="text-2xl font-bold text-white mb-6 text-center">Categorías</h2>
+            <div className="grid grid-cols-5 gap-0 max-w-[1440px] mx-auto">
+              {categories.map((category, index) => (
+                <Link
+                  key={index}
+                  href={category.href}
+                  className="group"
+                  style={{
+                    width: '288px',
+                    height: '431px'
+                  }}
+                >
+                  <div 
+                    className="w-full h-full flex flex-col items-center justify-center hover:opacity-80 transition-opacity duration-200"
+                    style={{
+                      backgroundColor: '#0ea5e9'
+                    }}
+                  >
+                    <div className="text-4xl mb-3">{category.icon}</div>
+                    <span className="text-[16px] text-white font-medium text-center px-2">
+                      {category.name}
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
 
 
         {/* Products Grid */}
