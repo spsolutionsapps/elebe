@@ -200,7 +200,16 @@ export class ProductsController {
   @Post()
   async create(@Body() createProductDto: any) {
     try {
-      console.log('Datos recibidos para crear producto:', createProductDto);
+      console.log('🚀 Backend: POST /api/products - Iniciando creación de producto');
+      console.log('📝 Backend: Datos recibidos:', JSON.stringify(createProductDto, null, 2));
+      
+      // Validar datos básicos
+      if (!createProductDto.name) {
+        console.log('❌ Backend: Error - nombre es requerido');
+        throw new Error('El nombre es requerido');
+      }
+      
+      console.log('✅ Backend: Validación básica pasada');
       
       const product = await this.prisma.product.create({
         data: {
@@ -226,41 +235,49 @@ export class ProductsController {
         },
       });
 
-      console.log('Producto creado:', product);
+      console.log('✅ Backend: Producto creado exitosamente:', product);
       
       // Invalidate cache
+      console.log('🗑️ Backend: Invalidando cache...');
       this.cacheService.delete('products:all');
       this.cacheService.delete('products:featured');
       this.cacheService.delete('products:popular');
+      console.log('✅ Backend: Cache invalidado');
       
-      return {
+      const response = {
         message: 'Producto creado correctamente',
         product,
       };
+      
+      console.log('📤 Backend: Enviando respuesta:', JSON.stringify(response, null, 2));
+      return response;
     } catch (error) {
-      console.error('Error creando producto:', error);
-      throw new Error('Error al crear el producto');
+      console.error('❌ Backend: Error creando producto:', error);
+      console.error('❌ Backend: Stack trace:', error.stack);
+      throw new Error(`Error al crear el producto: ${error.message}`);
     }
   }
 
   @Put(':id')
   async update(@Param('id') id: string, @Body() updateProductDto: any) {
     try {
-      console.log('=== ACTUALIZANDO PRODUCTO ===');
-      console.log('ID recibido:', id);
-      console.log('Datos recibidos para actualizar producto:', updateProductDto);
+      console.log('🚀 Backend: PUT /api/products/' + id + ' - Iniciando actualización de producto');
+      console.log('🆔 Backend: ID recibido:', id);
+      console.log('📝 Backend: Datos recibidos:', JSON.stringify(updateProductDto, null, 2));
       
       // Verificar que el producto existe
       const existingProduct = await this.prisma.product.findUnique({
         where: { id: id },
       });
 
-      console.log('Producto encontrado en BD:', existingProduct);
+      console.log('🔍 Backend: Producto encontrado en BD:', existingProduct);
 
       if (!existingProduct) {
-        console.log('ERROR: Producto no encontrado con ID:', id);
+        console.log('❌ Backend: Error - Producto no encontrado con ID:', id);
         throw new NotFoundException(`Producto no encontrado con ID: ${id}`);
       }
+
+      console.log('✅ Backend: Validación de producto existente pasada');
 
       const product = await this.prisma.product.update({
         where: { id: id },
@@ -288,21 +305,27 @@ export class ProductsController {
         },
       });
 
-      console.log('Producto actualizado:', product);
+      console.log('✅ Backend: Producto actualizado exitosamente:', product);
       
       // Invalidate cache
+      console.log('🗑️ Backend: Invalidando cache...');
       this.cacheService.delete('products:all');
       this.cacheService.delete('products:featured');
       this.cacheService.delete('products:popular');
       this.cacheService.delete(`products:${id}`);
+      console.log('✅ Backend: Cache invalidado');
       
-      return {
+      const response = {
         message: 'Producto actualizado correctamente',
         product,
       };
+      
+      console.log('📤 Backend: Enviando respuesta:', JSON.stringify(response, null, 2));
+      return response;
     } catch (error) {
-      console.error('Error actualizando producto:', error);
-      throw new Error('Error al actualizar el producto');
+      console.error('❌ Backend: Error actualizando producto:', error);
+      console.error('❌ Backend: Stack trace:', error.stack);
+      throw new Error(`Error al actualizar el producto: ${error.message}`);
     }
   }
 

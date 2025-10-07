@@ -138,11 +138,15 @@ export default function EditProductPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    console.log('🚀 Frontend: Form submitted for editing product:', productId)
+    console.log('📝 Frontend: Form data:', formData)
     setLoading(true)
     
     try {
       // Separar la primera imagen como imagen principal y el resto como imágenes adicionales
       const [mainImage, ...additionalImages] = formData.images
+      console.log('🖼️ Frontend: Main image:', mainImage)
+      console.log('🖼️ Frontend: Additional images:', additionalImages)
       
       const productData = {
         ...formData,
@@ -150,7 +154,9 @@ export default function EditProductPage() {
         images: additionalImages,
         isActive: product?.isActive ?? true
       }
+      console.log('📦 Frontend: Product data to send:', productData)
       
+      console.log('🌐 Frontend: Making PUT request to http://localhost:3001/api/products/' + productId)
       const response = await fetch(`http://localhost:3001/api/products/${productId}`, {
         method: 'PUT',
         headers: {
@@ -159,21 +165,26 @@ export default function EditProductPage() {
         body: JSON.stringify(productData),
       })
 
+      console.log('📡 Frontend: Response status:', response.status)
+      console.log('📡 Frontend: Response ok:', response.ok)
+
       if (response.ok) {
         const updatedProduct = await response.json()
-        console.log('✅ Product updated:', updatedProduct)
+        console.log('✅ Frontend: Product updated successfully:', updatedProduct)
+        alert('¡Producto actualizado exitosamente!')
         // Redirigir a la lista de productos
         router.push('/admin/products')
       } else {
         const errorData = await response.json()
-        console.error('Error response:', errorData)
+        console.error('❌ Frontend: Error response:', errorData)
         alert(`Error: ${errorData.error || 'Error al actualizar el producto'}`)
       }
     } catch (error) {
-      console.error('Error updating product:', error)
-      alert('Error al actualizar el producto')
+      console.error('❌ Frontend: Error updating product:', error)
+      alert(`Error al actualizar el producto: ${error.message}`)
     } finally {
       setLoading(false)
+      console.log('🔄 Frontend: Loading set to false')
     }
   }
 
@@ -206,49 +217,25 @@ export default function EditProductPage() {
   return (
     <div className="space-y-6 bg-white p-6 rounded-lg">
       {/* Header con botón de regreso y título */}
-      <div className="flex items-center justify-between mb-8">
-        <div className="flex items-center gap-4">
-          <Button
-            variant="outline"
-            onClick={handleCancel}
-            className="flex items-center gap-2 rounded-full"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Volver
-          </Button>
-          <div>
-            <h1 className="text-2xl font-bold text-black">Editar Producto</h1>
-            <p className="text-gray-600 mt-1">
-              Modifica la información del producto: <strong>{product.name}</strong>
-            </p>
-          </div>
-        </div>
-        
-        {/* Botones de acción */}
-        <div className="flex gap-2">
-          <Button 
-            type="submit"
-            disabled={loading}
-            className="bg-blue-600 hover:bg-blue-700 text-white rounded-full"
-            style={{
-              backgroundColor: '#2563eb',
-              borderColor: '#2563eb'
-            }}
-          >
-            {loading ? (
-              <>
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                Actualizando...
-              </>
-            ) : (
-              'Actualizar'
-            )}
-          </Button>
-          <Button type="button" variant="outline" onClick={handleCancel} className="rounded-full">
-            Cancelar
-          </Button>
+      <div className="flex items-center gap-4 mb-8">
+        <Button
+          variant="outline"
+          onClick={handleCancel}
+          className="flex items-center gap-2 rounded-full"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Volver
+        </Button>
+        <div>
+          <h1 className="text-2xl font-bold text-black">Editar Producto</h1>
+          <p className="text-gray-600 mt-1">
+            Modifica la información del producto: <strong>{product.name}</strong>
+          </p>
         </div>
       </div>
+
+      {/* Formulario */}
+      <form onSubmit={handleSubmit} className="space-y-6">
 
       {/* DIV 1: Formulario Básico + Imágenes */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -432,6 +419,33 @@ export default function EditProductPage() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Botones de acción */}
+      <div className="flex gap-2 justify-end">
+        <Button 
+          type="submit"
+          disabled={loading}
+          className="bg-blue-600 hover:bg-blue-700 text-white rounded-full"
+          style={{
+            backgroundColor: '#2563eb',
+            borderColor: '#2563eb'
+          }}
+        >
+          {loading ? (
+            <>
+              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+              Actualizando...
+            </>
+          ) : (
+            'Actualizar'
+          )}
+        </Button>
+        <Button type="button" variant="outline" onClick={handleCancel} className="rounded-full">
+          Cancelar
+        </Button>
+      </div>
+
+      </form>
     </div>
   )
 }

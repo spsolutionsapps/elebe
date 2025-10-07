@@ -79,11 +79,15 @@ export default function NewProductPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    console.log('🚀 Frontend: Form submitted for new product')
+    console.log('📝 Frontend: Form data:', formData)
     setLoading(true)
     
     try {
       // Separar la primera imagen como imagen principal y el resto como imágenes adicionales
       const [mainImage, ...additionalImages] = formData.images
+      console.log('🖼️ Frontend: Main image:', mainImage)
+      console.log('🖼️ Frontend: Additional images:', additionalImages)
       
       const productData = {
         ...formData,
@@ -91,7 +95,9 @@ export default function NewProductPage() {
         images: additionalImages,
         isActive: true
       }
+      console.log('📦 Frontend: Product data to send:', productData)
       
+      console.log('🌐 Frontend: Making POST request to http://localhost:3001/api/products')
       const response = await fetch('http://localhost:3001/api/products', {
         method: 'POST',
         headers: {
@@ -100,21 +106,26 @@ export default function NewProductPage() {
         body: JSON.stringify(productData),
       })
 
+      console.log('📡 Frontend: Response status:', response.status)
+      console.log('📡 Frontend: Response ok:', response.ok)
+
       if (response.ok) {
         const newProduct = await response.json()
-        console.log('✅ Product created:', newProduct)
+        console.log('✅ Frontend: Product created successfully:', newProduct)
+        alert('¡Producto creado exitosamente!')
         // Redirigir a la lista de productos
         router.push('/admin/products')
       } else {
         const errorData = await response.json()
-        console.error('Error response:', errorData)
+        console.error('❌ Frontend: Error response:', errorData)
         alert(`Error: ${errorData.error || 'Error al crear el producto'}`)
       }
     } catch (error) {
-      console.error('Error creating product:', error)
-      alert('Error al crear el producto')
+      console.error('❌ Frontend: Error creating product:', error)
+      alert(`Error al crear el producto: ${error.message}`)
     } finally {
       setLoading(false)
+      console.log('🔄 Frontend: Loading set to false')
     }
   }
 
@@ -137,32 +148,10 @@ export default function NewProductPage() {
           </Button>
         
         </div>
-        
-        {/* Botones de acción */}
-        <div className="flex gap-2">
-          <Button 
-            type="submit"
-            disabled={loading}
-            className="bg-blue-600 hover:bg-blue-700 text-white rounded-full"
-            style={{
-              backgroundColor: '#2563eb',
-              borderColor: '#2563eb'
-            }}
-          >
-            {loading ? (
-              <>
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                Publicando...
-              </>
-            ) : (
-              'Publicar producto'
-            )}
-          </Button>
-          <Button type="button" variant="outline" onClick={handleCancel} className="rounded-full">
-            Cancelar
-          </Button>
-        </div>
       </div>
+
+      {/* Formulario */}
+      <form onSubmit={handleSubmit} className="space-y-6">
 
       {/* DIV 1: Formulario Básico + Imágenes */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -346,6 +335,33 @@ export default function NewProductPage() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Botones de acción */}
+      <div className="flex gap-2 justify-end">
+        <Button 
+          type="submit"
+          disabled={loading}
+          className="bg-blue-600 hover:bg-blue-700 text-white rounded-full"
+          style={{
+            backgroundColor: '#2563eb',
+            borderColor: '#2563eb'
+          }}
+        >
+          {loading ? (
+            <>
+              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+              Publicando...
+            </>
+          ) : (
+            'Publicar producto'
+          )}
+        </Button>
+        <Button type="button" variant="outline" onClick={handleCancel} className="rounded-full">
+          Cancelar
+        </Button>
+      </div>
+
+      </form>
     </div>
   )
 }
