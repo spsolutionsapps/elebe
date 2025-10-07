@@ -120,7 +120,7 @@ function CatalogoContent() {
 
   return (
     <div className="min-h-screen bg-transparent py-12 paddingDesktop82">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="md:w-[1440px] mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-white mb-4">
@@ -147,16 +147,12 @@ function CatalogoContent() {
         {!categoryParam && !searchParam && (
           <div className="mb-16">
             <h2 className="text-2xl font-bold text-white mb-6 text-center">Categorías</h2>
-            <div className="grid grid-cols-5 gap-0 max-w-[1440px] mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-0 w-full md:w-[1440px] mx-auto">
               {categories.map((category, index) => (
                 <Link
                   key={index}
                   href={category.href}
-                  className="group"
-                  style={{
-                    width: '288px',
-                    height: '431px'
-                  }}
+                  className="group w-full md:w-[288px] h-[300px] md:h-[431px]"
                 >
                   <div 
                     className="w-full h-full flex flex-col items-center justify-center hover:opacity-80 transition-opacity duration-200"
