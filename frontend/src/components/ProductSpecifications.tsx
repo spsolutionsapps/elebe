@@ -31,13 +31,13 @@ export function ProductSpecifications({ product }: ProductSpecificationsProps) {
   }
 
   return (
-    <div className="p-6 mt-6">
-      <h3 className="text-lg font-semibold text-white mb-4">Especificaciones Técnicas</h3>
+    <div className="mt-6">
+      <h3 className="text-lg font-semibold mb-4">Especificaciones Técnicas</h3>
       
       {/* Tipos de Impresión */}
       {product.printingTypes && product.printingTypes.length > 0 && (
         <div className="mb-4">
-          <h4 className="text-sm font-medium text-white mb-2">Tipos de Impresión</h4>
+          <h4 className="text-sm font-medium mb-2">Tipos de Impresión</h4>
           <div className="flex flex-wrap gap-2">
             {product.printingTypes.map((type, index) => (
               <span
@@ -54,30 +54,30 @@ export function ProductSpecifications({ product }: ProductSpecificationsProps) {
       {/* Dimensiones del Producto */}
       {(product.productHeight || product.productLength || product.productWidth || product.productWeight) && (
         <div className="mb-4">
-          <h4 className="text-sm font-medium text-white mb-2">Dimensiones del Producto</h4>
+          <h4 className="text-sm font-medium mb-2">Dimensiones del Producto</h4>
           <div className="grid grid-cols-2 gap-4 text-sm">
             {product.productHeight && (
               <div>
-                <span className="text-white">Altura:</span>
-                <span className="ml-2 font-medium text-white">{product.productHeight} cm</span>
+                <span>Altura:</span>
+                <span className="ml-2 font-medium">{product.productHeight} cm</span>
               </div>
             )}
             {product.productLength && (
               <div>
-                <span className="text-white">Longitud:</span>
-                <span className="ml-2 font-medium text-white">{product.productLength} cm</span>
+                <span>Longitud:</span>
+                <span className="ml-2 font-medium">{product.productLength} cm</span>
               </div>
             )}
             {product.productWidth && (
               <div>
-                <span className="text-white">Ancho:</span>
-                <span className="ml-2 font-medium text-white">{product.productWidth} cm</span>
+                <span>Ancho:</span>
+                <span className="ml-2 font-medium">{product.productWidth} cm</span>
               </div>
             )}
             {product.productWeight && (
               <div>
-                <span className="text-white">Peso:</span>
-                <span className="ml-2 font-medium text-white">{product.productWeight} kg</span>
+                <span>Peso:</span>
+                <span className="ml-2 font-medium">{product.productWeight} kg</span>
               </div>
             )}
           </div>
@@ -87,30 +87,30 @@ export function ProductSpecifications({ product }: ProductSpecificationsProps) {
       {/* Dimensiones del Empaque */}
       {(product.packagingHeight || product.packagingLength || product.packagingWidth || product.packagingWeight) && (
         <div className="mb-4">
-          <h4 className="text-sm font-medium text-white mb-2">Dimensiones del Empaque</h4>
+          <h4 className="text-sm font-medium mb-2">Dimensiones del Empaque</h4>
           <div className="grid grid-cols-2 gap-4 text-sm">
             {product.packagingHeight && (
               <div>
-                <span className="text-white">Altura:</span>
-                <span className="ml-2 font-medium text-white">{product.packagingHeight} cm</span>
+                <span>Altura:</span>
+                <span className="ml-2 font-medium">{product.packagingHeight} cm</span>
               </div>
             )}
             {product.packagingLength && (
               <div>
-                <span className="text-white">Longitud:</span>
-                <span className="ml-2 font-medium text-white">{product.packagingLength} cm</span>
+                <span>Longitud:</span>
+                <span className="ml-2 font-medium">{product.packagingLength} cm</span>
               </div>
             )}
             {product.packagingWidth && (
               <div>
-                <span className="text-white">Ancho:</span>
-                <span className="ml-2 font-medium text-white">{product.packagingWidth} cm</span>
+                <span>Ancho:</span>
+                <span className="ml-2 font-medium">{product.packagingWidth} cm</span>
               </div>
             )}
             {product.packagingWeight && (
               <div>
-                <span className="text-white">Peso:</span>
-                <span className="ml-2 font-medium text-white">{product.packagingWeight} kg</span>
+                <span>Peso:</span>
+                <span className="ml-2 font-medium">{product.packagingWeight} kg</span>
               </div>
             )}
           </div>
@@ -120,18 +120,18 @@ export function ProductSpecifications({ product }: ProductSpecificationsProps) {
       {/* Información Adicional */}
       {(product.unitsPerBox || product.individualPackaging) && (
         <div>
-          <h4 className="text-sm font-medium text-white mb-2">Información Adicional</h4>
+          <h4 className="text-sm font-mediummb-2">Información Adicional</h4>
           <div className="grid grid-cols-2 gap-4 text-sm">
             {product.unitsPerBox && (
               <div>
-                <span className="text-white">Unidades por Caja:</span>
-                <span className="ml-2 font-medium text-white">{product.unitsPerBox}</span>
+                <span>Unidades por Caja:</span>
+                <span className="ml-2 font-medium">{product.unitsPerBox}</span>
               </div>
             )}
             {product.individualPackaging && (
               <div>
-                <span className="text-white">Empaque Individual:</span>
-                <span className="ml-2 font-medium text-white">{product.individualPackaging}</span>
+                <span>Empaque Individual:</span>
+                <span className="ml-2 font-medium">{product.individualPackaging}</span>
               </div>
             )}
           </div>

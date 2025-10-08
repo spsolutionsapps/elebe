@@ -221,11 +221,11 @@ export default function CategoriesPage() {
 
       {/* Modal de Crear/Editar */}
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <Card className="w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <CardHeader>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" style={{ marginTop: '-24px' }}>
+          <Card className="w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-xl bg-white p-6">
+            <CardHeader className="border-b">
               <div className="flex items-center justify-between">
-                <CardTitle>
+                <CardTitle className="text-xl font-semibold">
                   {editingCategory ? 'Editar Categoría' : 'Nueva Categoría'}
                 </CardTitle>
                 <Button
@@ -235,6 +235,7 @@ export default function CategoriesPage() {
                     setShowModal(false)
                     resetForm()
                   }}
+                  className="hover:bg-gray-100 rounded-full p-2"
                 >
                   <X className="h-4 w-4" />
                 </Button>
@@ -242,29 +243,31 @@ export default function CategoriesPage() {
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <Label htmlFor="name">Nombre *</Label>
-                  <Input
-                    id="name"
-                    value={formData.name}
-                    onChange={(e) => handleNameChange(e.target.value)}
-                    required
-                  />
-                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="name">Nombre *</Label>
+                    <Input
+                      id="name"
+                      value={formData.name}
+                      onChange={(e) => handleNameChange(e.target.value)}
+                      required
+                    />
+                  </div>
 
-                <div>
-                  <Label htmlFor="slug">Slug *</Label>
-                  <Input
-                    id="slug"
-                    value={formData.slug}
-                    onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
-                    required
-                    placeholder="categoria-ejemplo"
-                  />
-                  <p className="text-xs text-gray-500 mt-1">
-                    Se genera automáticamente desde el nombre. Debe ser único.
-                  </p>
+                  <div>
+                    <Label htmlFor="slug">Slug *</Label>
+                    <Input
+                      id="slug"
+                      value={formData.slug}
+                      onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
+                      required
+                      placeholder="categoria-ejemplo"
+                    />
+                  </div>
                 </div>
+                <p className="text-xs text-gray-500">
+                  El slug se genera automáticamente desde el nombre. Debe ser único.
+                </p>
 
                 <div>
                   <Label>Imagen de Fondo</Label>

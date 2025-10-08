@@ -122,7 +122,7 @@ export default function NewProductPage() {
       }
     } catch (error) {
       console.error('❌ Frontend: Error creating product:', error)
-      alert(`Error al crear el producto: ${error.message}`)
+      alert(`Error al crear el producto: ${error instanceof Error ? error.message : 'Error desconocido'}`)
     } finally {
       setLoading(false)
       console.log('🔄 Frontend: Loading set to false')

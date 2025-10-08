@@ -131,33 +131,86 @@ function CatalogoContent() {
 
   return (
     <div className="min-h-screen bg-transparent py-12 paddingDesktop82">
-      <div className="md:w-[1440px] mx-auto">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-white mb-4">
-            {searchParam ? `Resultados para: "${searchParam}"` : 
-             categoryParam ? `Categoría: ${categoryParam.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}` : 
-             'Catálogo de Productos'}
-          </h1>
-          <p className="text-lg text-white max-w-2xl mx-auto">
-            {searchParam ? `Encontramos ${filteredProducts.length} producto${filteredProducts.length !== 1 ? 's' : ''} para tu búsqueda` :
-             categoryParam ? `Productos de la categoría ${categoryParam.replace('-', ' ')}` : 
-             'Descubre nuestra colección exclusiva de ropa y accesorios de moda'}
-          </p>
+      {/* Header con buscador - 100% width */}
+      <div className="w-full p-8 mb-12 relative overflow-hidden" style={{ backgroundColor: '#4FBED5' }}>
+          <div className="text-center mb-6">
+            <h1 className="text-4xl font-bold text-white mb-4">
+              {searchParam ? `Resultados para: "${searchParam}"` : 
+               categoryParam ? `Categoría: ${categoryParam.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}` : 
+               'Catálogo de Productos'}
+            </h1>
+            <p className="text-lg text-white max-w-2xl mx-auto">
+              {searchParam ? `Encontramos ${filteredProducts.length} producto${filteredProducts.length !== 1 ? 's' : ''} para tu búsqueda` :
+               categoryParam ? `Productos de la categoría ${categoryParam.replace('-', ' ')}` : 
+               'Descubre nuestra colección exclusiva de ropa y accesorios de moda'}
+            </p>
+          </div>
+
+
+          {/* Buscador */}
+          <div className="max-w-2xl mx-auto">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Buscar productos..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full px-6 py-4 rounded-full text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white text-lg"
+              />
+              <button
+                className="absolute right-2 top-1/2 -translate-y-1/2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full transition-colors"
+              >
+                Buscar
+              </button>
+            </div>
+          </div>
+
           {(categoryParam || searchParam) && (
-            <Link 
-              href="/catalogo" 
-              className="inline-block mt-4 text-blue-400 hover:text-blue-300 underline"
-            >
-              ← Ver todos los productos
-            </Link>
+            <div className="text-center mt-6">
+              <Link 
+                href="/catalogo" 
+                className="inline-block text-white hover:text-gray-100 underline"
+              >
+                ← Ver todos los productos
+              </Link>
+            </div>
           )}
+
+          <div className='shapeCatalogoIzq'>
+            <img src="/shapeCatalogoIzq.svg" alt="ShapeCatalogoIzq" />
+          </div>
+
+          <div className='shapeCatalogoDer'>
+            <img src="/shapeCatalogoDer.svg" alt="ShapeCatalogoDer" />
+          </div>
+
+
         </div>
+
+      <div className="md:w-[1440px] mx-auto">
+        {/* Categories Links - Solo mostrar si no hay búsqueda o categoría seleccionada */}
+        {!categoryParam && !searchParam && (
+          <div className="mb-8">
+            {/* <h2 className="text-2xl font-bold mb-6 text-center">Categorías</h2> */}
+            
+            {/* Links de categorías */}
+            <div className="flex flex-wrap justify-center gap-4 mb-8">
+              {categories.map((category) => (
+                <Link
+                  key={category.id}
+                  href={`/catalogo?category=${category.slug}`}
+                  className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors border border-white/20 hover:border-white/40"
+                >
+                  {category.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Categories Grid - Solo mostrar si no hay búsqueda o categoría seleccionada */}
         {!categoryParam && !searchParam && (
           <div className="mb-16">
-            <h2 className="text-2xl font-bold text-white mb-6 text-center">Categorías</h2>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-0 w-full md:w-[1440px] mx-auto">
               {categories.map((category) => (
                 <Link
@@ -167,30 +220,25 @@ function CatalogoContent() {
                   title={category.hoverText || category.name}
                 >
                   <div 
-                    className="w-full h-full flex flex-col items-center justify-center transition-all duration-300 group-hover:scale-105 relative"
+                    className="w-full h-full transition-all duration-300 group-hover:scale-105 relative"
                     style={{
                       backgroundImage: category.image 
-                        ? `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(http://localhost:3001${category.image})`
+                        ? `url(http://localhost:3001${category.image})`
                         : 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)',
                       backgroundSize: 'cover',
                       backgroundPosition: 'center'
                     }}
                   >
-                    <span className="text-[16px] text-white font-medium text-center px-4 relative z-10 drop-shadow-lg">
-                      {category.name}
-                    </span>
-                    {category.hoverText && (
-                      <span className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-0 group-hover:bg-opacity-70 text-white text-sm px-4 text-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-20">
-                        {category.hoverText}
-                      </span>
-                    )}
+                    {/* Overlay con el nombre de la categoría solo en hover */}
+                    <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-0 group-hover:bg-opacity-70 text-white text-[16px] font-medium px-4 text-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                      {category.hoverText || category.name}
+                    </div>
                   </div>
                 </Link>
               ))}
             </div>
           </div>
         )}
-
 
         {/* Products Grid */}
         {filteredProducts.length === 0 ? (
@@ -267,8 +315,8 @@ export default function CatalogoPage() {
           </div>
         </div>
       </div>
-    }>
-      <CatalogoContent />
-    </Suspense>
+      }>
+        <CatalogoContent />
+      </Suspense>
   )
 }

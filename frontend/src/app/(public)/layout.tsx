@@ -15,7 +15,7 @@ export default function PublicLayout({
     <CartProvider>
       <div className="min-h-screen overflow-x-hidden flex flex-col bgElebe">
         <Navigation />
-        <main className="flex-1 mx-auto px-4 sm:px-6 lg:px-8 pt-8 w-full">
+        <main className="flex-1 mx-auto pt-8 w-full">
           {children}
         </main>
         <Footer />

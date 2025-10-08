@@ -44,6 +44,7 @@ export default function ProductPage({ params }: ProductPageProps) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [quantity, setQuantity] = useState(1)
+  const [activeTab, setActiveTab] = useState<'detalles' | 'especificaciones'>('detalles')
   const fetchCalled = useRef(false)
 
   const handleQuantityChange = (newQuantity: number) => {
@@ -118,18 +119,21 @@ export default function ProductPage({ params }: ProductPageProps) {
 
   return (
     <div className="paddingDesktop82">
-        {/* Breadcrumb */}
+     
+
+        <div className="max-w-6xl mx-auto mb-20">
+
+          {/* Breadcrumb */}
         <div className="mb-6">
           <Link 
             href="/catalogo" 
-            className="inline-flex items-center text-white transition-colors"
+            className="inline-flex items-center transition-colors"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Volver al catálogo
           </Link>
         </div>
 
-        <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Image Gallery */}
             <div>
@@ -154,17 +158,52 @@ export default function ProductPage({ params }: ProductPageProps) {
                
               </div>
 
-              {/* Description */}
-              <div>
-                <h3 className="text-xl font-semibold text-white mb-4">
-                  Detalles del producto
-                </h3>
-                <p className="text-gray-300 leading-relaxed text-lg">
-                  {product.description}
-                </p>
+              {/* Tabs Navigation */}
+              <div className="border-b border-gray-700">
+                <div className="flex gap-8">
+                  <button
+                    onClick={() => setActiveTab('detalles')}
+                    className={`pb-4 px-2 text-lg font-medium transition-colors relative ${
+                      activeTab === 'detalles'
+                        ? 'text-white'
+                        : 'text-gray-400 hover:text-gray-300'
+                    }`}
+                  >
+                    Detalles del producto
+                    {activeTab === 'detalles' && (
+                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-sky-500"></div>
+                    )}
+                  </button>
+                  <button
+                    onClick={() => setActiveTab('especificaciones')}
+                    className={`pb-4 px-2 text-lg font-medium transition-colors relative ${
+                      activeTab === 'especificaciones'
+                        ? 'text-white'
+                        : 'text-gray-400 hover:text-gray-300'
+                    }`}
+                  >
+                    Especificaciones técnicas
+                    {activeTab === 'especificaciones' && (
+                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-sky-500"></div>
+                    )}
+                  </button>
+                </div>
               </div>
 
-        
+              {/* Tab Content */}
+              <div className="py-6">
+                {activeTab === 'detalles' ? (
+                  <div>
+                    <p className="text-gray-300 leading-relaxed text-lg">
+                      {product.description}
+                    </p>
+                  </div>
+                ) : (
+                  <div>
+                    <ProductSpecifications product={product} />
+                  </div>
+                )}
+              </div>
 
               {/* Add to Cart */}
               <div className="space-y-6">
@@ -201,18 +240,19 @@ export default function ProductPage({ params }: ProductPageProps) {
                       className="w-full"
                     />
                   </div>
-
-   
-
-
                 </div>
               </div>
+
+    
+
             </div>
+
+ 
+
           </div>
         </div>
 
-           {/* Especificaciones Técnicas */}
-      <ProductSpecifications product={product} />
+     
 
         {/* Related Products Section 
         <div className="mt-16">
