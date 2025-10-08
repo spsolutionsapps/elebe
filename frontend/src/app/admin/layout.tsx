@@ -17,7 +17,8 @@ import {
   Globe,
   Calendar,
   CheckSquare,
-  Building2
+  Building2,
+  Grid3X3
 } from 'lucide-react'
 import { useInquiriesCount } from '@/hooks/useInquiriesCount'
 import { NotificationBadge } from '@/components/NotificationBadge'
@@ -57,6 +58,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       icon: Globe,
       children: [
         { name: 'Slides', href: '/admin/slides', icon: Image },
+        { name: 'Categorías', href: '/admin/categories', icon: Grid3X3 },
         { name: 'Productos', href: '/admin/products', icon: Package },
         { name: 'Productos Destacados', href: '/admin/featured-products', icon: Package },
         { name: 'Servicios', href: '/admin/services', icon: Settings },

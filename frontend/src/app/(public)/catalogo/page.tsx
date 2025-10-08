@@ -30,8 +30,19 @@ interface Product {
   updatedAt: Date
 }
 
+interface Category {
+  id: string
+  name: string
+  slug: string
+  image?: string | null
+  hoverText?: string | null
+  order: number
+  isActive: boolean
+}
+
 function CatalogoContent() {
   const [products, setProducts] = useState<Product[]>([])
+  const [categories, setCategories] = useState<Category[]>([])
   const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
   const searchParams = useSearchParams()
@@ -40,6 +51,7 @@ function CatalogoContent() {
 
   useEffect(() => {
     fetchProducts()
+    fetchCategories()
     // Inicializar searchTerm con el parámetro de URL
     if (searchParam) {
       setSearchTerm(searchParam)
@@ -61,6 +73,19 @@ function CatalogoContent() {
       console.error('Error fetching products:', error)
     } finally {
       setLoading(false)
+    }
+  }
+
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/api/categories')
+      if (response.ok) {
+        const data = await response.json()
+        setCategories(Array.isArray(data) ? data : [])
+      }
+    } catch (error) {
+      console.error('Error fetching categories:', error)
+      setCategories([])
     }
   }
 
@@ -104,20 +129,6 @@ function CatalogoContent() {
     )
   }
 
-  // Definir las categorías con sus iconos
-  const categories = [
-    { name: 'Todas', icon: '📦', href: '/catalogo' },
-    { name: 'Oficina', icon: '✏️', href: '/catalogo?category=oficina' },
-    { name: 'Deporte', icon: '⚽', href: '/catalogo?category=deporte' },
-    { name: 'Viajes', icon: '🧳', href: '/catalogo?category=viajes' },
-    { name: 'Moda', icon: '👔', href: '/catalogo?category=moda' },
-    { name: 'Uniformes', icon: '👕', href: '/catalogo?category=uniformes' },
-    { name: 'Bebidas', icon: '☕', href: '/catalogo?category=bebidas' },
-    { name: 'Imprenta', icon: '📚', href: '/catalogo?category=imprenta' },
-    { name: 'Merch', icon: '🎁', href: '/catalogo?category=merch' },
-    { name: 'Tecnología', icon: '📱', href: '/catalogo?category=tecnologia' }
-  ]
-
   return (
     <div className="min-h-screen bg-transparent py-12 paddingDesktop82">
       <div className="md:w-[1440px] mx-auto">
@@ -148,22 +159,31 @@ function CatalogoContent() {
           <div className="mb-16">
             <h2 className="text-2xl font-bold text-white mb-6 text-center">Categorías</h2>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-0 w-full md:w-[1440px] mx-auto">
-              {categories.map((category, index) => (
+              {categories.map((category) => (
                 <Link
-                  key={index}
-                  href={category.href}
-                  className="group w-full md:w-[288px] h-[300px] md:h-[431px]"
+                  key={category.id}
+                  href={`/catalogo?category=${category.slug}`}
+                  className="group w-full md:w-[288px] h-[300px] md:h-[431px] relative overflow-hidden"
+                  title={category.hoverText || category.name}
                 >
                   <div 
-                    className="w-full h-full flex flex-col items-center justify-center hover:opacity-80 transition-opacity duration-200"
+                    className="w-full h-full flex flex-col items-center justify-center transition-all duration-300 group-hover:scale-105 relative"
                     style={{
-                      backgroundColor: '#0ea5e9'
+                      backgroundImage: category.image 
+                        ? `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(http://localhost:3001${category.image})`
+                        : 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)',
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center'
                     }}
                   >
-                    <div className="text-4xl mb-3">{category.icon}</div>
-                    <span className="text-[16px] text-white font-medium text-center px-2">
+                    <span className="text-[16px] text-white font-medium text-center px-4 relative z-10 drop-shadow-lg">
                       {category.name}
                     </span>
+                    {category.hoverText && (
+                      <span className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-0 group-hover:bg-opacity-70 text-white text-sm px-4 text-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-20">
+                        {category.hoverText}
+                      </span>
+                    )}
                   </div>
                 </Link>
               ))}
