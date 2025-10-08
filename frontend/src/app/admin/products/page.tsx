@@ -11,7 +11,8 @@ import {
   Search, 
   Filter, 
   ChevronLeft, 
-  ChevronRight
+  ChevronRight,
+  RefreshCw
 } from 'lucide-react'
 import { Product } from '@/types'
 
@@ -124,17 +125,27 @@ export default function ProductsPage() {
             {filteredAndSortedProducts.length} de {stats.total} productos
           </p>
         </div>
-        <Button 
-          onClick={handleNewProduct}
-          className="bg-blue-600 hover:bg-blue-700 text-white rounded-full"
-          style={{
-            backgroundColor: '#2563eb',
-            borderColor: '#2563eb'
-          }}
-        >
-          <Plus className="h-4 w-4 mr-2" />
-          Nuevo Producto
-        </Button>
+        <div className="flex gap-2">
+          <Button 
+            onClick={fetchProducts}
+            variant="outline"
+            className="border-gray-300 hover:bg-gray-50"
+          >
+            <RefreshCw className="h-4 w-4 mr-2" />
+            Actualizar
+          </Button>
+          <Button 
+            onClick={handleNewProduct}
+            className="bg-blue-600 hover:bg-blue-700 text-white rounded-full"
+            style={{
+              backgroundColor: '#2563eb',
+              borderColor: '#2563eb'
+            }}
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            Nuevo Producto
+          </Button>
+        </div>
       </div>
 
       {/* Estadísticas */}

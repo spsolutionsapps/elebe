@@ -121,27 +121,29 @@ export class ProductsController {
       throw new NotFoundException('Producto no encontrado');
     }
 
-    // Incrementar contador de visitas con debounce para evitar incrementos duplicados
+    // Incrementar contador de visitas
     console.log('📈 Incrementando vistas para producto:', product.name, 'ID:', product.id);
     
-    // Verificar si ya se incrementó recientemente (últimos 5 segundos)
-    const now = new Date();
-    const fiveSecondsAgo = new Date(now.getTime() - 5000);
+    // Verificar si ya se incrementó recientemente usando el cache (últimos 30 segundos)
+    const viewCacheKey = `product:view:${product.id}`;
+    const recentView = this.cacheService.get(viewCacheKey);
     
-    // Obtener el producto actual para verificar la última actualización
-    const currentProduct = await this.prisma.product.findUnique({
-      where: { id: product.id }
-    });
-    
-    // Solo incrementar si la última actualización fue hace más de 5 segundos
-    if (!currentProduct.updatedAt || currentProduct.updatedAt < fiveSecondsAgo) {
+    if (!recentView) {
+      // Incrementar vistas en la base de datos
       await this.prisma.product.update({
         where: { id: product.id },
         data: { views: { increment: 1 } }
       });
+      
+      // Marcar en cache que este producto fue visto recientemente (30 segundos)
+      this.cacheService.set(viewCacheKey, true, 30 * 1000);
+      
+      // Invalidar cache de productos populares ya que las vistas cambiaron
+      this.cacheService.delete('products:popular');
+      
       console.log('✅ Vistas incrementadas');
     } else {
-      console.log('⏭️ Incremento omitido (demasiado reciente)');
+      console.log('⏭️ Incremento omitido (vista reciente en cache)');
     }
 
     // Obtener el producto actualizado con las nuevas vistas
@@ -157,44 +159,48 @@ export class ProductsController {
   async findOne(@Param('id') id: string) {
     console.log('Buscando producto con ID:', id);
     
-    // Incrementar contador de visitas con debounce para evitar incrementos duplicados
-    console.log('📈 Incrementando vistas para producto ID:', id);
-    
-    // Verificar si ya se incrementó recientemente (últimos 5 segundos)
-    const now = new Date();
-    const fiveSecondsAgo = new Date(now.getTime() - 5000);
-    
-    // Obtener el producto actual para verificar la última actualización
-    const currentProduct = await this.prisma.product.findUnique({
+    // Obtener el producto
+    const product = await this.prisma.product.findUnique({
       where: { id: id }
     });
-    
-    if (!currentProduct) {
-      throw new NotFoundException('Producto no encontrado');
-    }
-    
-    // Solo incrementar si la última actualización fue hace más de 5 segundos
-    if (!currentProduct.updatedAt || currentProduct.updatedAt < fiveSecondsAgo) {
-      await this.prisma.product.update({
-        where: { id: id },
-        data: { views: { increment: 1 } }
-      });
-      console.log('✅ Vistas incrementadas (por ID)');
-    } else {
-      console.log('⏭️ Incremento omitido (demasiado reciente) - ID');
-    }
-    
-    const product = await this.prisma.product.findUnique({
-      where: { id: id },
-    });
-    
-    console.log('Producto encontrado:', product);
     
     if (!product) {
       throw new NotFoundException('Producto no encontrado');
     }
-
-    return product;
+    
+    // Incrementar contador de visitas
+    console.log('📈 Incrementando vistas para producto ID:', id);
+    
+    // Verificar si ya se incrementó recientemente usando el cache (últimos 30 segundos)
+    const viewCacheKey = `product:view:${id}`;
+    const recentView = this.cacheService.get(viewCacheKey);
+    
+    if (!recentView) {
+      // Incrementar vistas en la base de datos
+      await this.prisma.product.update({
+        where: { id: id },
+        data: { views: { increment: 1 } }
+      });
+      
+      // Marcar en cache que este producto fue visto recientemente (30 segundos)
+      this.cacheService.set(viewCacheKey, true, 30 * 1000);
+      
+      // Invalidar cache de productos populares ya que las vistas cambiaron
+      this.cacheService.delete('products:popular');
+      
+      console.log('✅ Vistas incrementadas (por ID)');
+      
+      // Obtener el producto actualizado
+      const updatedProduct = await this.prisma.product.findUnique({
+        where: { id: id }
+      });
+      
+      console.log('📊 Vistas finales:', updatedProduct?.views);
+      return updatedProduct;
+    } else {
+      console.log('⏭️ Incremento omitido (vista reciente en cache)');
+      return product;
+    }
   }
 
   @Post()
