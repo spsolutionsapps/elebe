@@ -194,7 +194,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className="fixed inset-0 bg-gray-600 bg-opacity-75" onClick={() => setSidebarOpen(false)} />
         <div className="fixed inset-y-0 left-0 flex w-64 flex-col bg-white">
           <div className="flex h-16 items-center justify-between">
-            <h1 className="text-lg font-semibold" style={{ marginLeft: '12px' }}>LB Crm</h1>
+            <div className="flex items-center" style={{ marginLeft: '12px' }}>
+              <img 
+                src="/logo.svg" 
+                alt="LB Premium" 
+                className="h-8 w-auto mr-3"
+              />
+              <h1 className="text-lg font-semibold">LB CRM</h1>
+            </div>
             <button onClick={() => setSidebarOpen(false)}>
               <X className="h-6 w-6" />
             </button>
@@ -286,7 +293,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
         <div className="flex flex-col flex-grow bg-white border-r border-gray-200">
           <div className="flex h-16 items-center">
-            <h1 className="text-lg font-semibold" style={{ marginLeft: '12px' }}>LB Crm</h1>
+            <div className="flex items-center" style={{ marginLeft: '12px' }}>
+              <img 
+                src="/logo.svg" 
+                alt="LB Premium" 
+                className="h-8 w-auto mr-3"
+              />
+              <h1 className="text-lg font-semibold">LB CRM</h1>
+            </div>
           </div>
           <nav className="flex-1 space-y-2 py-4">
             {navigation.map((item) => (

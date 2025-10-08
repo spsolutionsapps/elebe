@@ -136,12 +136,12 @@ function CatalogoContent() {
           <div className="text-center mb-6">
             <h1 className="text-4xl font-bold text-white mb-4">
               {searchParam ? `Resultados para: "${searchParam}"` : 
-               categoryParam ? `Categoría: ${categoryParam.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}` : 
+               categoryParam ? `${categoryParam.replaceAll('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}` : 
                'Catálogo de Productos'}
             </h1>
             <p className="text-lg text-white max-w-2xl mx-auto">
               {searchParam ? `Encontramos ${filteredProducts.length} producto${filteredProducts.length !== 1 ? 's' : ''} para tu búsqueda` :
-               categoryParam ? `Productos de la categoría ${categoryParam.replace('-', ' ')}` : 
+               categoryParam ? `Productos de la categoría ${categoryParam.replaceAll('-', ' ')}` : 
                'Descubre nuestra colección exclusiva de ropa y accesorios de moda'}
             </p>
           </div>
@@ -165,7 +165,7 @@ function CatalogoContent() {
             </div>
           </div>
 
-          {(categoryParam || searchParam) && (
+          {searchParam && (
             <div className="text-center mt-6">
               <Link 
                 href="/catalogo" 
