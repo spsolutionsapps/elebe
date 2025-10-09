@@ -6,6 +6,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Save, FileText, Upload, X, Image as ImageIcon } from 'lucide-react'
 import MultiImageUpload from '@/components/MultiImageUpload'
 import { getImageUrl } from '@/lib/imageUtils'
+import { getApiUrl } from '@/lib/config'
+import { AlertModal } from '@/components/AlertModal'
+import { useModal } from '@/hooks/useModal'
 
 export default function AboutPage() {
   const [loading, setLoading] = useState(true)
@@ -15,6 +18,8 @@ export default function AboutPage() {
     content: '',
     images: [] as string[]
   })
+  
+  const { alertState, showAlert, hideAlert } = useModal()
 
   useEffect(() => {
     fetchAboutData()
@@ -22,7 +27,7 @@ export default function AboutPage() {
 
   const fetchAboutData = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/api/about`)
+      const response = await fetch(getApiUrl('/about'))
       if (response.ok) {
         const data = await response.json()
         if (data) {
@@ -45,7 +50,7 @@ export default function AboutPage() {
     setSaving(true)
     
     try {
-      const response = await fetch(`http://localhost:3001/api/about`, {
+      const response = await fetch(getApiUrl('/about'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -54,13 +59,25 @@ export default function AboutPage() {
       })
 
       if (response.ok) {
-        alert('Contenido guardado exitosamente')
+        showAlert({
+          title: 'Éxito',
+          message: 'Contenido guardado exitosamente',
+          type: 'success'
+        })
       } else {
-        alert('Error al guardar el contenido')
+        showAlert({
+          title: 'Error',
+          message: 'Error al guardar el contenido',
+          type: 'error'
+        })
       }
     } catch (error) {
       console.error('Error saving about data:', error)
-      alert('Error al guardar el contenido')
+      showAlert({
+        title: 'Error',
+        message: 'Error al guardar el contenido',
+        type: 'error'
+      })
     } finally {
       setSaving(false)
     }
@@ -79,6 +96,15 @@ export default function AboutPage() {
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">Sección Nosotros</h1>
       </div>
+
+      {/* Alert Modal */}
+      <AlertModal
+        isOpen={alertState.isOpen}
+        onClose={hideAlert}
+        title={alertState.title}
+        message={alertState.message}
+        type={alertState.type}
+      />
 
       <Card className="bg-white">
         <CardHeader className="pb-4 bg-blue-600 text-white rounded-t-lg">

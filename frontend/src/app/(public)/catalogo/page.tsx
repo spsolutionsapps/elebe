@@ -78,7 +78,7 @@ function CatalogoContent() {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/categories')
+      const response = await fetch(getApiUrl('/categories'))
       if (response.ok) {
         const data = await response.json()
         setCategories(Array.isArray(data) ? data : [])
@@ -223,7 +223,7 @@ function CatalogoContent() {
                     className="w-full h-full transition-all duration-300 group-hover:scale-105 relative"
                     style={{
                       backgroundImage: category.image 
-                        ? `url(http://localhost:3001${category.image})`
+                        ? `url(${getImageUrl(category.image)})`
                         : 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)',
                       backgroundSize: 'cover',
                       backgroundPosition: 'center'

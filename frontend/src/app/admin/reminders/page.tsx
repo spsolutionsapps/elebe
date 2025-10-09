@@ -10,6 +10,9 @@ import { Calendar, Clock, Plus, Edit, Trash2, CheckCircle, AlertTriangle, Bell, 
 import { useToast } from '@/hooks/useToast'
 import { Pagination } from '@/components/ui/pagination'
 import { Calendar as CalendarComponent } from '@/components/ui/calendar'
+import { getApiUrl } from '@/lib/config'
+import { ConfirmModal } from '@/components/ConfirmModal'
+import { useModal } from '@/hooks/useModal'
 
 interface Reminder {
   id: string;
@@ -44,6 +47,7 @@ const formatDateForInput = (date: Date | string): string => {
 
 export default function RemindersPage() {
   const { showSuccess, showError, showLoading, dismiss } = useToast()
+  const { confirmState, showConfirm, handleConfirm, handleCancel } = useModal()
   const [reminders, setReminders] = useState<Reminder[]>([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
@@ -105,7 +109,7 @@ export default function RemindersPage() {
 
   const fetchReminders = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/api/reminders`)
+      const response = await fetch(getApiUrl('/reminders'))
       const data = await response.json()
       setReminders(data)
     } catch (error) {
@@ -120,8 +124,8 @@ export default function RemindersPage() {
     
     try {
       const url = editingReminder 
-        ? `http://localhost:3001/api/reminders/${editingReminder.id}`
-        : `http://localhost:3001/api/reminders`
+        ? getApiUrl(`/reminders/${editingReminder.id}`)
+        : getApiUrl('/reminders')
       
       const method = editingReminder ? 'PUT' : 'POST'
       
@@ -150,10 +154,18 @@ export default function RemindersPage() {
   }
 
   const handleDelete = async (id: string) => {
-    if (!confirm('¿Estás seguro de que quieres eliminar este recordatorio?')) return
+    const confirmed = await showConfirm({
+      title: 'Confirmar eliminación',
+      message: '¿Estás seguro de que quieres eliminar este recordatorio? Esta acción no se puede deshacer.',
+      confirmText: 'Eliminar',
+      cancelText: 'Cancelar',
+      variant: 'danger'
+    })
+
+    if (!confirmed) return
 
     try {
-      const response = await fetch(`http://localhost:3001/api/reminders/${id}`, {
+      const response = await fetch(getApiUrl(`/reminders/${id}`), {
         method: 'DELETE',
       })
 
@@ -169,7 +181,7 @@ export default function RemindersPage() {
 
   const handleComplete = async (id: string) => {
     try {
-      const response = await fetch(`http://localhost:3001/api/reminders/${id}/complete`, {
+      const response = await fetch(getApiUrl(`/reminders/${id}/complete`), {
         method: 'PUT',
       })
 
@@ -317,6 +329,18 @@ export default function RemindersPage() {
 
   return (
     <div className="space-y-6">
+      {/* Confirm Modal */}
+      <ConfirmModal
+        isOpen={confirmState.isOpen}
+        onClose={handleCancel}
+        onConfirm={handleConfirm}
+        title={confirmState.title}
+        message={confirmState.message}
+        confirmText={confirmState.confirmText}
+        cancelText={confirmState.cancelText}
+        variant={confirmState.variant}
+      />
+
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">Recordatorios y Calendario</h1>
         <div className="flex items-center space-x-3">

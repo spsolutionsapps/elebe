@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Plus, Edit, Trash2, Package, Eye, EyeOff } from 'lucide-react'
 import { Product } from '@/types'
-import { getImageUrl as getImageUrlFromConfig } from '@/lib/config'
+import { getImageUrl as getImageUrlFromConfig, getApiUrl } from '@/lib/config'
 import { useToast } from '@/hooks/useToast'
 
 // Función para obtener la URL de la imagen
@@ -27,7 +27,7 @@ export default function FeaturedProductsPage() {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/api/products`)
+      const response = await fetch(getApiUrl('/products'))
       const data = await response.json()
       setAllProducts(Array.isArray(data) ? data : [])
     } catch (error) {
@@ -38,7 +38,7 @@ export default function FeaturedProductsPage() {
 
   const fetchFeaturedProducts = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/api/products/featured`)
+      const response = await fetch(getApiUrl('/products/featured'))
       const data = await response.json()
       setFeaturedProducts(Array.isArray(data) ? data : [])
     } catch (error) {
@@ -51,7 +51,7 @@ export default function FeaturedProductsPage() {
 
   const addToFeatured = async (productId: string) => {
     try {
-      const response = await fetch(`http://localhost:3001/api/products/${productId}/feature`, {
+      const response = await fetch(getApiUrl(`/products/${productId}/feature`), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ export default function FeaturedProductsPage() {
 
   const removeFromFeatured = async (productId: string) => {
     try {
-      const response = await fetch(`http://localhost:3001/api/products/${productId}/unfeature`, {
+      const response = await fetch(getApiUrl(`/products/${productId}/unfeature`), {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -93,7 +93,7 @@ export default function FeaturedProductsPage() {
 
   const updateOrder = async (productId: string, newOrder: number) => {
     try {
-      const response = await fetch(`http://localhost:3001/api/products/${productId}/feature-order`, {
+      const response = await fetch(getApiUrl(`/products/${productId}/feature-order`), {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

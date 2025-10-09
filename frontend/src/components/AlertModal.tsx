@@ -2,72 +2,66 @@
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { AlertTriangle, X } from 'lucide-react'
+import { CheckCircle, XCircle, AlertCircle, Info, X } from 'lucide-react'
 
-interface ConfirmModalProps {
+interface AlertModalProps {
   isOpen: boolean
   onClose: () => void
-  onConfirm: () => void
   title: string
   message: string
-  confirmText?: string
-  cancelText?: string
-  variant?: 'danger' | 'warning' | 'info'
-  icon?: React.ReactNode
+  type?: 'success' | 'error' | 'warning' | 'info'
+  buttonText?: string
 }
 
-export function ConfirmModal({
+export function AlertModal({
   isOpen,
   onClose,
-  onConfirm,
   title,
   message,
-  confirmText = 'Confirmar',
-  cancelText = 'Cancelar',
-  variant = 'danger',
-  icon
-}: ConfirmModalProps) {
+  type = 'info',
+  buttonText = 'Aceptar'
+}: AlertModalProps) {
   if (!isOpen) return null
 
-  const getVariantStyles = () => {
-    switch (variant) {
-      case 'danger':
+  const getTypeStyles = () => {
+    switch (type) {
+      case 'success':
         return {
+          icon: <CheckCircle className="h-6 w-6" />,
+          iconColor: 'text-green-500',
+          iconBg: 'bg-green-100',
+          headerBg: 'bg-green-600',
+          button: 'bg-green-600 hover:bg-green-700 text-white'
+        }
+      case 'error':
+        return {
+          icon: <XCircle className="h-6 w-6" />,
           iconColor: 'text-red-500',
           iconBg: 'bg-red-100',
           headerBg: 'bg-red-600',
-          confirmButton: 'bg-red-600 hover:bg-red-700 text-white',
-          borderColor: 'border-red-200'
+          button: 'bg-red-600 hover:bg-red-700 text-white'
         }
       case 'warning':
         return {
+          icon: <AlertCircle className="h-6 w-6" />,
           iconColor: 'text-yellow-500',
           iconBg: 'bg-yellow-100',
           headerBg: 'bg-yellow-600',
-          confirmButton: 'bg-yellow-600 hover:bg-yellow-700 text-white',
-          borderColor: 'border-yellow-200'
+          button: 'bg-yellow-600 hover:bg-yellow-700 text-white'
         }
       case 'info':
+      default:
         return {
+          icon: <Info className="h-6 w-6" />,
           iconColor: 'text-blue-500',
           iconBg: 'bg-blue-100',
           headerBg: 'bg-blue-600',
-          confirmButton: 'bg-blue-600 hover:bg-blue-700 text-white',
-          borderColor: 'border-blue-200'
-        }
-      default:
-        return {
-          iconColor: 'text-red-500',
-          iconBg: 'bg-red-100',
-          headerBg: 'bg-red-600',
-          confirmButton: 'bg-red-600 hover:bg-red-700 text-white',
-          borderColor: 'border-red-200'
+          button: 'bg-blue-600 hover:bg-blue-700 text-white'
         }
     }
   }
 
-  const styles = getVariantStyles()
-  const defaultIcon = <AlertTriangle className="h-6 w-6" />
+  const styles = getTypeStyles()
 
   return (
     <div 
@@ -75,7 +69,7 @@ export function ConfirmModal({
       onClick={onClose}
     >
       <Card 
-        className={`w-full max-w-md ${styles.borderColor} border-2 bg-white`}
+        className="w-full max-w-md bg-white border-2 shadow-xl"
         style={{ borderRadius: 0 }}
         onClick={(e) => e.stopPropagation()}
       >
@@ -83,15 +77,9 @@ export function ConfirmModal({
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div className={`p-2 ${styles.iconBg}`} style={{ borderRadius: 0 }}>
-                {icon ? (
-                  <div className={styles.iconColor}>
-                    {icon}
-                  </div>
-                ) : (
-                  <div className={styles.iconColor}>
-                    {defaultIcon}
-                  </div>
-                )}
+                <div className={styles.iconColor}>
+                  {styles.icon}
+                </div>
               </div>
               <CardTitle className="text-lg text-white">
                 {title}
@@ -114,21 +102,13 @@ export function ConfirmModal({
             {message}
           </p>
           
-          <div className="flex space-x-3 justify-end">
+          <div className="flex justify-end">
             <Button
-              variant="outline"
               onClick={onClose}
-              className="px-6"
+              className={`px-8 ${styles.button}`}
               style={{ borderRadius: 0 }}
             >
-              {cancelText}
-            </Button>
-            <Button
-              onClick={onConfirm}
-              className={`px-6 ${styles.confirmButton}`}
-              style={{ borderRadius: 0 }}
-            >
-              {confirmText}
+              {buttonText}
             </Button>
           </div>
         </CardContent>
@@ -136,3 +116,4 @@ export function ConfirmModal({
     </div>
   )
 }
+

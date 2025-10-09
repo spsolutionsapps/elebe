@@ -9,6 +9,7 @@ import { Task } from '@/types'
 import { TaskCard } from '@/components/TaskCard'
 import { TaskModal } from '@/components/TaskModal'
 import { useToast } from '@/hooks/useToast'
+import { getApiUrl } from '@/lib/config'
 
 const COLUMNS = [
   { 
@@ -155,7 +156,7 @@ export default function TasksPage() {
 
   const fetchTasks = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/api/tasks`)
+      const response = await fetch(getApiUrl('/tasks'))
       if (response.ok) {
         const data = await response.json()
         setTasks(data)
@@ -184,7 +185,7 @@ export default function TasksPage() {
       }
       
       
-      const response = await fetch(`http://localhost:3001/api/tasks`, {
+      const response = await fetch(getApiUrl('/tasks'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -212,7 +213,7 @@ export default function TasksPage() {
     if (!selectedTask) return
 
     try {
-      const response = await fetch(`http://localhost:3001/api/tasks/${selectedTask.id}`, {
+      const response = await fetch(getApiUrl(`/tasks/${selectedTask.id}`), {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -241,7 +242,7 @@ export default function TasksPage() {
 
   const handleDeleteTask = async (taskId: string) => {
     try {
-      const response = await fetch(`http://localhost:3001/api/tasks/${taskId}`, {
+      const response = await fetch(getApiUrl(`/tasks/${taskId}`), {
         method: 'DELETE',
       })
 
@@ -318,7 +319,7 @@ export default function TasksPage() {
 
     setIsMovingTask(true)
     try {
-      const response = await fetch(`http://localhost:3001/api/tasks/order/update`, {
+      const response = await fetch(getApiUrl('/tasks/order/update'), {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

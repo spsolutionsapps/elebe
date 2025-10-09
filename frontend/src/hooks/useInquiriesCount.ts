@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { getApiUrl } from '@/lib/config'
 
 export const useInquiriesCount = () => {
   const [count, setCount] = useState(0)
@@ -25,8 +26,7 @@ export const useInquiriesCount = () => {
         // Crear nuevo AbortController
         abortControllerRef.current = new AbortController()
         
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api'
-        const response = await fetch(`${apiUrl}/inquiries`, {
+        const response = await fetch(getApiUrl('/inquiries'), {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

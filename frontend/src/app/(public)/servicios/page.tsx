@@ -1,6 +1,6 @@
 import { Settings, CheckCircle } from 'lucide-react'
 import { getImageUrl } from '@/lib/imageUtils'
-import { API_CONFIG } from '@/lib/config'
+import { API_CONFIG, getApiUrl } from '@/lib/config'
 
 interface Service {
   id: string
@@ -15,10 +15,7 @@ interface Service {
 
 async function getServices(): Promise<Service[]> {
   try {
-    // Usar variable de entorno para el build
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api'
-    
-    const response = await fetch(`${apiUrl}/services`, { 
+    const response = await fetch(getApiUrl('/services'), { 
       next: { revalidate: 3600 } // Revalidar cada hora
     })
     

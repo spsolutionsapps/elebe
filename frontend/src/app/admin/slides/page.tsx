@@ -7,7 +7,9 @@ import { Plus, Edit, Trash2, Image as ImageIcon } from 'lucide-react'
 import { Slide } from '@/types'
 import ImageUpload from '@/components/ImageUpload'
 
-import { getImageUrl as getImageUrlFromConfig } from '@/lib/config';
+import { getImageUrl as getImageUrlFromConfig, getApiUrl } from '@/lib/config';
+import { ConfirmModal } from '@/components/ConfirmModal'
+import { useModal } from '@/hooks/useModal'
 
 // Función para obtener la URL de la imagen
 function getImageUrl(imagePath: string): string {
@@ -15,6 +17,7 @@ function getImageUrl(imagePath: string): string {
 }
 
 export default function SlidesPage() {
+  const { confirmState, showConfirm, handleConfirm, handleCancel } = useModal()
   const [slides, setSlides] = useState<Slide[]>([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
@@ -34,7 +37,7 @@ export default function SlidesPage() {
   const fetchSlides = async () => {
     try {
       console.log('🔄 Frontend: Fetching slides...')
-      const response = await fetch(`http://localhost:3001/api/slides`)
+      const response = await fetch(getApiUrl('/slides'))
       console.log('📡 Frontend: Response status:', response.status)
       
       const data = await response.json()
@@ -58,8 +61,8 @@ export default function SlidesPage() {
     
     try {
       const url = editingSlide 
-        ? `http://localhost:3001/api/slides/${editingSlide.id}` 
-        : `http://localhost:3001/api/slides`
+        ? getApiUrl(`/slides/${editingSlide.id}`)
+        : getApiUrl('/slides')
       
       const method = editingSlide ? 'PUT' : 'POST'
       
@@ -113,7 +116,15 @@ export default function SlidesPage() {
   const handleDelete = async (id: string) => {
     console.log('🗑️ Frontend: Delete button clicked for slide:', id)
     
-    if (!confirm('¿Estás seguro de que quieres eliminar este slide?')) {
+    const confirmed = await showConfirm({
+      title: 'Confirmar eliminación',
+      message: '¿Estás seguro de que quieres eliminar este slide? Esta acción no se puede deshacer.',
+      confirmText: 'Eliminar',
+      cancelText: 'Cancelar',
+      variant: 'danger'
+    })
+
+    if (!confirmed) {
       console.log('❌ Frontend: Delete cancelled by user')
       return
     }
@@ -121,7 +132,7 @@ export default function SlidesPage() {
     console.log('✅ Frontend: Delete confirmed by user')
 
     try {
-      const url = `http://localhost:3001/api/slides/${id}`
+      const url = getApiUrl(`/slides/${id}`)
       console.log('🌐 Frontend: Making DELETE request to:', url)
       
       const response = await fetch(url, {
@@ -169,6 +180,18 @@ export default function SlidesPage() {
 
   return (
     <div className="space-y-6">
+      {/* Confirm Modal */}
+      <ConfirmModal
+        isOpen={confirmState.isOpen}
+        onClose={handleCancel}
+        onConfirm={handleConfirm}
+        title={confirmState.title}
+        message={confirmState.message}
+        confirmText={confirmState.confirmText}
+        cancelText={confirmState.cancelText}
+        variant={confirmState.variant}
+      />
+
       <Card className="bg-white">
         <CardHeader style={{ paddingTop: '20px' }}>
           <div className="flex justify-between items-center p20">

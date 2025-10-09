@@ -13,6 +13,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useMutation } from '@tanstack/react-query'
+import { getApiUrl } from '@/lib/config'
 import ProductPlaceholder from '@/components/ProductPlaceholder'
 import { useToast } from '@/hooks/useToast'
 import { getImageUrl } from '@/lib/imageUtils'
@@ -52,7 +53,7 @@ export default function ContactoPage() {
       console.log('Productos en el carrito:', state.items.length)
       console.log('Productos con cantidades a enviar:', products)
 
-      const response = await fetch(`http://localhost:3001/api/inquiries`, {
+      const response = await fetch(getApiUrl('/inquiries'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

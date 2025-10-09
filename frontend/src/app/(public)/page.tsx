@@ -51,19 +51,16 @@ export default function HomePage() {
 
     const fetchData = async () => {
       try {
-        // Usar localhost para el fetch desde el cliente
-        const apiUrl = 'http://localhost:3001/api'
-
         // Fetch slides
-        const slidesResponse = await fetch(`${apiUrl}/slides`)
+        const slidesResponse = await fetch(getApiUrl('/slides'))
         if (slidesResponse.ok) {
           const slidesData = await slidesResponse.json()
           setSlides(slidesData.filter((slide: Slide) => slide.isActive))
         }
 
         // Fetch featured products
-        console.log('🌐 Home: Fetching featured products from:', `${apiUrl}/products/featured`)
-        const productsResponse = await fetch(`${apiUrl}/products/featured`)
+        console.log('🌐 Home: Fetching featured products from:', getApiUrl('/products/featured'))
+        const productsResponse = await fetch(getApiUrl('/products/featured'))
         console.log('📡 Home: Featured products response status:', productsResponse.status)
         
         if (productsResponse.ok) {

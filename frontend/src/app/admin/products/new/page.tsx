@@ -9,6 +9,9 @@ import ProductForm from '@/components/admin/ProductForm'
 import MultiImageUpload from '@/components/MultiImageUpload'
 import Select, { SingleValue } from 'react-select'
 import { Product } from '@/types'
+import { getApiUrl } from '@/lib/config'
+import { AlertModal } from '@/components/AlertModal'
+import { useModal } from '@/hooks/useModal'
 
 // Tipo para las opciones de React Select
 type SelectOption = {
@@ -19,6 +22,7 @@ type SelectOption = {
 export default function NewProductPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
+  const { alertState, showAlert, hideAlert } = useModal()
   
   // Opciones para React Select
   const packagingOptions = [
@@ -97,8 +101,8 @@ export default function NewProductPage() {
       }
       console.log('📦 Frontend: Product data to send:', productData)
       
-      console.log('🌐 Frontend: Making POST request to http://localhost:3001/api/products')
-      const response = await fetch('http://localhost:3001/api/products', {
+      console.log('🌐 Frontend: Making POST request to', getApiUrl('/products'))
+      const response = await fetch(getApiUrl('/products'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -112,17 +116,31 @@ export default function NewProductPage() {
       if (response.ok) {
         const newProduct = await response.json()
         console.log('✅ Frontend: Product created successfully:', newProduct)
-        alert('¡Producto creado exitosamente!')
-        // Redirigir a la lista de productos
-        router.push('/admin/products')
+        showAlert({
+          title: 'Éxito',
+          message: '¡Producto creado exitosamente!',
+          type: 'success'
+        })
+        // Redirigir a la lista de productos después de cerrar el modal
+        setTimeout(() => {
+          router.push('/admin/products')
+        }, 1500)
       } else {
         const errorData = await response.json()
         console.error('❌ Frontend: Error response:', errorData)
-        alert(`Error: ${errorData.error || 'Error al crear el producto'}`)
+        showAlert({
+          title: 'Error',
+          message: errorData.error || 'Error al crear el producto',
+          type: 'error'
+        })
       }
     } catch (error) {
       console.error('❌ Frontend: Error creating product:', error)
-      alert(`Error al crear el producto: ${error instanceof Error ? error.message : 'Error desconocido'}`)
+      showAlert({
+        title: 'Error',
+        message: `Error al crear el producto: ${error instanceof Error ? error.message : 'Error desconocido'}`,
+        type: 'error'
+      })
     } finally {
       setLoading(false)
       console.log('🔄 Frontend: Loading set to false')
@@ -135,6 +153,15 @@ export default function NewProductPage() {
 
   return (
     <div className="space-y-6 bg-white p-6 rounded-lg">
+      {/* Alert Modal */}
+      <AlertModal
+        isOpen={alertState.isOpen}
+        onClose={hideAlert}
+        title={alertState.title}
+        message={alertState.message}
+        type={alertState.type}
+      />
+
       {/* Header con botón de regreso y título */}
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-4">

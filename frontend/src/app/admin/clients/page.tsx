@@ -10,6 +10,7 @@ import { Users, Plus, Eye, Edit, Trash2, Search, X } from 'lucide-react'
 import { useToast } from '@/hooks/useToast'
 import { ConfirmModal } from '@/components/ConfirmModal'
 import { Pagination } from '@/components/ui/pagination'
+import { getApiUrl } from '@/lib/config'
 
 interface Client {
   id: string;
@@ -52,7 +53,7 @@ export default function ClientsPage() {
 
   const fetchClients = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/api/clients`)
+      const response = await fetch(getApiUrl('/clients'))
       const data = await response.json()
       setClients(data)
     } catch (error) {
@@ -67,8 +68,8 @@ export default function ClientsPage() {
     
     try {
       const url = editingClient 
-        ? `http://localhost:3001/api/clients/${editingClient.id}`
-        : `http://localhost:3001/api/clients`
+        ? getApiUrl(`/clients/${editingClient.id}`)
+        : getApiUrl('/clients')
       
       const method = editingClient ? 'PUT' : 'POST'
       
@@ -102,7 +103,7 @@ export default function ClientsPage() {
 
     try {
       
-      const response = await fetch(`http://localhost:3001/api/clients/${clientToDelete.id}`, {
+      const response = await fetch(getApiUrl(`/clients/${clientToDelete.id}`), {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

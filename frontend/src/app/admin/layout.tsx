@@ -24,6 +24,8 @@ import { useInquiriesCount } from '@/hooks/useInquiriesCount'
 import { NotificationBadge } from '@/components/NotificationBadge'
 // import { SafeIcon } from '@/components/ui/icon-wrapper'
 import { NavigationItem } from '@/types/navigation'
+import { AlertModal } from '@/components/AlertModal'
+import { useModal } from '@/hooks/useModal'
 
 // Array de navegación se define dentro del componente
 
@@ -32,6 +34,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const pathname = usePathname()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [expandedMenus, setExpandedMenus] = useState<string[]>([])
+  const { alertState, showAlert, hideAlert } = useModal()
   
   // TEMPORAL: Bypass de autenticación para desarrollo - SIEMPRE ACTIVO
   console.log('🔐 Admin Layout: FORCING DEVELOPMENT BYPASS')
@@ -147,10 +150,16 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     localStorage.removeItem('user')
     
     // Mostrar mensaje de confirmación
-    alert('Sesión cerrada correctamente')
+    showAlert({
+      title: 'Sesión cerrada',
+      message: 'Sesión cerrada correctamente',
+      type: 'success'
+    })
     
-    // Redirigir al login
-    router.push('/admin/login')
+    // Redirigir al login después de cerrar el modal
+    setTimeout(() => {
+      router.push('/admin/login')
+    }, 1500)
   }
 
   // Función para detectar si un link está activo
@@ -189,6 +198,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         background: 'linear-gradient(139deg, rgba(207, 236, 255, 1) 0%, rgba(237, 246, 255, 1) 50%, rgba(230, 241, 255, 1) 100%)'
       }}
     >
+      {/* Alert Modal */}
+      <AlertModal
+        isOpen={alertState.isOpen}
+        onClose={hideAlert}
+        title={alertState.title}
+        message={alertState.message}
+        type={alertState.type}
+      />
+
       {/* Mobile sidebar */}
       <div className={`fixed inset-0 z-50 lg:hidden ${sidebarOpen ? '' : 'hidden'}`}>
         <div className="fixed inset-0 bg-gray-600 bg-opacity-75" onClick={() => setSidebarOpen(false)} />

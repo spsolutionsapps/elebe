@@ -9,6 +9,9 @@ import ProductForm from '@/components/admin/ProductForm'
 import MultiImageUpload from '@/components/MultiImageUpload'
 import Select, { SingleValue } from 'react-select'
 import { Product } from '@/types'
+import { getApiUrl } from '@/lib/config'
+import { AlertModal } from '@/components/AlertModal'
+import { useModal } from '@/hooks/useModal'
 
 // Tipo para las opciones de React Select
 type SelectOption = {
@@ -23,6 +26,7 @@ export default function EditProductPage() {
   
   const [loading, setLoading] = useState(false)
   const [product, setProduct] = useState<Product | null>(null)
+  const { alertState, showAlert, hideAlert } = useModal()
   
   // Opciones para React Select
   const packagingOptions = [
@@ -88,7 +92,7 @@ export default function EditProductPage() {
   const fetchProduct = async () => {
     try {
       setLoadingProduct(true)
-      const response = await fetch(`http://localhost:3001/api/products/${productId}`)
+      const response = await fetch(getApiUrl(`/products/${productId}`))
       
       if (response.ok) {
         const productData = await response.json()
@@ -120,13 +124,25 @@ export default function EditProductPage() {
         })
       } else {
         console.error('Error fetching product')
-        alert('Error al cargar el producto')
-        router.push('/admin/products')
+        showAlert({
+          title: 'Error',
+          message: 'Error al cargar el producto',
+          type: 'error'
+        })
+        setTimeout(() => {
+          router.push('/admin/products')
+        }, 1500)
       }
     } catch (error) {
       console.error('Error fetching product:', error)
-      alert('Error al cargar el producto')
-      router.push('/admin/products')
+      showAlert({
+        title: 'Error',
+        message: 'Error al cargar el producto',
+        type: 'error'
+      })
+      setTimeout(() => {
+        router.push('/admin/products')
+      }, 1500)
     } finally {
       setLoadingProduct(false)
     }
@@ -156,8 +172,8 @@ export default function EditProductPage() {
       }
       console.log('📦 Frontend: Product data to send:', productData)
       
-      console.log('🌐 Frontend: Making PUT request to http://localhost:3001/api/products/' + productId)
-      const response = await fetch(`http://localhost:3001/api/products/${productId}`, {
+      console.log('🌐 Frontend: Making PUT request to', getApiUrl(`/products/${productId}`))
+      const response = await fetch(getApiUrl(`/products/${productId}`), {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -171,17 +187,31 @@ export default function EditProductPage() {
       if (response.ok) {
         const updatedProduct = await response.json()
         console.log('✅ Frontend: Product updated successfully:', updatedProduct)
-        alert('¡Producto actualizado exitosamente!')
+        showAlert({
+          title: 'Éxito',
+          message: '¡Producto actualizado exitosamente!',
+          type: 'success'
+        })
         // Redirigir a la lista de productos
-        router.push('/admin/products')
+        setTimeout(() => {
+          router.push('/admin/products')
+        }, 1500)
       } else {
         const errorData = await response.json()
         console.error('❌ Frontend: Error response:', errorData)
-        alert(`Error: ${errorData.error || 'Error al actualizar el producto'}`)
+        showAlert({
+          title: 'Error',
+          message: errorData.error || 'Error al actualizar el producto',
+          type: 'error'
+        })
       }
     } catch (error) {
       console.error('❌ Frontend: Error updating product:', error)
-      alert(`Error al actualizar el producto: ${error.message}`)
+      showAlert({
+        title: 'Error',
+        message: `Error al actualizar el producto: ${error instanceof Error ? error.message : 'Error desconocido'}`,
+        type: 'error'
+      })
     } finally {
       setLoading(false)
       console.log('🔄 Frontend: Loading set to false')
@@ -216,6 +246,15 @@ export default function EditProductPage() {
 
   return (
     <div className="space-y-6 bg-white p-6 rounded-lg">
+      {/* Alert Modal */}
+      <AlertModal
+        isOpen={alertState.isOpen}
+        onClose={hideAlert}
+        title={alertState.title}
+        message={alertState.message}
+        type={alertState.type}
+      />
+
       {/* Header con botón de regreso y título */}
       <div className="flex items-center gap-4 mb-8">
         <Button

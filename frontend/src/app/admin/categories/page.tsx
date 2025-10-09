@@ -8,6 +8,10 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Plus, Edit, Trash2, Image as ImageIcon, X } from 'lucide-react'
 import ImageUpload from '@/components/ImageUpload'
+import { getApiUrl, getImageUrl } from '@/lib/config'
+import { AlertModal } from '@/components/AlertModal'
+import { ConfirmModal } from '@/components/ConfirmModal'
+import { useModal } from '@/hooks/useModal'
 
 interface Category {
   id: string
@@ -34,6 +38,8 @@ export default function CategoriesPage() {
     order: 0,
     isActive: true
   })
+  
+  const { alertState, showAlert, hideAlert, confirmState, showConfirm, handleConfirm, handleCancel } = useModal()
 
   useEffect(() => {
     fetchCategories()
@@ -41,7 +47,7 @@ export default function CategoriesPage() {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/categories')
+      const response = await fetch(getApiUrl('/categories'))
       const data = await response.json()
       setCategories(data)
     } catch (error) {
@@ -56,8 +62,8 @@ export default function CategoriesPage() {
     
     try {
       const url = editingCategory
-        ? `http://localhost:3001/api/categories/${editingCategory.id}`
-        : 'http://localhost:3001/api/categories'
+        ? getApiUrl(`/categories/${editingCategory.id}`)
+        : getApiUrl('/categories')
       
       const method = editingCategory ? 'PUT' : 'POST'
 
@@ -73,13 +79,26 @@ export default function CategoriesPage() {
         await fetchCategories()
         resetForm()
         setShowModal(false)
+        showAlert({
+          title: 'Éxito',
+          message: editingCategory ? 'Categoría actualizada exitosamente' : 'Categoría creada exitosamente',
+          type: 'success'
+        })
       } else {
         const error = await response.json()
-        alert(error.message || 'Error al guardar la categoría')
+        showAlert({
+          title: 'Error',
+          message: error.message || 'Error al guardar la categoría',
+          type: 'error'
+        })
       }
     } catch (error) {
       console.error('Error saving category:', error)
-      alert('Error al guardar la categoría')
+      showAlert({
+        title: 'Error',
+        message: 'Error al guardar la categoría',
+        type: 'error'
+      })
     }
   }
 
@@ -97,21 +116,42 @@ export default function CategoriesPage() {
   }
 
   const handleDelete = async (id: string) => {
-    if (!confirm('¿Estás seguro de eliminar esta categoría?')) return
+    const confirmed = await showConfirm({
+      title: 'Confirmar eliminación',
+      message: '¿Estás seguro de eliminar esta categoría? Esta acción no se puede deshacer.',
+      confirmText: 'Eliminar',
+      cancelText: 'Cancelar',
+      variant: 'danger'
+    })
+
+    if (!confirmed) return
 
     try {
-      const response = await fetch(`http://localhost:3001/api/categories/${id}`, {
+      const response = await fetch(getApiUrl(`/categories/${id}`), {
         method: 'DELETE',
       })
 
       if (response.ok) {
         await fetchCategories()
+        showAlert({
+          title: 'Éxito',
+          message: 'Categoría eliminada exitosamente',
+          type: 'success'
+        })
       } else {
-        alert('Error al eliminar la categoría')
+        showAlert({
+          title: 'Error',
+          message: 'Error al eliminar la categoría',
+          type: 'error'
+        })
       }
     } catch (error) {
       console.error('Error deleting category:', error)
-      alert('Error al eliminar la categoría')
+      showAlert({
+        title: 'Error',
+        message: 'Error al eliminar la categoría',
+        type: 'error'
+      })
     }
   }
 
@@ -167,9 +207,9 @@ export default function CategoriesPage() {
       </div>
 
       {/* Lista de Categorías */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {categories.map((category) => (
-          <Card key={category.id}>
+          <Card className="bg-white rounded-lg p-2" key={category.id}>
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
                 <span>{category.name}</span>
@@ -195,7 +235,7 @@ export default function CategoriesPage() {
               {category.image && (
                 <div className="mb-4">
                   <img
-                    src={`http://localhost:3001${category.image}`}
+                    src={getImageUrl(category.image)}
                     alt={category.name}
                     className="w-full h-32 object-cover rounded"
                   />
@@ -218,6 +258,27 @@ export default function CategoriesPage() {
           </Card>
         ))}
       </div>
+
+      {/* Alert Modal */}
+      <AlertModal
+        isOpen={alertState.isOpen}
+        onClose={hideAlert}
+        title={alertState.title}
+        message={alertState.message}
+        type={alertState.type}
+      />
+
+      {/* Confirm Modal */}
+      <ConfirmModal
+        isOpen={confirmState.isOpen}
+        onClose={handleCancel}
+        onConfirm={handleConfirm}
+        title={confirmState.title}
+        message={confirmState.message}
+        confirmText={confirmState.confirmText}
+        cancelText={confirmState.cancelText}
+        variant={confirmState.variant}
+      />
 
       {/* Modal de Crear/Editar */}
       {showModal && (

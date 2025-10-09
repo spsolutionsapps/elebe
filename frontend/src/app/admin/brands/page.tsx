@@ -10,6 +10,8 @@ import { Textarea } from '@/components/ui/textarea'
 import { Plus, Edit, Trash2, Eye, EyeOff, Upload } from 'lucide-react'
 import { toast } from 'react-hot-toast'
 import { getImageUrl } from '@/lib/imageUtils'
+import { ConfirmModal } from '@/components/ConfirmModal'
+import { useModal } from '@/hooks/useModal'
 
 interface Brand {
   id: string
@@ -23,6 +25,7 @@ interface Brand {
 }
 
 export default function BrandsPage() {
+  const { confirmState, showConfirm, handleConfirm, handleCancel } = useModal()
   const [brands, setBrands] = useState<Brand[]>([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
@@ -124,7 +127,15 @@ export default function BrandsPage() {
   }
 
   const handleDelete = async (id: string) => {
-    if (!confirm('¿Estás seguro de que quieres eliminar esta marca?')) return
+    const confirmed = await showConfirm({
+      title: 'Confirmar eliminación',
+      message: '¿Estás seguro de que quieres eliminar esta marca? Esta acción no se puede deshacer.',
+      confirmText: 'Eliminar',
+      cancelText: 'Cancelar',
+      variant: 'danger'
+    })
+
+    if (!confirmed) return
 
     try {
       const apiUrl = API_CONFIG.BASE_URL
@@ -179,6 +190,18 @@ export default function BrandsPage() {
 
   return (
     <div className="space-y-6">
+      {/* Confirm Modal */}
+      <ConfirmModal
+        isOpen={confirmState.isOpen}
+        onClose={handleCancel}
+        onConfirm={handleConfirm}
+        title={confirmState.title}
+        message={confirmState.message}
+        confirmText={confirmState.confirmText}
+        cancelText={confirmState.cancelText}
+        variant={confirmState.variant}
+      />
+
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Marcas</h1>

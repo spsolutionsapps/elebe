@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import { API_CONFIG } from '@/lib/config'
+import { API_CONFIG, getApiUrl } from '@/lib/config'
 import { 
   Users, 
   Eye, 
@@ -30,6 +30,8 @@ import {
 } from 'lucide-react'
 import { useToast } from '@/hooks/useToast'
 import { ConfirmModal } from '@/components/ConfirmModal'
+import { AlertModal } from '@/components/AlertModal'
+import { useModal } from '@/hooks/useModal'
 import { Pagination } from '@/components/ui/pagination'
 import { LeadTags } from '@/components/LeadTags'
 import { useInquiriesCount } from '@/hooks/useInquiriesCount'
@@ -70,6 +72,7 @@ interface Inquiry {
 export default function InquiriesPage() {
   const { showSuccess, showError } = useToast()
   const { count: inquiriesCount } = useInquiriesCount()
+  const { alertState, showAlert, hideAlert } = useModal()
   const [inquiries, setInquiries] = useState<Inquiry[]>([])
   const [loading, setLoading] = useState(true)
   const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null)
@@ -146,7 +149,7 @@ export default function InquiriesPage() {
 
   const fetchInquiries = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/api/inquiries`)
+      const response = await fetch(getApiUrl('/inquiries'))
       const data = await response.json()
       setInquiries(data)
     } catch (error) {
@@ -166,7 +169,7 @@ export default function InquiriesPage() {
     if (!inquiryToDelete) return
 
     try {
-      const response = await fetch(`http://localhost:3001/api/inquiries/${inquiryToDelete.id}`, {
+      const response = await fetch(getApiUrl(`/inquiries/${inquiryToDelete.id}`), {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -219,7 +222,7 @@ export default function InquiriesPage() {
 
     setIsSubmittingFollowUp(true)
     try {
-      const response = await fetch(`http://localhost:3001/api/inquiries/${inquiryForFollowUp.id}/follow-up`, {
+      const response = await fetch(getApiUrl(`/inquiries/${inquiryForFollowUp.id}/follow-up`), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -299,7 +302,7 @@ export default function InquiriesPage() {
 
     setIsSubmittingInquiry(true)
     try {
-      const response = await fetch(`http://localhost:3001/api/inquiries`, {
+      const response = await fetch(getApiUrl('/inquiries'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -354,11 +357,19 @@ export default function InquiriesPage() {
       setInquiryToConvert(null)
 
       // Mostrar mensaje de éxito
-      alert('Cliente convertido exitosamente')
+      showAlert({
+        title: 'Éxito',
+        message: 'Cliente convertido exitosamente',
+        type: 'success'
+      })
       
     } catch (error) {
       console.error('Error convirtiendo a cliente:', error)
-      alert('Error al convertir a cliente')
+      showAlert({
+        title: 'Error',
+        message: 'Error al convertir a cliente',
+        type: 'error'
+      })
     }
   }
 
@@ -448,7 +459,7 @@ export default function InquiriesPage() {
   const fetchInquiryDetails = async (inquiryId: string) => {
     setLoadingInquiryDetails(true)
     try {
-      const response = await fetch(`http://localhost:3001/api/inquiries/${inquiryId}`)
+      const response = await fetch(getApiUrl(`/inquiries/${inquiryId}`))
       const data = await response.json()
       setSelectedInquiry(data)
     } catch (error) {
@@ -469,6 +480,15 @@ export default function InquiriesPage() {
 
   return (
     <div className="space-y-6">
+      {/* Alert Modal */}
+      <AlertModal
+        isOpen={alertState.isOpen}
+        onClose={hideAlert}
+        title={alertState.title}
+        message={alertState.message}
+        type={alertState.type}
+      />
+
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">Consultas desde el sitio web</h1>
         <div className="flex items-center space-x-4">

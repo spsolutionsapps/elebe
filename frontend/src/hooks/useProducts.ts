@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Product } from '@/types'
+import { getApiUrl } from '@/lib/config'
 
 interface UseProductsReturn {
   // Estados
@@ -176,8 +177,7 @@ export function useProducts(): UseProductsReturn {
     try {
       setLoading(true)
       
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api'
-      const response = await fetch(`${apiUrl}/products?t=${Date.now()}`, {
+      const response = await fetch(`${getApiUrl('/products')}?t=${Date.now()}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -223,7 +223,7 @@ export function useProducts(): UseProductsReturn {
         headers['Authorization'] = `Bearer ${token}`
       }
 
-      const response = await fetch(`http://localhost:3001/api/products/${productToDelete.id}`, {
+      const response = await fetch(getApiUrl(`/products/${productToDelete.id}`), {
         method: 'DELETE',
         headers,
       })
@@ -257,7 +257,7 @@ export function useProducts(): UseProductsReturn {
         headers['Authorization'] = `Bearer ${token}`
       }
       
-      const response = await fetch(`http://localhost:3001/api/products/${id}`, {
+      const response = await fetch(getApiUrl(`/products/${id}`), {
         method: 'PUT',
         headers,
         body: JSON.stringify({ isActive: !currentStatus }),

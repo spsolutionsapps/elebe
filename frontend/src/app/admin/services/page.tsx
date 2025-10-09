@@ -7,8 +7,12 @@ import { Plus, Edit, Trash2, Settings } from 'lucide-react'
 import { Service } from '@/types'
 import ImageUpload from '@/components/ImageUpload'
 import { getImageUrl } from '@/lib/imageUtils'
+import { getApiUrl } from '@/lib/config'
+import { ConfirmModal } from '@/components/ConfirmModal'
+import { useModal } from '@/hooks/useModal'
 
 export default function ServicesPage() {
+  const { confirmState, showConfirm, handleConfirm, handleCancel } = useModal()
   const [services, setServices] = useState<Service[]>([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
@@ -27,7 +31,7 @@ export default function ServicesPage() {
 
   const fetchServices = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/api/services/admin`)
+      const response = await fetch(getApiUrl('/services/admin'))
       const data = await response.json()
       setServices(data)
     } catch (error) {
@@ -42,8 +46,8 @@ export default function ServicesPage() {
     
     try {
       const url = editingService 
-        ? `http://localhost:3001/api/services/${editingService.id}` 
-        : `http://localhost:3001/api/services`
+        ? getApiUrl(`/services/${editingService.id}`)
+        : getApiUrl('/services')
       
       const method = editingService ? 'PUT' : 'POST'
       
@@ -79,10 +83,18 @@ export default function ServicesPage() {
   }
 
   const handleDelete = async (id: string) => {
-    if (!confirm('¿Estás seguro de que quieres eliminar este servicio?')) return
+    const confirmed = await showConfirm({
+      title: 'Confirmar eliminación',
+      message: '¿Estás seguro de que quieres eliminar este servicio? Esta acción no se puede deshacer.',
+      confirmText: 'Eliminar',
+      cancelText: 'Cancelar',
+      variant: 'danger'
+    })
+
+    if (!confirmed) return
 
     try {
-      const response = await fetch(`http://localhost:3001/api/services/${id}`, {
+      const response = await fetch(getApiUrl(`/services/${id}`), {
         method: 'DELETE',
       })
 
@@ -110,6 +122,18 @@ export default function ServicesPage() {
 
   return (
     <div className="space-y-6">
+      {/* Confirm Modal */}
+      <ConfirmModal
+        isOpen={confirmState.isOpen}
+        onClose={handleCancel}
+        onConfirm={handleConfirm}
+        title={confirmState.title}
+        message={confirmState.message}
+        confirmText={confirmState.confirmText}
+        cancelText={confirmState.cancelText}
+        variant={confirmState.variant}
+      />
+
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">Gestión de Servicios</h1>
         <Button onClick={() => setShowForm(true)}>
