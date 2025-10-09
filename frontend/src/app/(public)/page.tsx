@@ -15,7 +15,7 @@ import { ShoppingCart } from 'lucide-react'
 import Link from 'next/link'
 
 // Función para obtener la URL de la imagen
-import { getImageUrl as getImageUrlFromConfig } from '@/lib/config';
+import { getImageUrl as getImageUrlFromConfig, getApiUrl } from '@/lib/config';
 
 function getImageUrl(imagePath: string): string {
   return getImageUrlFromConfig(imagePath);
