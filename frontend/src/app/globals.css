@@ -181,6 +181,16 @@
   .paddingDesktop82 {
     padding-top: 82px;
   }
+  .paddingDesktop62 {
+    padding-top: 62px;
+  }
+
+  .shapeMenuIzq {
+    position: absolute;
+    left: -14px;
+    bottom: -7px;
+    opacity: 0.3;
+  }
 }
 
 .p20 {padding: 0 26px;}
@@ -201,6 +211,14 @@
   position: absolute;
   right: -36px;
   top: -58px;
+}
+
+.shapeRayo {
+  position: absolute;
+  right: -26px;
+  top: 0;
+  z-index: 0;
+  opacity: 0.5;
 }
 
 .white-text {

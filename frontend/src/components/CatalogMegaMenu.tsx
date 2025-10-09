@@ -36,7 +36,7 @@ interface CatalogMegaMenuProps {
 }
 
 export function CatalogMegaMenu({ isOpen, onClose }: CatalogMegaMenuProps) {
-  if (!isOpen) return null
+  // if (!isOpen) return null // Comentado para trabajar con el submenu visible
 
   const categories = [
     // Columna 1
@@ -45,22 +45,23 @@ export function CatalogMegaMenu({ isOpen, onClose }: CatalogMegaMenuProps) {
       { name: 'Oficina', icon: Pen, href: '/catalogo?category=oficina' },
       { name: 'Deporte', icon: Package, href: '/catalogo?category=deporte' },
       { name: 'Viajes', icon: MapPin, href: '/catalogo?category=viajes' },
-      { name: 'Moda', icon: Shirt, href: '/catalogo?category=moda' },
-      { name: 'Uniformes', icon: Tractor, href: '/catalogo?category=uniformes' },
-      { name: 'Bebidas', icon: Coffee, href: '/catalogo?category=bebidas' }
+      { name: 'Moda', icon: Shirt, href: '/catalogo?category=moda' }
     ],
     // Columna 2
     [
+      { name: 'Uniformes', icon: Tractor, href: '/catalogo?category=uniformes' },
+      { name: 'Bebidas', icon: Coffee, href: '/catalogo?category=bebidas' },
       { name: 'Imprenta', icon: BookOpen, href: '/catalogo?category=imprenta' },
       { name: 'Merch', icon: Key, href: '/catalogo?category=merch' },
-      { name: 'Tecnología', icon: Smartphone, href: '/catalogo?category=tecnologia' },
-      { name: 'Bonus', icon: Sun, href: '/catalogo?category=bonus' }
-    ]
+      { name: 'Tecnología', icon: Smartphone, href: '/catalogo?category=tecnologia' }
+    ],
+    // Columna 3 - Imagen
+    []
   ]
 
   return (
     <AnimatePresence>
-      {isOpen && (
+      {true && ( // Cambiado de isOpen a true para trabajar con el submenu visible
         <motion.div 
           className="fixed left-0 right-0 w-full z-[99999] top-16 md:top-[95px] flex justify-center"
           initial={{ opacity: 0, y: -10 }}
@@ -69,13 +70,13 @@ export function CatalogMegaMenu({ isOpen, onClose }: CatalogMegaMenuProps) {
           transition={{ duration: 0.2 }}
         >
           <div 
-            className="w-[620px] shadow-lg p-6 -mt-px"
+            className="w-[620px] shadow-lg p-6 -mt-px relative overflow-hidden"
             style={{ 
               backgroundColor: '#0ea5e9',
               borderRadius: '0 0 8px 8px'
             }}
           >
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-3 gap-6 relative z-[1]">
               {categories.map((column, columnIndex) => (
                 <motion.div 
                   key={columnIndex} 
@@ -84,33 +85,37 @@ export function CatalogMegaMenu({ isOpen, onClose }: CatalogMegaMenuProps) {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3, delay: columnIndex * 0.1 }}
                 >
-                  {/* Título de la columna */}
-                  <div className="mb-3">
-                    <h3 className="text-[16px] font-bold text-white uppercase tracking-wider">
-                      {columnIndex === 0 ? 'Categorías Principales' : 
-                       columnIndex === 1 ? 'Más Categorías' :
-                       columnIndex === 2 ? 'Productos Especializados' :
-                       columnIndex === 3 ? 'Categorías Específicas' :
-                       'Más Categorías'}
-                    </h3>
-                  </div>
-                  
-                  {column.map((category, index) => (
-                    <NextLink
-                      key={index}
-                      href={category.href}
-                      className="flex items-center space-x-3 py-2 px-3 rounded-md hover:bg-white/20 transition-all duration-200 group"
-                      onClick={onClose}
-                    >
-                      <category.icon className="h-4 w-4 text-white transition-colors duration-200 flex-shrink-0" />
-                      <span className="text-[16px] text-white group-hover:text-blue-100 transition-colors duration-200">
-                        {category.name}
-                      </span>
-                    </NextLink>
-                  ))}
+                  {columnIndex === 2 ? (
+                    <div className='bgMenu'>
+                      <img src="/bgMenu.png" alt="bgMenu" />
+                    </div>
+                  ) : (
+                    column.map((category, index) => (
+                      <NextLink
+                        key={index}
+                        href={category.href}
+                        className="flex items-center space-x-3 py-2 px-3 rounded-md hover:bg-white/20 transition-all duration-200 group"
+                        onClick={onClose}
+                      >
+                        <category.icon className="h-4 w-4 text-white transition-colors duration-200 flex-shrink-0" />
+                        <span className="text-[16px] text-white group-hover:text-blue-100 transition-colors duration-200">
+                          {category.name}
+                        </span>
+                      </NextLink>
+                    ))
+                  )}
                 </motion.div>
               ))}
             </div>
+
+            <div className='shapeRayo'>
+              <img src="/rayo.svg" alt="ShapeRayo" />
+            </div>
+
+            <div className='shapeMenuIzq'>
+              <img src="/shapeMenuIzq.svg" alt="ShapeMenuIzq" />
+            </div>
+
           </div>
         </motion.div>
       )}

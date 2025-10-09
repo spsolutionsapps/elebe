@@ -130,7 +130,7 @@ function CatalogoContent() {
   }
 
   return (
-    <div className="min-h-screen bg-transparent py-12 paddingDesktop82">
+    <div className="min-h-screen bg-transparent py-12 paddingDesktop62">
       {/* Header con buscador - 100% width */}
       <div className="w-full p-8 mb-12 relative overflow-hidden" style={{ backgroundColor: '#4FBED5' }}>
           <div className="text-center mb-6">
