@@ -55,6 +55,8 @@ services:
       - NEXT_PUBLIC_API_URL=http://localhost:3001/api
       - NEXT_PUBLIC_BACKEND_URL=http://localhost:3001
       - NEXT_PUBLIC_ENV=development
+      - API_URL=http://backend:3001/api
+      - BACKEND_URL=http://backend:3001
     ports:
       - "${FRONTEND_PORT:-3000}:3000"
     volumes:

@@ -36,32 +36,30 @@ interface CatalogMegaMenuProps {
 }
 
 export function CatalogMegaMenu({ isOpen, onClose }: CatalogMegaMenuProps) {
-  // if (!isOpen) return null // Comentado para trabajar con el submenu visible
+  if (!isOpen) return null
 
   const categories = [
     // Columna 1
     [
-      { name: 'Todas', icon: Grid3X3, href: '/catalogo' },
-      { name: 'Oficina', icon: Pen, href: '/catalogo?category=oficina' },
-      { name: 'Deporte', icon: Package, href: '/catalogo?category=deporte' },
-      { name: 'Viajes', icon: MapPin, href: '/catalogo?category=viajes' },
-      { name: 'Moda', icon: Shirt, href: '/catalogo?category=moda' }
+      { name: 'Oficina', icon: Pen, href: '/catalogo?category=oficina', description: 'welcome kits, cuadernos, biromes, soportes, etc' },
+      { name: 'Deporte', icon: Package, href: '/catalogo?category=deporte', description: 'remeras maratones, mochilas, toallas, bolsos, brazaletes, etc' },
+      { name: 'Viajes', icon: MapPin, href: '/catalogo?category=viajes', description: 'carry on, mochilas, bolsos, neceser, antifaces, almohadas, etc' },
+      { name: 'Moda', icon: Shirt, href: '/catalogo?category=moda', description: 'hoodies, crew, remeras, chombas, gorras, camperas, etc' },
+      { name: 'Uniformes', icon: Tractor, href: '/catalogo?category=uniformes', description: 'trabajo, lady stork, Michelin, etc' }
     ],
     // Columna 2
     [
-      { name: 'Uniformes', icon: Tractor, href: '/catalogo?category=uniformes' },
-      { name: 'Bebidas', icon: Coffee, href: '/catalogo?category=bebidas' },
-      { name: 'Imprenta', icon: BookOpen, href: '/catalogo?category=imprenta' },
-      { name: 'Merch', icon: Key, href: '/catalogo?category=merch' },
-      { name: 'Tecnología', icon: Smartphone, href: '/catalogo?category=tecnologia' }
-    ],
-    // Columna 3 - Imagen
-    []
+      { name: 'Bebidas', icon: Coffee, href: '/catalogo?category=bebidas', description: 'botellas, vasos, termos, mates, tazas' },
+      { name: 'Imprenta', icon: BookOpen, href: '/catalogo?category=imprenta', description: 'pack, poster, tarjetones, stickers, etc' },
+      { name: 'Merch', icon: Key, href: '/catalogo?category=merch', description: 'pins, lanyards, gorras, totebags, llaveros, etc' },
+      { name: 'Tecnología', icon: Smartphone, href: '/catalogo?category=tecnologia', description: 'auriculares, relojes, cargadores, insta pix' },
+      { name: 'Bonus', icon: Sun, href: '/catalogo?category=bonus', description: '3d, cosas especiales, abanicos, etc' }
+    ]
   ]
 
   return (
     <AnimatePresence>
-      {true && ( // Cambiado de isOpen a true para trabajar con el submenu visible
+      {isOpen && (
         <motion.div 
           className="fixed left-0 right-0 w-full z-[99999] top-16 md:top-[95px] flex justify-center"
           initial={{ opacity: 0, y: -10 }}
@@ -70,42 +68,82 @@ export function CatalogMegaMenu({ isOpen, onClose }: CatalogMegaMenuProps) {
           transition={{ duration: 0.2 }}
         >
           <div 
-            className="w-[620px] shadow-lg p-6 -mt-px relative overflow-hidden"
+            className="w-[600px] shadow-lg p-6 -mt-px relative overflow-hidden"
             style={{ 
               backgroundColor: '#0ea5e9',
               borderRadius: '0 0 8px 8px'
             }}
           >
-            <div className="grid grid-cols-3 gap-6 relative z-[1]">
-              {categories.map((column, columnIndex) => (
-                <motion.div 
-                  key={columnIndex} 
-                  className="space-y-3"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3, delay: columnIndex * 0.1 }}
+            <div className="space-y-4 relative z-[1]">
+              {/* Todas - Full width header */}
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <NextLink
+                  href="/catalogo"
+                  className="flex items-center space-x-2 py-2 px-3 rounded-md transition-all duration-200 group"
+                  style={{ 
+                    transition: 'background-color 0.2s'
+                  }}
+                  onMouseEnter={(e: React.MouseEvent<HTMLAnchorElement>) => {
+                    e.currentTarget.style.backgroundColor = '#1289bf'
+                  }}
+                  onMouseLeave={(e: React.MouseEvent<HTMLAnchorElement>) => {
+                    e.currentTarget.style.backgroundColor = 'transparent'
+                  }}
+                  onClick={onClose}
                 >
-                  {columnIndex === 2 ? (
-                    <div className='bgMenu'>
-                      <img src="/bgMenu.png" alt="bgMenu" />
-                    </div>
-                  ) : (
-                    column.map((category, index) => (
+                  <Grid3X3 className="h-4 w-4 text-white transition-colors duration-200 flex-shrink-0" />
+                  <span className="text-[16px] font-medium text-white group-hover:text-blue-100 transition-colors duration-200">
+                    Todas
+                  </span>
+                </NextLink>
+              </motion.div>
+
+              {/* Categories in 2 columns */}
+              <div className="grid grid-cols-2 gap-8">
+                {categories.map((column, columnIndex) => (
+                  <motion.div 
+                    key={columnIndex} 
+                    className="space-y-2"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.3, delay: (columnIndex + 1) * 0.1 }}
+                  >
+                    {column.map((category, index) => (
                       <NextLink
                         key={index}
                         href={category.href}
-                        className="flex items-center space-x-3 py-2 px-3 rounded-md hover:bg-white/20 transition-all duration-200 group"
+                        className="flex items-start space-x-2 py-2 px-3 rounded-md transition-all duration-200 group"
+                        style={{ 
+                          transition: 'background-color 0.2s'
+                        }}
+                        onMouseEnter={(e: React.MouseEvent<HTMLAnchorElement>) => {
+                          e.currentTarget.style.backgroundColor = '#1289bf'
+                        }}
+                        onMouseLeave={(e: React.MouseEvent<HTMLAnchorElement>) => {
+                          e.currentTarget.style.backgroundColor = 'transparent'
+                        }}
                         onClick={onClose}
                       >
-                        <category.icon className="h-4 w-4 text-white transition-colors duration-200 flex-shrink-0" />
-                        <span className="text-[16px] text-white group-hover:text-blue-100 transition-colors duration-200">
-                          {category.name}
-                        </span>
+                        <category.icon className="h-4 w-4 text-white transition-colors duration-200 flex-shrink-0 mt-0.5" />
+                        <div className="flex flex-col">
+                          <span className="text-[16px] font-medium text-white group-hover:text-blue-100 transition-colors duration-200">
+                            {category.name}
+                          </span>
+                          {category.description && (
+                            <span className="text-[11px] text-white/80 group-hover:text-blue-100/90 transition-colors duration-200 leading-tight">
+                              {category.description}
+                            </span>
+                          )}
+                        </div>
                       </NextLink>
-                    ))
-                  )}
-                </motion.div>
-              ))}
+                    ))}
+                  </motion.div>
+                ))}
+              </div>
             </div>
 
             <div className='shapeRayo'>

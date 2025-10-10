@@ -18,7 +18,8 @@ import {
   Calendar,
   CheckSquare,
   Building2,
-  Grid3X3
+  Grid3X3,
+  Mail
 } from 'lucide-react'
 import { useInquiriesCount } from '@/hooks/useInquiriesCount'
 import { NotificationBadge } from '@/components/NotificationBadge'
@@ -76,6 +77,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       count: inquiriesCount && inquiriesCount > 0 ? inquiriesCount : undefined 
     },
     { name: 'Clientes', href: '/admin/clients', icon: Users },
+    { name: 'Newsletter', href: '/admin/newsletter', icon: Mail },
     { name: 'Recordatorios', href: '/admin/reminders', icon: Calendar },
     { name: 'Tareas', href: '/admin/tasks', icon: CheckSquare },
   ]

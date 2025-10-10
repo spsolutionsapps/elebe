@@ -28,37 +28,35 @@ export function NewsletterForm() {
 
   if (isSuccess) {
     return (
-      <div className="text-center">
-        <CheckCircle className="w-8 h-8 text-green-500 mx-auto mb-2" />
-        <p className="text-white font-medium">¡Suscrito correctamente!</p>
-        <p className="text-gray-300 text-sm">Gracias por unirte a nuestro newsletter</p>
+      <div className="text-center space-y-3 py-4">
+        <CheckCircle className="w-12 h-12 text-green-500 mx-auto" />
+        <p className="text-gray-900 font-medium font-body">¡Suscrito correctamente!</p>
+        <p className="text-gray-600 text-sm font-body">Gracias por unirte a nuestro newsletter</p>
       </div>
     )
   }
 
   return (
-    <form action={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-      <div className="flex-1">
+    <form action={handleSubmit} className="space-y-4">
+      <div className="relative">
         <Input
           name="email"
           type="email"
           required
-          placeholder="tu@email.com"
-          className="bg-transparent border-white/20 text-white placeholder-gray-300 focus:border-white/40"
+          placeholder="Ingresa tu email"
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-500 font-body"
+          disabled={isSubmitting}
         />
       </div>
       <Button
         type="submit"
         disabled={isSubmitting}
-        className="bg-lime-400 hover:bg-lime-500 text-black font-medium px-6 py-2 rounded-full transition-colors"
+        className="w-full bg-gray-900 hover:bg-blue-600 text-white p-3 rounded-lg transition-colors duration-300 flex items-center justify-center font-body"
       >
         {isSubmitting ? (
-          <Loader2 className="w-4 h-4 animate-spin" />
+          <Loader2 className="w-5 h-5 animate-spin" />
         ) : (
-          <>
-            <Mail className="w-4 h-4 mr-2" />
-            Suscribirse
-          </>
+          <Mail className="w-5 h-5" />
         )}
       </Button>
     </form>

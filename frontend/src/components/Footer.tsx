@@ -1,16 +1,9 @@
 'use client'
 
-import { useState } from 'react'
 import { Facebook, Twitter, Mail, Phone, MapPin, Send } from 'lucide-react'
+import { NewsletterForm } from './NewsletterForm'
 
 export function Footer() {
-  const [email, setEmail] = useState('')
-
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Newsletter email submitted
-    setEmail('')
-  }
 
   return (
     <footer className="bg-white text-gray-900 py-16 border-t border-gray-200">
@@ -132,24 +125,9 @@ export function Footer() {
               Suscríbete a Nuestro<br />
               Newsletter
             </h3>
-            <form onSubmit={handleNewsletterSubmit} className="space-y-4">
-              <div className="relative">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Ingresa tu email"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-500 font-body"
-                  required
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full bg-gray-900 hover:bg-blue-600 p-3 rounded-lg transition-colors duration-300 flex items-center justify-center font-body"
-              >
-                <Send className="h-5 w-5 text-white" />
-              </button>
-            </form>
+            <div className="newsletter-form-wrapper">
+              <NewsletterForm />
+            </div>
           </div>
         </div>
 

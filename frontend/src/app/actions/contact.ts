@@ -67,17 +67,36 @@ export async function subscribeNewsletter(formData: FormData) {
   }
   
   try {
-    // Simular suscripción (aquí conectarías con tu servicio de email marketing)
-    console.log('Nueva suscripción a newsletter:', {
-      email,
-      timestamp: new Date().toISOString()
+    // Conectar con el backend
+    // En el servidor, usar API_URL (apunta a backend:3001 en Docker)
+    // En el cliente, usar NEXT_PUBLIC_API_URL (apunta a localhost:3001)
+    const API_URL = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api'
+    
+    console.log('🔗 Newsletter: Using API_URL:', API_URL)
+    
+    const response = await fetch(`${API_URL}/newsletter`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }),
     })
     
+    if (!response.ok) {
+      const error = await response.json()
+      throw new Error(error.message || 'Error al suscribirse')
+    }
+    
+    const data = await response.json()
+    console.log('✅ Nueva suscripción a newsletter:', data)
+    
     revalidatePath('/')
-    redirect('/?newsletter=success')
+    
+    // No hacer redirect, solo retornar éxito para que el componente maneje el estado
+    return { success: true, message: data.message }
     
   } catch (error) {
     console.error('Error suscribiendo a newsletter:', error)
-    throw new Error('Error al suscribirse. Inténtalo de nuevo.')
+    throw error instanceof Error ? error : new Error('Error al suscribirse. Inténtalo de nuevo.')
   }
 }
