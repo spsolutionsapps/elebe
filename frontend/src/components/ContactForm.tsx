@@ -14,8 +14,11 @@ export function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
 
-  const handleSubmit = async (formData: FormData) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     setIsSubmitting(true)
+    
+    const formData = new FormData(e.currentTarget)
     
     try {
       await submitContact(formData)
@@ -61,7 +64,7 @@ export function ContactForm() {
         </p>
       </CardHeader>
       <CardContent>
-        <form action={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="name" className="text-white">

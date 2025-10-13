@@ -101,8 +101,11 @@ export function Cart({ initialItems = [] }: CartProps) {
     }
   }
 
-  const handleSubmitInquiry = async (formData: FormData) => {
+  const handleSubmitInquiry = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     setIsSubmitting(true)
+    
+    const formData = new FormData(e.currentTarget)
     
     try {
       await submitInquiry(formData)
@@ -297,7 +300,7 @@ export function Cart({ initialItems = [] }: CartProps) {
           </p>
         </CardHeader>
         <CardContent>
-          <form action={handleSubmitInquiry} className="space-y-4">
+          <form onSubmit={handleSubmitInquiry} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="name" className="text-white">

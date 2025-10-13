@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useEffect } from 'react'
+import { useCallback, useMemo, useRef, useEffect, useState } from 'react'
 
 // Hook para optimización de rendering
 export function usePerformance() {
@@ -77,9 +77,9 @@ export function useLazyData<T>(
   fetchFn: () => Promise<T>,
   dependencies: React.DependencyList = []
 ) {
-  const [data, setData] = React.useState<T | null>(null)
-  const [loading, setLoading] = React.useState(false)
-  const [error, setError] = React.useState<Error | null>(null)
+  const [data, setData] = useState<T | null>(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<Error | null>(null)
 
   const fetchData = useCallback(async () => {
     setLoading(true)
@@ -104,7 +104,7 @@ export function useVirtualization(
   itemHeight: number,
   containerHeight: number
 ) {
-  const [scrollTop, setScrollTop] = React.useState(0)
+  const [scrollTop, setScrollTop] = useState(0)
 
   const visibleStart = Math.floor(scrollTop / itemHeight)
   const visibleEnd = Math.min(
@@ -137,8 +137,8 @@ export function useVirtualization(
 export function useIntersectionObserver(
   options: IntersectionObserverInit = {}
 ) {
-  const [isIntersecting, setIsIntersecting] = React.useState(false)
-  const [hasIntersected, setHasIntersected] = React.useState(false)
+  const [isIntersecting, setIsIntersecting] = useState(false)
+  const [hasIntersected, setHasIntersected] = useState(false)
   const ref = useRef<HTMLElement>(null)
 
   useEffect(() => {
@@ -167,7 +167,7 @@ export function useIntersectionObserver(
 
 // Hook para performance monitoring
 export function usePerformanceMonitoring() {
-  const [metrics, setMetrics] = React.useState<{
+  const [metrics, setMetrics] = useState<{
     renderTime: number
     memoryUsage: number
     fps: number

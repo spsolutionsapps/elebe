@@ -11,8 +11,11 @@ export function NewsletterForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
 
-  const handleSubmit = async (formData: FormData) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     setIsSubmitting(true)
+    
+    const formData = new FormData(e.currentTarget)
     
     try {
       await subscribeNewsletter(formData)
@@ -37,7 +40,7 @@ export function NewsletterForm() {
   }
 
   return (
-    <form action={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4">
       <div className="relative">
         <Input
           name="email"

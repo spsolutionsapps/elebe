@@ -25,6 +25,9 @@ export interface Product {
   
   // Contador de visitas
   views?: number
+  
+  // Orden en productos destacados
+  featuredOrder?: number | null
 }
 
 export interface Service {
