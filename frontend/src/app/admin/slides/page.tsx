@@ -252,12 +252,15 @@ export default function SlidesPage() {
                   Enlace del Botón
                 </label>
                 <input
-                  type="url"
+                  type="text"
                   value={formData.buttonLink}
                   onChange={(e) => setFormData({ ...formData, buttonLink: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Ej: /catalogo o https://ejemplo.com"
                 />
+                <p className="text-xs text-gray-500 mt-1">
+                  Puedes usar rutas relativas (/catalogo) o URLs completas (https://ejemplo.com)
+                </p>
               </div>
               
               <div>

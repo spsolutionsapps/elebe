@@ -199,7 +199,8 @@ function CatalogoContent() {
                 <Link
                   key={category.id}
                   href={`/catalogo?category=${category.slug}`}
-                  className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors border border-white/20 hover:border-white/40"
+                  className="px-4 py-2 rounded-full transition-colors hover:opacity-90"
+                  style={{ backgroundColor: 'rgb(242, 219, 103)' }}
                 >
                   {category.name}
                 </Link>
@@ -240,64 +241,74 @@ function CatalogoContent() {
           </div>
         )}
 
-        {/* Products Grid */}
-        {filteredProducts.length === 0 ? (
-          <div className="text-center py-16">
-            <Package className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-xl font-medium text-gray-900 mb-2">
-              {searchTerm ? 'No se encontraron productos' : 'No hay productos disponibles'}
-            </h3>
-            <p className="text-gray-600">
-              {searchTerm ? 'Intenta con otros términos de búsqueda' : 'Pronto tendremos nuevos productos para ti'}
-            </p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 ">
-            {filteredProducts.map((product) => {
-              const productSlug = generateSlug(product.name)
-              return (
-                <Link
-                  key={product.id}
-                  href={`/producto/${productSlug}`}
-                  className="group block"
+        {/* Products Grid - Solo mostrar si hay búsqueda o categoría seleccionada */}
+        {(categoryParam || searchParam) && (
+          <>
+            {filteredProducts.length === 0 ? (
+              <div className="text-center py-16">
+                <Package className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-xl font-medium text-gray-900 mb-2">
+                  No se encontraron productos
+                </h3>
+                <p className="text-gray-600">
+                  {searchTerm ? 'Intenta con otros términos de búsqueda' : 'No hay productos en esta categoría'}
+                </p>
+                <Link 
+                  href="/catalogo" 
+                  className="inline-block mt-4 text-blue-600 hover:text-blue-700 underline"
                 >
-                  <div className="rounded-lg overflow-hidden">
-                    {/* Imagen del producto */}
-                    <div className="w-full h-64 bg-transparent">
-                      {product.image ? (
-                        <img
-                          src={getImageUrl(product.image)}
-                          alt={product.name}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 radius20"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center bg-gray-100">
-                          <Package className="h-16 w-16 text-gray-400" />
-                        </div>
-                      )}
-                    </div>
-                    
-                    {/* Barra inferior con nombre del producto */}
-                    <div className="bg-black text-white p-3 text-left">
-                      <h2 className="text-sm font-medium truncate">
-                        {product.name}
-                      </h2>
-                      <p className="text-xs text-gray-300 mt-1">
-                        {product.category}
-                      </p>
-                    </div>
-                  </div>
+                  ← Volver a categorías
                 </Link>
-              )
-            })}
-          </div>
-        )}
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 ">
+                {filteredProducts.map((product) => {
+                  const productSlug = generateSlug(product.name)
+                  return (
+                    <Link
+                      key={product.id}
+                      href={`/producto/${productSlug}`}
+                      className="group block"
+                    >
+                      <div className="rounded-lg overflow-hidden">
+                        {/* Imagen del producto */}
+                        <div className="w-full h-64 bg-transparent">
+                          {product.image ? (
+                            <img
+                              src={getImageUrl(product.image)}
+                              alt={product.name}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 radius20"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center bg-gray-100">
+                              <Package className="h-16 w-16 text-gray-400" />
+                            </div>
+                          )}
+                        </div>
+                        
+                        {/* Barra inferior con nombre del producto */}
+                        <div className="bg-black text-white p-3 text-left">
+                          <h2 className="text-sm font-medium truncate">
+                            {product.name}
+                          </h2>
+                          <p className="text-xs text-gray-300 mt-1">
+                            {product.category}
+                          </p>
+                        </div>
+                      </div>
+                    </Link>
+                  )
+                })}
+              </div>
+            )}
 
-        {/* Results Count */}
-        {searchTerm && (
-          <div className="text-center mt-8 text-gray-600">
-            {filteredProducts.length} producto{filteredProducts.length !== 1 ? 's' : ''} encontrado{filteredProducts.length !== 1 ? 's' : ''}
-          </div>
+            {/* Results Count */}
+            {searchTerm && (
+              <div className="text-center mt-8 text-gray-600">
+                {filteredProducts.length} producto{filteredProducts.length !== 1 ? 's' : ''} encontrado{filteredProducts.length !== 1 ? 's' : ''}
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>
