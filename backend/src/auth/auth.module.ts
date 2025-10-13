@@ -15,12 +15,17 @@ import { LocalStrategy } from './strategies/local.strategy';
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        secret: configService.get<string>('JWT_SECRET') || 'your-super-secret-jwt-key-2024',
-        signOptions: {
-          expiresIn: configService.get<string>('JWT_EXPIRES_IN', '7d'),
-        },
-      }),
+      useFactory: async (configService: ConfigService) => {
+        const expiresIn = configService.get<string>('JWT_EXPIRES_IN', '7d');
+        // Convert string duration to seconds (7d = 7 * 24 * 60 * 60 = 604800 seconds)
+        const expiresInSeconds = expiresIn === '7d' ? 604800 : parseInt(expiresIn) || 604800;
+        return {
+          secret: configService.get<string>('JWT_SECRET') || 'your-super-secret-jwt-key-2024',
+          signOptions: {
+            expiresIn: expiresInSeconds,
+          },
+        };
+      },
       inject: [ConfigService],
     }),
   ],
