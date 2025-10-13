@@ -251,6 +251,7 @@ export default function SlidesPage() {
                 <label className="block text-sm font-medium mb-1">
                   Enlace del Botón
                 </label>
+                
                 <input
                   type="text"
                   value={formData.buttonLink}
@@ -260,6 +261,7 @@ export default function SlidesPage() {
                 />
                 <p className="text-xs text-gray-500 mt-1">
                   Puedes usar rutas relativas (/catalogo) o URLs completas (https://ejemplo.com)
+
                 </p>
               </div>
               
