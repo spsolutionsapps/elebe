@@ -36,25 +36,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [expandedMenus, setExpandedMenus] = useState<string[]>([])
   const { alertState, showAlert, hideAlert } = useModal()
+  const [user, setUser] = useState<any>(null)
   
-  // TEMPORAL: Bypass de autenticación para desarrollo - SIEMPRE ACTIVO
-  console.log('🔐 Admin Layout: FORCING DEVELOPMENT BYPASS')
-  const devUser = {
-    id: 'dev-user',
-    email: 'admin@lbpremium.com',
-    name: 'Admin Dev',
-    role: 'admin'
-  }
-  const [user, setUser] = useState<any>(devUser)
-  
-  console.log('🔐 Admin Layout: Component rendered, user state:', user)
   const { count: inquiriesCount, error: inquiriesError } = useInquiriesCount()
 
-  // Debug: verificar el conteo de consultas
-  // console.log('Layout - Consultas pendientes:', inquiriesCount)
-  // console.log('Layout - Error consultas:', inquiriesError)
-
-  // Definir el array de navegación aquí para tener acceso a inquiriesCount
+  // Definir el array de navegación con acceso a inquiriesCount
   const navigation: NavigationItem[] = [
     { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
     {
@@ -84,53 +70,45 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
 
   useEffect(() => {
-    console.log('🔐 Admin Layout: useEffect triggered for path:', pathname)
-    
     // Si estamos en la página de login, no verificar autenticación
     if (pathname === '/admin/login') {
-      console.log('🔐 Admin Layout: On login page, skipping auth check')
       return
     }
 
-    // TEMPORAL: Bypass de autenticación para desarrollo - SIEMPRE ACTIVO
-    console.log('🔐 Admin Layout: FORCING DEVELOPMENT BYPASS')
-    const devUser = {
-      id: 'dev-user',
-      email: 'admin@lbpremium.com',
-      name: 'Admin Dev',
-      role: 'admin'
+    // SOLO para desarrollo local: Bypass opcional (NUNCA en producción)
+    const isDevelopment = process.env.NODE_ENV === 'development'
+    const bypassAuth = process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === 'true'
+    
+    if (isDevelopment && bypassAuth) {
+      console.warn('⚠️ DESARROLLO: Bypass de autenticación activado')
+      setUser({
+        id: 'dev-user',
+        email: 'admin@lbpremium.com',
+        name: 'Admin Dev',
+        role: 'admin'
+      })
+      return
     }
-    setUser(devUser)
-    console.log('🔐 Admin Layout: Dev user set:', devUser)
-    return
 
-    // Verificar si hay un usuario logueado
+    // Verificar si hay un usuario logueado (producción y desarrollo normal)
     const token = localStorage.getItem('access_token')
     const userData = localStorage.getItem('user')
     
-    console.log('🔐 Admin Layout: Token exists:', !!token)
-    console.log('🔐 Admin Layout: User data exists:', !!userData)
-    console.log('🔐 Admin Layout: Token:', token ? 'Present' : 'Missing')
-    console.log('🔐 Admin Layout: User data:', userData ? 'Present' : 'Missing')
-    
     if (!token || !userData) {
-      console.log('🔐 Admin Layout: Missing auth data, redirecting to login')
       router.push('/admin/login')
       return
     }
 
     try {
       const parsedUser = JSON.parse(userData)
-      console.log('🔐 Admin Layout: User parsed successfully:', parsedUser)
       setUser(parsedUser)
-      console.log('🔐 Admin Layout: User state set')
     } catch (error) {
-      console.error('❌ Admin Layout: Error parsing user data:', error)
+      console.error('Error parsing user data:', error)
       localStorage.removeItem('access_token')
       localStorage.removeItem('user')
       router.push('/admin/login')
     }
-  }, [pathname]) // Remover router de las dependencias para evitar bucles
+  }, [pathname, router])
 
   // Auto-expand "Página Web" menu when on subpages
   useEffect(() => {
@@ -174,13 +152,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   // Si estamos en la página de login, mostrar solo el contenido
   if (pathname === '/admin/login') {
-    console.log('🔐 Admin Layout: Rendering login page')
     return <>{children}</>
   }
 
   // Si no hay usuario y no estamos en login, mostrar loading
   if (!user && pathname !== '/admin/login') {
-    console.log('🔐 Admin Layout: No user, showing loading state')
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
@@ -190,8 +166,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       </div>
     )
   }
-
-  console.log('🔐 Admin Layout: User authenticated, rendering admin layout')
   
   return (
     <div 
