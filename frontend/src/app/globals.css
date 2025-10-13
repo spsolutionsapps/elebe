@@ -193,6 +193,16 @@
   }
 }
 
+.flexCentradoContacto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px;
+  background-color: #4FBED5;
+  margin-top: 62px;
+}
+
 .p20 {padding: 0 26px;}
 
 .card-slides {	

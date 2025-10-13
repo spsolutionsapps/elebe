@@ -173,7 +173,7 @@ export function Navigation() {
                       placeholder="¿Qué producto buscas?"
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      className="bg-black text-white placeholder-gray-400 px-4 py-2 rounded-full border border-blue focus:outline-none focus:border-blue focus:ring-1 focus:ring-blue w-64"
+                      className="bg-white text-black placeholder-gray-500 px-4 py-2 rounded-full border-none outline-none w-64"
                       autoFocus
                     />
                   </form>
