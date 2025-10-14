@@ -1,6 +1,6 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
-set -euo pipefail
+set -eu
 
 # Paths
 REPO_ROOT="/home/joule/project/pado/elebe"
@@ -22,7 +22,7 @@ TGT_BLACK_ITALIC="GothamBlackItalic.otf"
 echo "==> Setting up Gotham fonts"
 
 # 1) Validate source fonts directory
-if [[ ! -d "$SRC_DIR" ]]; then
+if [ ! -d "$SRC_DIR" ]; then
   echo "ERROR: Source directory not found: $SRC_DIR" >&2
   exit 1
 fi
@@ -31,18 +31,20 @@ fi
 mkdir -p "$PUBLIC_DIR_LOCAL"
 
 # 3) Copy/rename fonts locally
-declare -A FILE_MAP=(
-  ["$SRC_BOOK"]="$TGT_BOOK"
-  ["$SRC_MEDIUM"]="$TGT_MEDIUM"
-  ["$SRC_BLACK_ITALIC"]="$TGT_BLACK_ITALIC"
-)
+set -- \
+  "$SRC_BOOK" "$TGT_BOOK" \
+  "$SRC_MEDIUM" "$TGT_MEDIUM" \
+  "$SRC_BLACK_ITALIC" "$TGT_BLACK_ITALIC"
 
-for SRC_NAME in "${!FILE_MAP[@]}"; do
-  TGT_NAME="${FILE_MAP[$SRC_NAME]}"
+while [ $# -gt 0 ]; do
+  SRC_NAME="$1"
+  TGT_NAME="$2"
+  shift 2
+
   SRC_PATH="$SRC_DIR/$SRC_NAME"
   TGT_PATH="$PUBLIC_DIR_LOCAL/$TGT_NAME"
 
-  if [[ ! -f "$SRC_PATH" ]]; then
+  if [ ! -f "$SRC_PATH" ]; then
     echo "WARNING: Missing source font: $SRC_PATH (skipping)" >&2
     continue
   fi
@@ -60,7 +62,7 @@ if docker ps --format '{{.Names}}' | grep -qx "$FRONTEND_CONTAINER"; then
 
   for TGT_NAME in "$TGT_BOOK" "$TGT_MEDIUM" "$TGT_BLACK_ITALIC"; do
     LOCAL_PATH="$PUBLIC_DIR_LOCAL/$TGT_NAME"
-    if [[ -f "$LOCAL_PATH" ]]; then
+    if [ -f "$LOCAL_PATH" ]; then
       docker cp "$LOCAL_PATH" "$FRONTEND_CONTAINER:$PUBLIC_DIR_CONTAINER/"
       echo "Copied into container: $TGT_NAME"
     else
