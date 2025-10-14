@@ -48,7 +48,7 @@ async function bootstrap() {
   
   console.log(`🚀 Fashion Style API running on port ${port}`);
   console.log(`📚 Swagger docs available at http://localhost:${port}/api/docs`);
-  console.log(`🌐 CORS enabled for origins: ${corsOrigins.join(', ')}`);
+  console.log(`🌐 CORS enabled for all origins`);
 }
 
 bootstrap();
