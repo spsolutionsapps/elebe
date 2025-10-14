@@ -53,6 +53,7 @@ async function main() {
       image: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=400',
       images: [],
       isActive: true,
+      views: 0,
     },
     {
       id: 'product-2',
@@ -62,6 +63,7 @@ async function main() {
       image: 'https://images.unsplash.com/photo-1445205170230-053b83016050?w=400',
       images: [],
       isActive: true,
+      views: 0,
     },
     {
       id: 'product-3',
@@ -71,6 +73,7 @@ async function main() {
       image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400',
       images: [],
       isActive: true,
+      views: 0,
     },
   ];
 

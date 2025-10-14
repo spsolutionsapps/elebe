@@ -13,7 +13,6 @@ CREATE INDEX IF NOT EXISTS "Service_order_idx" ON "Service"("order");
 -- Indexes for Product model
 CREATE INDEX IF NOT EXISTS "Product_isActive_idx" ON "Product"("isActive");
 CREATE INDEX IF NOT EXISTS "Product_isFeatured_featuredOrder_idx" ON "Product"("isFeatured", "featuredOrder");
-CREATE INDEX IF NOT EXISTS "Product_views_idx" ON "Product"("views" DESC);
 CREATE INDEX IF NOT EXISTS "Product_category_idx" ON "Product"("category");
 CREATE INDEX IF NOT EXISTS "Product_createdAt_idx" ON "Product"("createdAt" DESC);
 
