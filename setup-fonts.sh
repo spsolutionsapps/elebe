@@ -3,7 +3,7 @@
 set -eu
 
 # Paths
-REPO_ROOT="/home/joule/project/pado/elebe"
+REPO_ROOT="$(dirname "$0")"
 SRC_DIR="$REPO_ROOT/fonts para convertir"
 PUBLIC_DIR_LOCAL="$REPO_ROOT/frontend/public/fonts"
 FRONTEND_CONTAINER="lb-premium-frontend"
