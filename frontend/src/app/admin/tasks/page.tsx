@@ -8,7 +8,9 @@ import { Plus, Calendar, User, Tag, AlertCircle } from 'lucide-react'
 import { Task } from '@/types'
 import { TaskCard } from '@/components/TaskCard'
 import { TaskModal } from '@/components/TaskModal'
+import { ConfirmModal } from '@/components/ConfirmModal'
 import { useToast } from '@/hooks/useToast'
+import { useModal } from '@/hooks/useModal'
 import { getApiUrl } from '@/lib/config'
 
 const COLUMNS = [
@@ -132,6 +134,7 @@ function DroppableColumn({
 
 export default function TasksPage() {
   const { showSuccess, showError } = useToast()
+  const { confirmState, showConfirm, handleConfirm, handleCancel } = useModal()
   const [tasks, setTasks] = useState<Task[]>([])
   const [loading, setLoading] = useState(true)
   const [showTaskModal, setShowTaskModal] = useState(false)
@@ -241,6 +244,18 @@ export default function TasksPage() {
   }
 
   const handleDeleteTask = async (taskId: string) => {
+    const confirmed = await showConfirm({
+      title: 'Eliminar Tarea',
+      message: '¿Estás seguro de que quieres eliminar esta tarea? Esta acción no se puede deshacer.',
+      confirmText: 'Eliminar',
+      cancelText: 'Cancelar',
+      variant: 'danger'
+    })
+
+    if (!confirmed) {
+      return
+    }
+
     try {
       const response = await fetch(getApiUrl(`/tasks/${taskId}`), {
         method: 'DELETE',
@@ -392,6 +407,18 @@ export default function TasksPage() {
 
   return (
     <div className="space-y-6">
+      {/* Confirm Modal */}
+      <ConfirmModal
+        isOpen={confirmState.isOpen}
+        onClose={handleCancel}
+        onConfirm={handleConfirm}
+        title={confirmState.title}
+        message={confirmState.message}
+        confirmText={confirmState.confirmText}
+        cancelText={confirmState.cancelText}
+        variant={confirmState.variant}
+      />
+
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
