@@ -51,8 +51,8 @@ services:
     container_name: lb-premium-frontend
     environment:
       - NODE_ENV=development
-      - NEXT_PUBLIC_API_URL=http://localhost:3001/api
-      - NEXT_PUBLIC_BACKEND_URL=http://localhost:3001
+      - NEXT_PUBLIC_API_URL=http://146.190.116.222:3001/api
+      - NEXT_PUBLIC_BACKEND_URL=http://146.190.116.222:3001
     ports:
       - "${FRONTEND_PORT:-3000}:3000"
     depends_on:
