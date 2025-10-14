@@ -28,7 +28,9 @@ ENV NODE_ENV production
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-COPY --from=builder /app/public ./public
+## Copy only root-level files from public (exclude subdirectories)
+# 1) Copy entire public to a temp location from the builder
+COPY --from=builder /app/public /tmp/public
 
 # Configurar los permisos correctos para el directorio de caché de Next.js
 RUN mkdir .next
@@ -36,7 +38,11 @@ RUN chown nextjs:nodejs .next
 
 # Copiar archivos de construcción
 COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
-COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+# 2) Create final public dir and move only files at depth 1
+RUN mkdir -p ./public \
+    && find /tmp/public -maxdepth 1 -type f -exec cp -p {} ./public/ \; \
+    && rm -rf /tmp/public \
+    && chown -R nextjs:nodejs ./public
 COPY --from=builder --chown=nextjs:nodejs /app/package.json ./package.json
 
 USER nextjs
