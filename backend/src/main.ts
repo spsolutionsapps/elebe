@@ -12,28 +12,12 @@ async function bootstrap() {
   // Set global prefix for all routes
   app.setGlobalPrefix('api');
 
-  // Enable CORS with dynamic configuration
-  const corsOrigins: (string | RegExp)[] = [
-    process.env.FRONTEND_URL || 'http://localhost:3000',
-    process.env.ADMIN_URL || 'http://localhost:3002',
-  ];
-
-  // Add production domains if specified
-  if (process.env.PRODUCTION_DOMAINS) {
-    const productionDomains = process.env.PRODUCTION_DOMAINS.split(',').map(domain => domain.trim());
-    corsOrigins.push(...productionDomains);
-  }
-
-  // In development, allow any localhost port
-  if (process.env.NODE_ENV !== 'production') {
-    corsOrigins.push(/^http:\/\/localhost:\d+$/);
-  }
-
+  // Enable CORS for all origins
   app.enableCors({
-    origin: corsOrigins,
+    origin: true, // Allow all origins
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS', 'HEAD'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With', '*'],
   });
 
   // Serve static files
