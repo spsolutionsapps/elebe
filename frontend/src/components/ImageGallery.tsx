@@ -47,7 +47,7 @@ export default function ImageGallery({ images, productName }: ImageGalleryProps)
     <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
       {/* Thumbnails - Left side */}
       <div className="lg:col-span-1 order-2 lg:order-1">
-        <div className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-y-auto height-auto ">
+        <div className="flex lg:flex-col gap-2 lg:gap-3.5 overflow-x-auto lg:overflow-y-auto height-auto ">
           {images.map((image, index) => (
             <button
               key={index}

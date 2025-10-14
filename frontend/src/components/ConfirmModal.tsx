@@ -75,7 +75,7 @@ export function ConfirmModal({
       onClick={onClose}
     >
       <Card 
-        className={`w-full max-w-md ${styles.borderColor} border-2 bg-white`}
+        className="w-full max-w-md bg-white border-2 shadow-xl"
         style={{ borderRadius: 0 }}
         onClick={(e) => e.stopPropagation()}
       >

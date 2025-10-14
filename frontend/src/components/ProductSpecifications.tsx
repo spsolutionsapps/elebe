@@ -31,22 +31,24 @@ export function ProductSpecifications({ product }: ProductSpecificationsProps) {
   }
 
   return (
-    <div className="mt-6">
-      <h3 className="text-lg font-semibold mb-4">Especificaciones Técnicas</h3>
+    <div>
+      <h3 className="text-lg font-semibold mb-4 text-gray-900">Especificaciones Técnicas</h3>
       
       {/* Tipos de Impresión */}
       {product.printingTypes && product.printingTypes.length > 0 && (
         <div className="mb-4">
-          <h4 className="text-sm font-medium mb-2">Tipos de Impresión</h4>
-          <div className="flex flex-wrap gap-2">
-            {product.printingTypes.map((type, index) => (
-              <span
-                key={index}
-                className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-600 text-white"
-              >
-                {type}
-              </span>
-            ))}
+          <div className="flex items-center gap-3 flex-wrap">
+            <h4 className="text-sm font-medium text-gray-900">Tipos de Impresión:</h4>
+            <div className="flex flex-wrap gap-2">
+              {product.printingTypes.map((type, index) => (
+                <span
+                  key={index}
+                  className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-600 text-white"
+                >
+                  {type}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       )}
@@ -54,8 +56,8 @@ export function ProductSpecifications({ product }: ProductSpecificationsProps) {
       {/* Dimensiones del Producto */}
       {(product.productHeight || product.productLength || product.productWidth || product.productWeight) && (
         <div className="mb-4">
-          <h4 className="text-sm font-medium mb-2">Dimensiones del Producto</h4>
-          <div className="grid grid-cols-2 gap-4 text-sm">
+          <h4 className="text-sm font-medium mb-2 text-gray-900">Dimensiones del Producto</h4>
+          <div className="grid grid-cols-2 gap-4 text-sm text-gray-900">
             {product.productHeight && (
               <div>
                 <span>Altura:</span>
@@ -87,8 +89,8 @@ export function ProductSpecifications({ product }: ProductSpecificationsProps) {
       {/* Dimensiones del Empaque */}
       {(product.packagingHeight || product.packagingLength || product.packagingWidth || product.packagingWeight) && (
         <div className="mb-4">
-          <h4 className="text-sm font-medium mb-2">Dimensiones del Empaque</h4>
-          <div className="grid grid-cols-2 gap-4 text-sm">
+          <h4 className="text-sm font-medium mb-2 text-gray-900">Dimensiones del Empaque</h4>
+          <div className="grid grid-cols-2 gap-4 text-sm text-gray-900">
             {product.packagingHeight && (
               <div>
                 <span>Altura:</span>
@@ -120,8 +122,8 @@ export function ProductSpecifications({ product }: ProductSpecificationsProps) {
       {/* Información Adicional */}
       {(product.unitsPerBox || product.individualPackaging) && (
         <div>
-          <h4 className="text-sm font-mediummb-2">Información Adicional</h4>
-          <div className="grid grid-cols-2 gap-4 text-sm">
+          <h4 className="text-sm font-medium mb-2 text-gray-900">Información Adicional</h4>
+          <div className="grid grid-cols-2 gap-4 text-sm text-gray-900">
             {product.unitsPerBox && (
               <div>
                 <span>Unidades por Caja:</span>

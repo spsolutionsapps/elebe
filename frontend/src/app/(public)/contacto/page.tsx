@@ -123,7 +123,7 @@ export default function ContactoPage() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
+            <div className="bg-white p-8 rounded-2xl border border-gray-200">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Envíanos tu consulta</h2>
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 {/* Name and Email Row */}
@@ -213,7 +213,7 @@ export default function ContactoPage() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
+            <div className="bg-white p-8 rounded-2xl border border-gray-200">
               <h3 className="text-gray-900 text-2xl font-bold mb-8 flex items-center">
                 <ShoppingCart className="mr-3 h-6 w-6 text-blue-600" />
                 Productos en tu consulta

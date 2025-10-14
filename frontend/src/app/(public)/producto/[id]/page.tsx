@@ -119,15 +119,18 @@ export default function ProductPage({ params }: ProductPageProps) {
 
   return (
     <div className="paddingDesktop82">
-     
 
-        <div className="max-w-6xl mx-auto mb-20">
+      <div className="shapeDerProducto"> 
+        <img src="/productoShape.svg" alt="shapeDerProducto" />
+      </div>
+
+        <div className="max-w-8xl mx-auto mb-20">
 
           {/* Breadcrumb */}
         <div className="mb-6">
           <Link 
             href="/catalogo" 
-            className="inline-flex items-center transition-colors"
+            className="inline-flex items-center text-gray-900 hover:text-gray-700 transition-colors"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Volver al catálogo
@@ -148,25 +151,25 @@ export default function ProductPage({ params }: ProductPageProps) {
               {/* Product Header */}
               <div>
                
-              <p className="text-lg text-gray-300 mb-6">
+              <p className="text-lg text-gray-900 mb-62">
                   {product.category}
                 </p>
                
-                <h1 className="text-4xl font-bold text-white mb-3">
+                <h1 className="text-4xl font-bold text-gray-900 mb-2">
                   {product.name}
                 </h1>
                
               </div>
 
               {/* Tabs Navigation */}
-              <div className="border-b border-gray-700">
+              <div className="border-b border-gray-300">
                 <div className="flex gap-8">
                   <button
                     onClick={() => setActiveTab('detalles')}
                     className={`pb-4 px-2 text-lg font-medium transition-colors relative ${
                       activeTab === 'detalles'
-                        ? 'text-white'
-                        : 'text-gray-400 hover:text-gray-300'
+                        ? 'text-gray-900'
+                        : 'text-gray-600 hover:text-gray-900'
                     }`}
                   >
                     Detalles del producto
@@ -178,8 +181,8 @@ export default function ProductPage({ params }: ProductPageProps) {
                     onClick={() => setActiveTab('especificaciones')}
                     className={`pb-4 px-2 text-lg font-medium transition-colors relative ${
                       activeTab === 'especificaciones'
-                        ? 'text-white'
-                        : 'text-gray-400 hover:text-gray-300'
+                        ? 'text-gray-900'
+                        : 'text-gray-600 hover:text-gray-900'
                     }`}
                   >
                     Especificaciones técnicas
@@ -191,10 +194,10 @@ export default function ProductPage({ params }: ProductPageProps) {
               </div>
 
               {/* Tab Content */}
-              <div className="py-6">
+              <div className="py-2">
                 {activeTab === 'detalles' ? (
                   <div>
-                    <p className="text-gray-300 leading-relaxed text-lg">
+                    <p className="text-gray-900 leading-relaxed text-lg">
                       {product.description}
                     </p>
                   </div>
@@ -206,24 +209,24 @@ export default function ProductPage({ params }: ProductPageProps) {
               </div>
 
               {/* Add to Cart */}
-              <div className="space-y-6">
+              <div className="space-y-4">
                 <div className="flex items-center gap-4">
                   {/* Quantity Selector */}
-                  <div className="flex items-center bg-gray-800 rounded-full px-4 py-2">
+                  <div className="flex items-center bg-gray-100 rounded-full px-4 py-2 border border-gray-300">
                     <button
                       onClick={() => handleQuantityChange(quantity - 1)}
-                      className="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center hover:bg-gray-600 transition-colors"
+                      className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300 transition-colors"
                     >
-                      <Minus className="h-4 w-4 text-white" />
+                      <Minus className="h-4 w-4 text-gray-900" />
                     </button>
-                    <span className="mx-4 text-white font-medium min-w-[2rem] text-center">
+                    <span className="mx-4 text-gray-900 font-medium min-w-[2rem] text-center">
                       {quantity}
                     </span>
                     <button
                       onClick={() => handleQuantityChange(quantity + 1)}
-                      className="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center hover:bg-gray-600 transition-colors"
+                      className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300 transition-colors"
                     >
-                      <Plus className="h-4 w-4 text-white" />
+                      <Plus className="h-4 w-4 text-gray-900" />
                     </button>
                   </div>
                   

@@ -210,6 +210,12 @@
     background: #eaeefe;
 }
 
+.shapeDerProducto {
+  position: absolute;
+  right: 0px;
+  top: 0;
+}
+
 
 .shapeCatalogoIzq {
   position: absolute;

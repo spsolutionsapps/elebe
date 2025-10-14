@@ -66,14 +66,13 @@ export function AddToCartButton({
       disabled={isAdded}
       variant="default"
       size={size}
-      className={`transition-all duration-200 ${
+      className={`rounded-full transition-all duration-200 ${
         isAdded 
           ? 'bg-green-600 hover:bg-green-700 text-white' 
           : 'bg-blue-600 hover:bg-blue-700 text-white'
       } ${className}`}
       style={{
-        backgroundColor: isAdded ? '#16a34a' : '#2563eb',
-        borderColor: isAdded ? '#16a34a' : '#2563eb'
+        backgroundColor: isAdded ? '#004CAC' : '#2563eb',
       }}
     >
       {isAdded ? (
@@ -136,7 +135,7 @@ export function AddToCartButtonCompact({
       onClick={handleAddToCart}
       disabled={isAdded}
       size="sm"
-      className={`w-full transition-all duration-200 ${
+      className={`w-full rounded-full transition-all duration-200 ${
         isAdded 
           ? 'bg-green-600 hover:bg-green-700 text-white' 
           : 'bg-blue-600 hover:bg-blue-700 text-white'

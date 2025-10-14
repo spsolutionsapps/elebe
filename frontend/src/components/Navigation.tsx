@@ -6,7 +6,7 @@ import { ShoppingCart, Menu, X, Search } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { CatalogMegaMenu } from '@/components/CatalogMegaMenu'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import { useCart } from '@/contexts/CartContext'
 import { CartSidebar } from '@/components/CartSidebar'
 
@@ -19,9 +19,13 @@ export function Navigation() {
   const [isHeaderVisible, setIsHeaderVisible] = useState(true)
   const [lastScrollY, setLastScrollY] = useState(0)
   const router = useRouter()
+  const pathname = usePathname()
   
   // Usar el hook del carrito
   const { state: cart, toggleCart } = useCart()
+
+  // Detectar si estamos en página de producto
+  const isProductPage = pathname?.startsWith('/producto/')
 
   // Limpiar timeout al desmontar
   useEffect(() => {
@@ -75,7 +79,7 @@ export function Navigation() {
       className={`fixed top-0 left-0 right-0 z-[9999] py-header transition-transform duration-300 ease-in-out ${
         isHeaderVisible ? 'translate-y-0' : '-translate-y-full'
       }`} 
-      style={{ backgroundColor: '#F3E9CD' }}
+      style={{ backgroundColor: isProductPage ? 'transparent' : '#F3E9CD' }}
     >
       <div className="max-w-8xl mx-auto px-4 md:px-0">
         <div className="flex items-center justify-between h-16">
