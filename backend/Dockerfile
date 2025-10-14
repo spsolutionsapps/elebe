@@ -19,6 +19,7 @@ RUN npx prisma generate
 
 # Copiar código fuente
 COPY src ./src
+COPY scripts ./scripts
 COPY tsconfig.json ./
 COPY nest-cli.json ./
 
