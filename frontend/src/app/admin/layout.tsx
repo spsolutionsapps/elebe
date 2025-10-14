@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
 import {
   LayoutDashboard,
@@ -10,10 +9,7 @@ import {
   Settings,
   Users,
   FileText,
-  LogOut,
   Menu,
-  X,
-  ChevronDown,
   Globe,
   Calendar,
   CheckSquare,
@@ -22,11 +18,11 @@ import {
   Mail
 } from 'lucide-react'
 import { useInquiriesCount } from '@/hooks/useInquiriesCount'
-import { NotificationBadge } from '@/components/NotificationBadge'
-// import { SafeIcon } from '@/components/ui/icon-wrapper'
 import { NavigationItem } from '@/types/navigation'
 import { AlertModal } from '@/components/AlertModal'
 import { useModal } from '@/hooks/useModal'
+import { MobileSidebar } from '@/components/admin/MobileSidebar'
+import { DesktopSidebar } from '@/components/admin/DesktopSidebar'
 
 // Array de navegación se define dentro del componente
 
@@ -184,198 +180,26 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       />
 
       {/* Mobile sidebar */}
-      <div className={`fixed inset-0 z-50 lg:hidden ${sidebarOpen ? '' : 'hidden'}`}>
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-75" onClick={() => setSidebarOpen(false)} />
-        <div className="fixed inset-y-0 left-0 flex w-64 flex-col bg-white">
-          <div className="flex h-16 items-center justify-between">
-            <div className="flex items-center" style={{ marginLeft: '12px' }}>
-              <img 
-                src="/logo.svg" 
-                alt="LB Premium" 
-                className="h-8 w-auto mr-3"
-              />
-              <h1 className="text-lg font-semibold">LB CRM</h1>
-            </div>
-            <button onClick={() => setSidebarOpen(false)}>
-              <X className="h-6 w-6" />
-            </button>
-          </div>
-          <nav className="flex-1 space-y-2 py-4">
-            {navigation.map((item) => (
-              <div key={item.name}>
-                {item.children ? (
-                  <div>
-                    <button
-                      onClick={() => {
-                        setExpandedMenus(prev =>
-                          prev.includes(item.name)
-                            ? prev.filter(name => name !== item.name)
-                            : [...prev, item.name]
-                        )
-                      }}
-                      className="group flex items-center w-full px-3 py-3 text-[16px] font-medium text-[#212121] hover:bg-gray-50 hover:text-[#000] transition-colors"
-                    >
-                      <item.icon className="mr-3 h-5 w-5" />
-                      {item.name}
-                      <ChevronDown
-                        className={`ml-auto h-4 w-4 transition-transform ${
-                          expandedMenus.includes(item.name) ? 'rotate-180' : ''
-                        }`}
-                      />
-                    </button>
-                    {expandedMenus.includes(item.name) && (
-                      <div className="ml-4 mt-1 space-y-2">
-                        {item.children.map((child) => (
-                          child.href ? (
-                            <Link
-                              key={child.name}
-                              href={child.href}
-                                                             className={`group flex items-center px-3 py-3 text-[16px] transition-colors ${
-                                 isActiveLink(child.href)
-                                   ? 'text-[#165cff] bg-[#165cff]/10 font-medium border-r-4 border-r-[#165cff]'
-                                   : 'text-[#212121] hover:bg-gray-50 hover:text-[#000] font-light'
-                               }`}
-                               onClick={() => setSidebarOpen(false)}
-                             >
-                               <child.icon className="mr-3 h-5 w-5" />
-                               {child.name}
-                             </Link>
-                           ) : null
-                         ))}
-                       </div>
-                     )}
-                   </div>
-                                  ) : (
-                                    item.href ? (
-                                      <Link
-                                        href={item.href}
-                                        className={`group flex items-center px-3 py-3 text-[16px] transition-colors relative ${
-                                          isActiveLink(item.href)
-                                            ? 'text-[#165cff] bg-[#165cff]/10 font-medium border-r-4 border-r-[#165cff]'
-                                            : 'text-[#212121] hover:bg-gray-50 hover:text-[#000] font-light'
-                                        }`}
-                                        onClick={() => setSidebarOpen(false)}
-                                      >
-                                        <item.icon className="mr-3 h-5 w-5" />
-                                        {item.name}
-                                        {item.count && item.count > 0 && <NotificationBadge count={item.count} />}
-                                      </Link>
-                                    ) : null
-                                  )}
-              </div>
-            ))}
-          </nav>
-          <div className="border-t border-gray-200">
-            <div className="flex items-center">
-              <div className="ml-3">
-                <p className="text-sm font-medium text-gray-700">{user.name}</p>
-                <p className="text-xs text-gray-500">{user.email}</p>
-              </div>
-            </div>
-            <button
-              onClick={handleLogout}
-              className="mt-3 flex w-full items-center px-2 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-            >
-              <LogOut className="mr-3 h-4 w-4" />
-              Cerrar Sesión
-            </button>
-          </div>
-        </div>
-      </div>
+      <MobileSidebar
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+        navigation={navigation}
+        expandedMenus={expandedMenus}
+        setExpandedMenus={setExpandedMenus}
+        user={user}
+        onLogout={handleLogout}
+        isActiveLink={isActiveLink}
+      />
 
       {/* Desktop sidebar */}
-      <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
-        <div className="flex flex-col flex-grow bg-white border-r border-gray-200">
-          <div className="flex h-16 items-center">
-            <div className="flex items-center" style={{ marginLeft: '12px' }}>
-              <img 
-                src="/logo.svg" 
-                alt="LB Premium" 
-                className="h-8 w-auto mr-3"
-              />
-              <h1 className="text-lg font-semibold">LB CRM</h1>
-            </div>
-          </div>
-          <nav className="flex-1 space-y-2 py-4">
-            {navigation.map((item) => (
-              <div key={item.name}>
-                {item.children ? (
-                  <div>
-                    <button
-                      onClick={() => {
-                        setExpandedMenus(prev =>
-                          prev.includes(item.name)
-                            ? prev.filter(name => name !== item.name)
-                            : [...prev, item.name]
-                        )
-                      }}
-                      className="group flex items-center w-full px-3 py-3 text-[16px] font-medium text-[#212121] hover:bg-gray-50 hover:text-[#000] transition-colors"
-                    >
-                      <item.icon className="mr-3 h-5 w-5" />
-                      {item.name}
-                      <ChevronDown
-                        className={`ml-auto h-4 w-4 transition-transform ${
-                          expandedMenus.includes(item.name) ? 'rotate-180' : ''
-                        }`}
-                      />
-                    </button>
-                                            {expandedMenus.includes(item.name) && (
-                          <div className="ml-4 mt-1 space-y-2">
-                            {item.children.map((child) => (
-                              child.href ? (
-                                <Link
-                                  key={child.name}
-                                  href={child.href}
-                                                                   className={`group flex items-center px-3 py-3 text-[16px] transition-colors ${
-                                   isActiveLink(child.href)
-                                     ? 'text-[#165cff] bg-[#165cff]/10 font-medium border-r-4 border-r-[#165cff]'
-                                     : 'text-[#212121] hover:bg-gray-50 hover:text-[#000] font-light'
-                                 }`}
-                                >
-                                  <child.icon className="mr-3 h-5 w-5" />
-                                  {child.name}
-                                </Link>
-                              ) : null
-                            ))}
-                          </div>
-                        )}
-                  </div>
-                                 ) : (
-                                   item.href ? (
-                                     <Link
-                                       href={item.href}
-                                                                                                                       className={`group flex items-center px-3 py-3 text-[16px] transition-colors relative ${
-                                          isActiveLink(item.href)
-                                            ? 'text-[#165cff] bg-[#165cff]/10 font-medium border-r-4 border-r-[#165cff]'
-                                            : 'text-[#212121] hover:bg-gray-50 hover:text-[#000] font-light'
-                                        }`}
-                                      >
-                                        <item.icon className="mr-3 h-5 w-5" />
-                                        {item.name}
-                                        {item.count && item.count > 0 && <NotificationBadge count={item.count} />}
-                                      </Link>
-                                    ) : null
-                                  )}
-               </div>
-             ))}
-           </nav>
-          <div className="border-t border-gray-200">
-            <div className="flex items-center">
-              <div className="ml-3">
-                <p className="text-sm font-medium text-gray-700">{user.name}</p>
-                <p className="text-xs text-gray-500">{user.email}</p>
-              </div>
-            </div>
-            <button
-              onClick={handleLogout}
-              className="mt-3 flex w-full items-center px-2 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-            >
-              <LogOut className="mr-3 h-4 w-4" />
-              Cerrar Sesión
-            </button>
-          </div>
-        </div>
-      </div>
+      <DesktopSidebar
+        navigation={navigation}
+        expandedMenus={expandedMenus}
+        setExpandedMenus={setExpandedMenus}
+        user={user}
+        onLogout={handleLogout}
+        isActiveLink={isActiveLink}
+      />
 
       {/* Main content */}
       <div className="lg:pl-64">
