@@ -34,3 +34,4 @@ export function SidebarFooter({ user, onLogout }: SidebarFooterProps) {
   )
 }
 
+
