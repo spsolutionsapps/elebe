@@ -173,7 +173,7 @@ export function BrandsSlider() {
           <div className="flex items-center">
             <div className="w-16 h-px bg-gray-600 mr-4"></div>
             <h2 className="text-lg font-bold font-blue uppercase tracking-wider font-heading">
-              Clientes con los que he trabajado
+              Clientes con los que trabajamos
             </h2>
             <div className="flex-1 h-px bg-gray-600 ml-4"></div>
           </div>
@@ -194,14 +194,14 @@ export function BrandsSlider() {
             {duplicatedBrands.map((brand, index) => (
               <div
                 key={`${brand.id}-${index}`}
-                className="flex-shrink-0 mx-8 flex items-center justify-center"
-                style={{ width: '130px', height: '48px' }}
+                className="flex-shrink-0 mx-2 flex items-center justify-center"
+                style={{ width: '260px', height: '96px' }}
               >
                 <div className="flex items-center justify-center w-full h-full p-2 transition-colors duration-300">
                     <img
                       src={getImageUrl(brand.logo)}
                       alt={brand.name}
-                      className="max-h-8 max-w-full object-contain transition-all duration-300"
+                      className="max-h-16 max-w-full object-contain transition-all duration-300"
                       onError={(e) => {
                         // Reemplazar con un placeholder elegante sin logs de error
                         e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0yMCAxMkMxNi42ODYzIDEyIDE0IDE0LjY4NjMgMTQgMThDMTQgMjEuMzEzNyAxNi42ODYzIDI0IDIwIDI0QzIzLjMxMzcgMjQgMjYgMjEuMzEzNyAyNiAxOEMyNiAxNC42ODYzIDIzLjMxMzcgMTIgMjAgMTJaIiBmaWxsPSIjOUI5QjlCIi8+Cjwvc3ZnPgo='

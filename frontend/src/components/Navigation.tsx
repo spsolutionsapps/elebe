@@ -79,7 +79,10 @@ export function Navigation() {
       className={`fixed top-0 left-0 right-0 z-[9999] py-header transition-transform duration-300 ease-in-out ${
         isHeaderVisible ? 'translate-y-0' : '-translate-y-full'
       }`} 
-      style={{ backgroundColor: isProductPage ? 'transparent' : '#F3E9CD' }}
+      style={{ 
+        backgroundColor: isProductPage ? 'transparent' : '#f3e9cdad',
+        backdropFilter: isProductPage ? 'none' : 'blur(10px)'
+      }}
     >
       <div className="max-w-8xl mx-auto px-4 md:px-0">
         <div className="flex items-center justify-between h-16">

@@ -151,10 +151,23 @@
   background-color: #0e1721;
 }
 
-.border-white {border: 1px solid white;}
+.bg-blue {background-color: #004CAC;}
 
+.border-white {border: 1px solid white;}
+.noBorderRadius {border-radius: 0 !important;}
 .font-blue {
   color: #004CAC;
+}
+
+.sliderCategory {
+  background: #6ebcd2;
+  display: inline;
+  padding: 5px;
+  color: white !important;
+}
+
+.btnAmarillo {background-color: rgb(247, 218, 77);
+  color: rgb(0, 93, 185);
 }
 
 .paddingZero {padding: 0;}
@@ -204,6 +217,10 @@
 }
 
 .p20 {padding: 0 26px;}
+
+.verde {color: #176A7B;}
+.bgRosa {background-color: #e9b99f;}
+.bgAmarillo {background-color: #f8da3f;}
 
 .card-slides {	
   border-radius: 20px;
@@ -384,12 +401,14 @@
 /* shapes */
 .shapeAmarilloIzq {
   position: absolute;
-  bottom: -5px;
+  bottom: 0;
   left: -36px;
 }
 
 .shapeAmarilloDer {
   position: absolute;
-  right: -33px;
-  bottom: -5px;
+  right: 16px;
+  bottom: -86px;
 }
+
+

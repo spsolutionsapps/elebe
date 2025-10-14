@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import { Product } from '@/types'
 import { getImageUrl } from '@/lib/config'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import useEmblaCarousel from 'embla-carousel-react'
@@ -119,8 +118,8 @@ export function FeaturedProductsSlider({ products }: FeaturedProductsSliderProps
   if (!isClient) {
     return (
       <div className="relative padding120Desk">
-        <h2 className="text-3xl font-bold text-white font-heading mb-8">
-          Productos Más Buscados
+        <h2 className="text-3xl font-bold verde font-heading mb-8">
+          Productos <em>más buscados</em> 
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {products.slice(0, 8).map((product) => {
@@ -128,8 +127,8 @@ export function FeaturedProductsSlider({ products }: FeaturedProductsSliderProps
             return (
             <div key={product.id} className="group">
               <Link href={`/producto/${productSlug}`}>
-                <div className="rounded-lg transition-all duration-300 group-hover:scale-105 py-2 px-2">
-                  <div className="aspect-square rounded-lg mb-4 flex items-center justify-center overflow-hidden bg-gray-800">
+                <div className="transition-all duration-300 group-hover:scale-105 py-2 px-2">
+                  <div className="aspect-square mb-4 flex items-center justify-center overflow-hidden bg-gray-800">
                     {product.image ? (
                       <img
                         src={getImageUrl(product.image)}
@@ -176,8 +175,8 @@ export function FeaturedProductsSlider({ products }: FeaturedProductsSliderProps
         </div>
         <div className="flex justify-center mt-8">
           <Link href="/catalogo">
-            <Button className="bg-blue hover:bg-blue-700 text-white px-8 py-3 rounded-full font-medium transition-colors text-base">
-              Ver Todos los Productos
+            <Button className="btnAmarillo py-4 noBorderRadius hover:bg-blue-700 hover:text-white px-8 py-3  font-medium transition-colors text-base">
+              Ver Todos los <em>productos</em> 
             </Button>
           </Link>
         </div>
@@ -202,8 +201,8 @@ export function FeaturedProductsSlider({ products }: FeaturedProductsSliderProps
   return (
     <div className="relative padding120Desk">
       <div className="flex items-center justify-between mb-8">
-        <h2 className="text-3xl font-bold text-white font-heading">
-          Productos Más Buscados
+        <h2 className="text-3xl font-bold verde font-heading">
+        Productos <em>más buscados</em> 
         </h2>
         
         {/* Desktop navigation */}
@@ -223,26 +222,30 @@ export function FeaturedProductsSlider({ products }: FeaturedProductsSliderProps
           
           {/* Navigation arrows */}
           <div className="flex space-x-2">
-            <Button
-              variant="ghost"
-              size="sm"
+            <button
               onClick={scrollPrev}
               disabled={prevBtnDisabled}
-              className="w-8 h-8 p-0 rounded-full text-white border-white disabled:opacity-50"
+              className="group flex items-center justify-center w-12 h-12 backdrop-blur-sm border border-white/20 rounded-full transition-all duration-300 disabled:opacity-30"
               style={{ backgroundColor: '#176A7B' }}
+              aria-label="Slide anterior"
             >
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="sm"
+              <div className="relative w-5 h-5">
+                <div className="absolute top-1/2 left-0 w-4 h-0.5 bg-white transform -translate-y-1/2 rotate-45 origin-left group-hover:bg-white/80 transition-colors duration-300"></div>
+                <div className="absolute top-1/2 left-0 w-4 h-0.5 bg-white transform -translate-y-1/2 -rotate-45 origin-left group-hover:bg-white/80 transition-colors duration-300"></div>
+              </div>
+            </button>
+            <button
               onClick={scrollNext}
               disabled={nextBtnDisabled}
-              className="w-8 h-8 p-0 rounded-full text-white border-white disabled:opacity-50"
+              className="group flex items-center justify-center w-12 h-12 backdrop-blur-sm border border-white/20 rounded-full transition-all duration-300 disabled:opacity-30"
               style={{ backgroundColor: '#176A7B' }}
+              aria-label="Slide siguiente"
             >
-              <ChevronRight className="h-4 w-4" />
-            </Button>
+              <div className="relative w-5 h-5">
+                <div className="absolute top-1/2 right-0 w-4 h-0.5 bg-white transform -translate-y-1/2 -rotate-45 origin-right group-hover:bg-white/80 transition-colors duration-300"></div>
+                <div className="absolute top-1/2 right-0 w-4 h-0.5 bg-white transform -translate-y-1/2 rotate-45 origin-right group-hover:bg-white/80 transition-colors duration-300"></div>
+              </div>
+            </button>
           </div>
         </div>
       </div>
@@ -251,26 +254,30 @@ export function FeaturedProductsSlider({ products }: FeaturedProductsSliderProps
       <div className="relative overflow-hidden">
         {/* Mobile navigation arrows */}
         <div className="md:hidden">
-          <Button
-            variant="ghost"
-            size="sm"
+          <button
             onClick={scrollPrev}
             disabled={prevBtnDisabled}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 p-0 rounded-full text-white border-white/30 backdrop-blur-sm disabled:opacity-50"
+            className="group absolute left-4 top-1/2 transform -translate-y-1/2 z-10 flex items-center justify-center w-16 h-16 backdrop-blur-sm border border-white/20 rounded-full transition-all duration-300 disabled:opacity-30"
             style={{ backgroundColor: '#176A7B' }}
+            aria-label="Slide anterior"
           >
-            <ChevronLeft className="h-5 w-5" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
+            <div className="relative w-6 h-6">
+              <div className="absolute top-1/2 left-0 w-5 h-0.5 bg-white transform -translate-y-1/2 rotate-45 origin-left group-hover:bg-white/80 transition-colors duration-300"></div>
+              <div className="absolute top-1/2 left-0 w-5 h-0.5 bg-white transform -translate-y-1/2 -rotate-45 origin-left group-hover:bg-white/80 transition-colors duration-300"></div>
+            </div>
+          </button>
+          <button
             onClick={scrollNext}
             disabled={nextBtnDisabled}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 p-0 rounded-full text-white border-white/30 backdrop-blur-sm disabled:opacity-50"
+            className="group absolute right-4 top-1/2 transform -translate-y-1/2 z-10 flex items-center justify-center w-16 h-16 backdrop-blur-sm border border-white/20 rounded-full transition-all duration-300 disabled:opacity-30"
             style={{ backgroundColor: '#176A7B' }}
+            aria-label="Slide siguiente"
           >
-            <ChevronRight className="h-5 w-5" />
-          </Button>
+            <div className="relative w-6 h-6">
+              <div className="absolute top-1/2 right-0 w-5 h-0.5 bg-white transform -translate-y-1/2 -rotate-45 origin-right group-hover:bg-white/80 transition-colors duration-300"></div>
+              <div className="absolute top-1/2 right-0 w-5 h-0.5 bg-white transform -translate-y-1/2 rotate-45 origin-right group-hover:bg-white/80 transition-colors duration-300"></div>
+            </div>
+          </button>
         </div>
 
         <div className="embla" ref={emblaRef}>
@@ -283,8 +290,8 @@ export function FeaturedProductsSlider({ products }: FeaturedProductsSliderProps
                     return (
                     <div key={product.id} className="group">
                       <Link href={`/producto/${productSlug}`}>
-                        <div className="rounded-lg transition-all duration-300 group-hover:scale-105 py-2 px-2">
-                          <div className="aspect-square rounded-lg mb-4 flex items-center justify-center overflow-hidden">
+                        <div className="transition-all duration-300 group-hover:scale-105 py-2 px-2">
+                          <div className="aspect-square mb-4 flex items-center justify-center overflow-hidden">
                             {product.image ? (
                               <img
                                 src={getImageUrl(product.image)}
@@ -299,10 +306,10 @@ export function FeaturedProductsSlider({ products }: FeaturedProductsSliderProps
                             )}
                           </div>
                           <div className="space-y-2">
-                            <h3 className="font-semibold text-white text-sm line-clamp-2 group-hover:text-blue transition-colors">
+                            <h3 className="font-semibold verde text-md line-clamp-2 group-hover:text-blue transition-colors">
                               {product.name}
                             </h3>
-                            <p className="text-xs text-white font-medium">
+                            <p className="text-xs sliderCategory verde font-medium">
                               {product.category}
                             </p>
                           </div>
@@ -334,8 +341,8 @@ export function FeaturedProductsSlider({ products }: FeaturedProductsSliderProps
       {/* Ver todos los productos button */}
       <div className="flex justify-center mt-8">
         <Link href="/catalogo">
-          <Button className="bg-blue hover:bg-blue-700 text-white px-8 py-3 rounded-full font-medium transition-colors text-base">
-            Ver Todos los Productos
+          <Button className="btnAmarillo noBorderRadius hover:bg-blue-700 hover:text-white px-8 py-6  font-medium transition-colors text-base">
+            Ver Todos los <em>productos</em>
           </Button>
         </Link>
       </div>

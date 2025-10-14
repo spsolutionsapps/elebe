@@ -47,7 +47,19 @@ module.exports = {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        // blue: "#0d6efd", // Comentado para usar los colores azules estándar de Tailwind
+        // Colores personalizados de la marca - Azul #004CAC
+        blue: {
+          50: '#e6f0ff',
+          100: '#cce0ff',
+          200: '#99c2ff',
+          300: '#66a3ff',
+          400: '#3385ff',
+          500: '#0066ff',
+          600: '#004CAC', // Color principal de la marca
+          700: '#003d8a',
+          800: '#002e68',
+          900: '#001f46',
+        },
         dark: "#121212",
         darkGray: "#0e1721",
         inputBorder: "#2a2a2a",

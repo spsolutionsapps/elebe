@@ -302,8 +302,10 @@ export function GSAPSlider({ slides, onControls }: GSAPSliderProps) {
     )
   }
 
+
+  //rounded-3xl iba aca
   return (
-    <div className="relative w-full h-[calc(100vh-8rem-60px)] overflow-hidden mx-auto rounded-3xl" style={{ marginTop: '2rem' }}>
+    <div className="relative w-full h-[calc(100vh-8rem-60px)] overflow-hidden mx-auto" style={{ marginTop: '2rem' }}>
       {/* Contenedor principal del slider */}
       <div 
         ref={containerRef}
@@ -320,7 +322,7 @@ export function GSAPSlider({ slides, onControls }: GSAPSliderProps) {
             style={{ width: `${100 / slides.length}%` }}
           >
             {/* Imagen del slide */}
-            <div className="relative h-full bg-gradient-to-br from-gray-900 to-gray-700 overflow-hidden rounded-3xl">
+            <div className="relative h-full bg-gradient-to-br from-gray-900 to-gray-700 overflow-hidden">
               <img
                 src={getImageUrl(slide.image)}
                 alt={slide.title}

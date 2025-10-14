@@ -8,7 +8,6 @@ export function ServicesHighlightedSection() {
         backgroundColor: '#12161E', 
         marginLeft: 'calc(-50vw + 50%)', 
         marginRight: 'calc(-50vw + 50%)',
-        backgroundImage: 'url(/bgDestacados.png)',
         backgroundSize: 'cover',
         backgroundPosition: 'center center',
         backgroundRepeat: 'no-repeat'
