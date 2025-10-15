@@ -9,7 +9,7 @@ export const NotificationBadge = ({ count, className = '' }: NotificationBadgePr
     return null
   }
   return (
-    <div className={`inline-flex items-center justify-center bg-red-500 text-white text-xs rounded-full h-5 w-5 font-medium ml-2.5 ${className}`}>
+    <div style={{borderRadius: '150px'}} className={`inline-flex items-center justify-center bg-red-500 text-white text-xs h-5 w-5 font-medium ml-2.5 ${className}`}>
       {count > 99 ? '99+' : count}
     </div>
   )
