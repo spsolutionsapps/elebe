@@ -68,7 +68,7 @@ export function Navigation() {
   const navItems = [
     { href: '/', label: 'Inicio' },
     { href: '/catalogo', label: 'Catálogo' },
-    { href: '/servicios', label: 'Servicios' },
+    { href: '/servicios', label: 'Servicios', hidden: true },
     { href: '/nosotros', label: 'Nosotros' },
     { href: '/contacto', label: 'Contacto' },
   ]
@@ -102,7 +102,7 @@ export function Navigation() {
               {navItems.map((item) => (
                 <div 
                   key={item.href} 
-                  className="relative"
+                  className={`relative ${item.hidden ? 'hidden' : ''}`}
                   onMouseEnter={() => {
                     if (item.label === 'Catálogo') {
                       if (catalogHoverTimeout) {
@@ -244,7 +244,7 @@ export function Navigation() {
                 <div className="border-b border-gray-700 mb-4"></div>
 
                 {navItems.map((item) => (
-                  <div key={item.href}>
+                  <div key={item.href} className={item.hidden ? 'hidden' : ''}>
                     {item.label === 'Catálogo' ? (
                       <div>
                         <button
