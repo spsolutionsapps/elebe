@@ -66,7 +66,7 @@ export function AddToCartButton({
       disabled={isAdded}
       variant="default"
       size={size}
-      className={`rounded-full transition-all duration-200 ${
+      className={`transition-all radius0 height50 width250Desktop duration-200 ${
         isAdded 
           ? 'bg-green-600 hover:bg-green-700 text-white' 
           : 'bg-blue-600 hover:bg-blue-700 text-white'
@@ -135,7 +135,7 @@ export function AddToCartButtonCompact({
       onClick={handleAddToCart}
       disabled={isAdded}
       size="sm"
-      className={`w-full rounded-full transition-all duration-200 ${
+      className={`w-full transition-all duration-200 ${
         isAdded 
           ? 'bg-green-600 hover:bg-green-700 text-white' 
           : 'bg-blue-600 hover:bg-blue-700 text-white'

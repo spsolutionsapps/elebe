@@ -141,7 +141,7 @@ export default function NewsletterPage() {
       ])
     ].map(row => row.join(',')).join('\n')
 
-    const blob = new Blob([csv], { type: 'text/csv' })
+    const blob = new (window as any).Blob([csv], { type: 'text/csv' })
     const url = window.URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url

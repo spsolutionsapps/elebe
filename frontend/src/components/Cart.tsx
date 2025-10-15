@@ -101,7 +101,7 @@ export function Cart({ initialItems = [] }: CartProps) {
     }
   }
 
-  const handleSubmitInquiry = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitInquiry = async (e: React.FormEvent<any>) => {
     e.preventDefault()
     setIsSubmitting(true)
     

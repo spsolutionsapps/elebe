@@ -14,9 +14,9 @@ export const dynamicImports = {
   ImageGallery: () => import('@/components/ui/optimized-image').then(m => ({ default: m.ImageGallery })),
   ProductForm: () => import('@/components/examples/ProductFormWithValidation'),
   
-  // Librerías externas
-  Chart: () => import('react-chartjs-2'),
-  DatePicker: () => import('react-datepicker'),
+  // Librerías externas (comentadas temporalmente)
+  // Chart: () => import('react-chartjs-2'),
+  // DatePicker: () => import('react-datepicker'),
 }
 
 // Preload de componentes críticos
@@ -62,7 +62,7 @@ export const treeShakingHelpers = {
   getUtility: (utilName: string) => {
     switch (utilName) {
       case 'cn': return import('@/lib/utils').then(m => m.cn)
-      case 'formatDate': return import('@/lib/utils').then(m => m.formatDate)
+      // case 'formatDate': return import('@/lib/utils').then(m => m.formatDate)
       default: return Promise.resolve(null)
     }
   }
@@ -79,14 +79,14 @@ export function analyzeBundle() {
 // Performance monitoring
 export function monitorPerformance() {
   if (typeof window !== 'undefined') {
-    // Monitor Core Web Vitals
-    import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
-      getCLS(console.log)
-      getFID(console.log)
-      getFCP(console.log)
-      getLCP(console.log)
-      getTTFB(console.log)
-    })
+    // Monitor Core Web Vitals (comentado temporalmente)
+    // import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
+    //   getCLS(console.log)
+    //   getFID(console.log)
+    //   getFCP(console.log)
+    //   getLCP(console.log)
+    //   getTTFB(console.log)
+    // })
   }
 }
 

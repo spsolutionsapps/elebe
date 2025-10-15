@@ -40,28 +40,28 @@ export function NewsletterForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="relative">
-        <Input
+    <form onSubmit={handleSubmit} className="flex items-center justify-center">
+      <div className="relative max-w-md w-full">
+        <input
           name="email"
           type="email"
           required
-          placeholder="Ingresa tu email"
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-500 font-body"
+          placeholder="Ingresa tu email..."
+          className="w-full px-6 py-4 rounded-full text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white text-lg"
           disabled={isSubmitting}
         />
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="absolute right-2 top-1/2 -translate-y-1/2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full transition-colors"
+        >
+          {isSubmitting ? (
+            <Loader2 className="w-4 h-4 animate-spin" />
+          ) : (
+            'Suscribirse'
+          )}
+        </button>
       </div>
-      <Button
-        type="submit"
-        disabled={isSubmitting}
-        className="w-full bg-gray-900 hover:bg-blue-600 text-white p-3 rounded-lg transition-colors duration-300 flex items-center justify-center font-body"
-      >
-        {isSubmitting ? (
-          <Loader2 className="w-5 h-5 animate-spin" />
-        ) : (
-          <Mail className="w-5 h-5" />
-        )}
-      </Button>
     </form>
   )
 }

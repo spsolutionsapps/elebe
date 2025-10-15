@@ -212,21 +212,21 @@ export default function ProductPage({ params }: ProductPageProps) {
               <div className="space-y-4">
                 <div className="flex items-center gap-4">
                   {/* Quantity Selector */}
-                  <div className="flex items-center bg-gray-100 rounded-full px-4 py-2 border border-gray-300">
+                  <div className="flex items-center bgCyan radius0 px-4 py-2 height50">
                     <button
                       onClick={() => handleQuantityChange(quantity - 1)}
-                      className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300 transition-colors"
+                      className="w-8 h-8 text-white flex items-center justify-center hover:bg-blue transition-colors"
                     >
-                      <Minus className="h-4 w-4 text-gray-900" />
+                      <Minus className="h-4 w-4 text-white" />
                     </button>
-                    <span className="mx-4 text-gray-900 font-medium min-w-[2rem] text-center">
+                    <span className="mx-4 text-white font-medium min-w-[2rem] text-center">
                       {quantity}
                     </span>
                     <button
                       onClick={() => handleQuantityChange(quantity + 1)}
-                      className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300 transition-colors"
+                      className="w-8 h-8  flex items-center justify-center hover:bg-blue transition-colors"
                     >
-                      <Plus className="h-4 w-4 text-gray-900" />
+                      <Plus className="h-4 w-4 text-white" />
                     </button>
                   </div>
                   

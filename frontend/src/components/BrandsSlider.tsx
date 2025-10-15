@@ -68,41 +68,32 @@ export function BrandsSlider() {
     const fetchBrands = async () => {
       try {
         const apiUrl = API_CONFIG.BASE_URL
-        console.log('Fetching brands from:', `${apiUrl}/brands/active`)
         const response = await fetch(`${apiUrl}/brands/active`)
         
         if (!isMounted) return
 
         if (response.ok) {
           const data = await response.json()
-          console.log('Brands loaded successfully:', data)
-          console.log('Number of brands received:', data.length)
           
           // Verificar si las marcas tienen URLs válidas
           const validBrands = data.filter((brand: any) => {
             const hasLogo = brand.logo && brand.logo.trim() !== ''
-            console.log(`Brand ${brand.name}: hasLogo=${hasLogo}, logo="${brand.logo}", isActive=${brand.isActive}`)
             return hasLogo
           })
-          
-          console.log('Valid brands after filtering:', validBrands.length)
           
           if (validBrands.length > 0) {
             setBrands(validBrands)
           } else {
-            console.log('No valid brands found, using fallback')
             // Si no hay URLs válidas, usar fallback
             setBrands(getFallbackBrands())
           }
         } else {
-          console.error('Error response:', response.status, response.statusText)
           // Usar fallback data solo si el componente sigue montado
           if (isMounted) {
             setBrands(getFallbackBrands())
           }
         }
       } catch (error) {
-        console.error('Error fetching brands:', error)
         // Usar fallback data solo si el componente sigue montado
         if (isMounted) {
           setBrands(getFallbackBrands())

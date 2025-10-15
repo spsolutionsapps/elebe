@@ -28,8 +28,6 @@ interface FeaturedProductsSliderProps {
 }
 
 export function FeaturedProductsSlider({ products }: FeaturedProductsSliderProps) {
-  console.log('🎠 FeaturedProductsSlider: Received products:', products?.length || 0)
-  console.log('🎠 FeaturedProductsSlider: Products data:', products)
   
   const [isMobile, setIsMobile] = useState(false)
   const [isClient, setIsClient] = useState(false)
@@ -173,7 +171,7 @@ export function FeaturedProductsSlider({ products }: FeaturedProductsSliderProps
             )
           })}
         </div>
-        <div className="flex justify-center mt-8">
+        <div className="flex justify-center mt-12">
           <Link href="/catalogo">
             <Button className="btnAmarillo py-4 noBorderRadius hover:bg-blue-700 hover:text-white px-8 py-3  font-medium transition-colors text-base">
               Ver Todos los <em>productos</em> 
@@ -339,7 +337,7 @@ export function FeaturedProductsSlider({ products }: FeaturedProductsSliderProps
       </div>
 
       {/* Ver todos los productos button */}
-      <div className="flex justify-center mt-8">
+      <div className="flex justify-center mt-12">
         <Link href="/catalogo">
           <Button className="btnAmarillo noBorderRadius hover:bg-blue-700 hover:text-white px-8 py-6  font-medium transition-colors text-base">
             Ver Todos los <em>productos</em>

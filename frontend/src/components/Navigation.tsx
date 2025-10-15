@@ -24,8 +24,7 @@ export function Navigation() {
   // Usar el hook del carrito
   const { state: cart, toggleCart } = useCart()
 
-  // Detectar si estamos en página de producto
-  const isProductPage = pathname?.startsWith('/producto/')
+  // Detectar si estamos en página de producto - removido para mantener header consistente
 
   // Limpiar timeout al desmontar
   useEffect(() => {
@@ -80,8 +79,8 @@ export function Navigation() {
         isHeaderVisible ? 'translate-y-0' : '-translate-y-full'
       }`} 
       style={{ 
-        backgroundColor: isProductPage ? 'transparent' : '#f3e9cdad',
-        backdropFilter: isProductPage ? 'none' : 'blur(10px)'
+        backgroundColor: '#f3e9cdad',
+        backdropFilter: 'blur(10px)'
       }}
     >
       <div className="max-w-8xl mx-auto px-4 md:px-0">

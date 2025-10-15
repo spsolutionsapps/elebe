@@ -52,7 +52,7 @@ export default function ImageGallery({ images, productName }: ImageGalleryProps)
             <button
               key={index}
               onClick={() => handleThumbnailClick(index)}
-              className={`flex-shrink-0 w-20 h-20 lg:w-full lg:h-20 rounded-lg overflow-hidden transition-all ${
+              className={`flex-shrink-0 w-20 h-20 lg:w-full lg:h-20 overflow-hidden transition-all ${
                 index === selectedImageIndex
                   ? 'border-blue-500 ring-2 ring-blue-200'
                   : 'border-gray-200 hover:border-gray-300'
@@ -77,7 +77,7 @@ export default function ImageGallery({ images, productName }: ImageGalleryProps)
 
       {/* Main Image - Right side */}
       <div className="lg:col-span-4 order-1 lg:order-2 relative">
-        <div className="aspect-square bg-transparent rounded-lg overflow-hidden relative group">
+        <div className="aspect-square bg-transparent overflow-hidden relative group">
           <img
             src={getImageUrl(images[selectedImageIndex])}
             alt={`${productName} - Vista ${selectedImageIndex + 1}`}
@@ -115,7 +115,7 @@ export default function ImageGallery({ images, productName }: ImageGalleryProps)
 
           {/* Image counter */}
           {images.length > 1 && (
-            <div className="absolute bottom-2 right-2 bg-black/50 text-white px-2 py-1 rounded text-sm">
+            <div className="absolute bottom-2 right-2 bg-black/50 text-white px-2 py-1 text-sm">
               {selectedImageIndex + 1} / {images.length}
             </div>
           )}

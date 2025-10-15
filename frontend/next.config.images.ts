@@ -23,9 +23,6 @@ export const imageOptimizationConfig: NextConfig = {
     // Configuración de carga
     loader: 'default',
     
-    // Configuración de calidad
-    quality: 75,
-    
     // Configuración de placeholder
     placeholder: 'blur',
     

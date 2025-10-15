@@ -177,6 +177,10 @@
 }
 
 @media (min-width: 1024px) {
+
+
+.width250Desktop {width: 250px;}
+
   .shape1 {
     position: absolute;
     left: -41%;
@@ -221,6 +225,8 @@
 .verde {color: #176A7B;}
 .bgRosa {background-color: #e9b99f;}
 .bgAmarillo {background-color: #f8da3f;}
+.bgCyan {background-color: #6ebcd2;}
+.height50 {height: 50px;}
 
 .card-slides {	
   border-radius: 20px;
@@ -230,7 +236,7 @@
 .shapeDerProducto {
   position: absolute;
   right: 0px;
-  top: 0;
+  top: 94px;
 }
 
 
@@ -411,4 +417,10 @@
   bottom: -86px;
 }
 
+.radius0 {
+  border-radius: 0 !important;
+}
 
+
+
+.rounded-full {border-radius: 0 !important;}
