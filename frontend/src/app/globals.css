@@ -435,3 +435,97 @@ body:has([data-pathname*="/admin"]) .rounded-full {
 .lg\:pl-64 .rounded-full {
   border-radius: 150px !important;
 }
+
+
+.logoB {
+  position: absolute;
+  left: 155px;
+  top: -40px;
+}
+
+.quienesSomosDerecha {
+  position: absolute;
+  right: -2px;
+  top: -7px;
+}
+
+.logoCorazon {
+  left: 0;
+  right: 0;
+  position: absolute;
+  margin: auto auto;
+  width: 330px;
+  top: 0;
+  bottom: 0;
+  height: 274px;
+}
+
+/* Animaciones de Slide-In */
+.slide-in-left {
+  animation: slideInLeft 1s ease-out forwards;
+  opacity: 0;
+  transform: translateX(-100px);
+}
+
+.slide-in-right {
+  animation: slideInRight 1s ease-out 0.3s forwards;
+  opacity: 0;
+  transform: translateX(100px);
+}
+
+.slide-in-top {
+  animation: slideInTop 1s ease-out 0.6s forwards;
+  opacity: 0;
+  transform: translateY(-50px);
+}
+
+.slide-in-center {
+  animation: slideInCenter 1.2s ease-out 0.9s forwards;
+  opacity: 0;
+  transform: translateY(50px) scale(0.8);
+}
+
+@keyframes slideInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInTop {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInCenter {
+  0% {
+    opacity: 0;
+    transform: translateY(50px) scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+

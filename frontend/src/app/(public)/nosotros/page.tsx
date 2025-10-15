@@ -69,26 +69,47 @@ export default function NosotrosPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Hero */}
-      <section className="bg-blue-600 text-white py-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <img 
-            src="/logo.svg" 
-            alt="LB Premium" 
-            className="h-16 w-auto mx-auto mb-6 filter brightness-0 invert"
-          />
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            Sobre Nosotros
-          </h1>
-          <p className="text-xl text-blue-100 max-w-3xl mx-auto">
-            {about?.content || "LB Premium es una empresa líder en soluciones de impresión y merchandising, comprometida con la excelencia y la innovación."}
-          </p>
+    <div className="min-h-screen paddingDesktop62">
+
+      {/* Header con buscador - 100% width */}
+      <div className="w-full p-8 mb-12 relative overflow-hidden" style={{ backgroundColor: '#4FBED5',height: '335px' }}>
+         
+          <div className="text-center mb-6">
+            <h1 className="text-4xl font-bold text-white mb-4">
+              
+            </h1>
+            <p className="text-lg text-white max-w-2xl mx-auto">
+              
+            </p>
+          </div>
+
+
+          
+          <div className='shapeAmarilloIzq slide-in-left'>
+            <img src="/shapeAmarilloizq.svg" alt="Shape Catalogo Izq" />
+          </div>
+
+          <div className='logoB slide-in-top'>
+            <img src="/letraB.svg" alt="logo B" />
+          </div>
+
+          <div className='logoCorazon slide-in-center'>
+            <img src="/logocorazon.svg" alt="logo Corazón" />
+          </div>
+
+          <div className='quienesSomosDerecha slide-in-right'>
+            <img src="/quienesSomosDerecha.svg" alt="Shape Catalogo Der" />
+          </div>
+
+
         </div>
-      </section>
+
+
+
+ 
 
       {/* Historia - Texto Izquierda, Imagen Derecha */}
-      <section className="py-16 bg-white">
+      <section className="py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
