@@ -423,4 +423,15 @@
 
 
 
-.rounded-full {border-radius: 0 !important;}
+.rounded-full {border-radius: 0;}
+
+/* Admin específico: rounded-full con 150px - usando selector de ruta */
+html:has([data-pathname*="/admin"]) .rounded-full,
+body:has([data-pathname*="/admin"]) .rounded-full {
+  border-radius: 150px !important;
+}
+
+/* Alternativa: selector más específico para admin */
+.lg\:pl-64 .rounded-full {
+  border-radius: 150px !important;
+}
