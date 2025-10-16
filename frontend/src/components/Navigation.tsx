@@ -73,6 +73,14 @@ export function Navigation() {
     { href: '/contacto', label: 'Contacto' },
   ]
 
+  // Función para determinar si un item está activo
+  const isActiveItem = (href: string) => {
+    if (href === '/') {
+      return pathname === '/'
+    }
+    return pathname.startsWith(href)
+  }
+
   return (
     <nav 
       className={`fixed top-0 left-0 right-0 z-[9999] py-header transition-transform duration-300 ease-in-out ${
@@ -122,21 +130,40 @@ export function Navigation() {
                   }}
                 >
                   {item.label === 'Catálogo' ? (
-                    <button
-                      className="px-3 py-2 rounded-md font-medium transition-colors font-body cursor-pointer bg-transparent border-none relative group"
-                      style={{ fontSize: '18px', color: '#176A7B' }}
+                    <Link
+                      href={item.href}
+                      className={`px-3 py-2 rounded-md font-medium transition-colors font-body relative group ${
+                        isActiveItem(item.href) ? 'font-bold' : ''
+                      }`}
+                      style={{ 
+                        fontSize: '18px', 
+                        color: '#176A7B'
+                      }}
                     >
                       {item.label}
-                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#176A7B] transition-all duration-300 ease-in-out group-hover:w-full"></span>
-                    </button>
+                      <span 
+                        className={`absolute bottom-0 left-0 h-0.5 bg-[#176A7B] transition-all duration-300 ease-in-out ${
+                          isActiveItem(item.href) ? 'w-full' : 'w-0 group-hover:w-full'
+                        }`}
+                      ></span>
+                    </Link>
                   ) : (
                     <Link
                       href={item.href}
-                      className="px-3 py-2 rounded-md font-medium transition-colors font-body relative group"
-                      style={{ fontSize: '18px', color: '#176A7B' }}
+                      className={`px-3 py-2 rounded-md font-medium transition-colors font-body relative group ${
+                        isActiveItem(item.href) ? 'font-bold' : ''
+                      }`}
+                      style={{ 
+                        fontSize: '18px', 
+                        color: '#176A7B'
+                      }}
                     >
                       {item.label}
-                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#176A7B] transition-all duration-300 ease-in-out group-hover:w-full"></span>
+                      <span 
+                        className={`absolute bottom-0 left-0 h-0.5 bg-[#176A7B] transition-all duration-300 ease-in-out ${
+                          isActiveItem(item.href) ? 'w-full' : 'w-0 group-hover:w-full'
+                        }`}
+                      ></span>
                     </Link>
                   )}
                   {item.label === 'Catálogo' && (

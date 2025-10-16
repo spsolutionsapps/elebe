@@ -158,7 +158,7 @@ export default function HomePage() {
       <section className="quienes-somos-section py-16 relative z-[110]">
         <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-[36px] text-center text18Mobile font-blue leading-tight mx-auto mb-12">
-            Nos Especializamos en el Diseño y <br /> Producción de <em>Artículos Personalizados</em>
+          Creamos <em>EXPERIENCIAS</em> para ser vividas, filmadas y viralizadas.
           </p>
 
 
@@ -178,9 +178,7 @@ export default function HomePage() {
               {/* Botón para ir a Nosotros */}
               <div className="flex justify-center lg:justify-start mt-6">
                 <Link href="/nosotros">
-                  <button className="px-6 py-3 bg-blue-600 hover:bg-blue-700 hover:text-white  font-medium btnAmarillo transition-colors duration-300">
                     Conocé más de la <em>agencia</em>
-                  </button>
                 </Link>
               </div>
             </div>
