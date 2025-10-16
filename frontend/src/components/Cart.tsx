@@ -132,7 +132,7 @@ export function Cart({ initialItems = [] }: CartProps) {
           <Button 
             onClick={() => setIsSuccess(false)}
             variant="outline"
-            className="border-white text-white hover:bg-white hover:text-black"
+            className="border-white radius0 text-white  hover:bg-white hover:text-black"
           >
             Hacer nueva consulta
           </Button>
@@ -152,7 +152,7 @@ export function Cart({ initialItems = [] }: CartProps) {
           </p>
           <Button 
             onClick={() => window.location.href = '/'}
-            className="bg-blue-600 hover:bg-blue-700 text-white"
+            className="bg-blue-600 hover:bg-blue-700 radius0 text-white"
           >
             Ver Productos
           </Button>
@@ -183,7 +183,7 @@ export function Cart({ initialItems = [] }: CartProps) {
                 onClick={handleClearCart}
                 variant="outline"
                 size="sm"
-                className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
+                className="border-red-500 radius0 text-red-500 hover:bg-red-500 hover:text-white"
               >
                 <Trash2 className="w-4 h-4 mr-2" />
                 Vaciar
@@ -374,7 +374,7 @@ export function Cart({ initialItems = [] }: CartProps) {
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3"
+              className="w-full bg-blue-600 hover:bg-blue-700 radius0 text-white py-3"
             >
               {isSubmitting ? (
                 <>

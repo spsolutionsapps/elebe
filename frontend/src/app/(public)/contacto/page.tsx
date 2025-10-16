@@ -94,7 +94,7 @@ export default function ContactoPage() {
     <div className="min-h-screen paddingDesktop62" style={{ backgroundColor: '#F3E9CD' }}>
      
       {/* Banner Section */}
-      <div className="w-full p-8 mb-12 relative overflow-hidden flexCentradoContacto" style={{ backgroundColor: '#4FBED5' }}>
+      <div className="w-full p-8 relative overflow-hidden flexCentradoContacto" style={{ backgroundColor: '#4FBED5' }}>
         
           <h1 className="text-4xl font-bold text-white mb-4">
             Contáctanos
@@ -109,7 +109,7 @@ export default function ContactoPage() {
           <img src="/shapeCatalogoIzq.svg" alt="ShapeCatalogoIzq" />
         </div>
 
-        <div className='shapeCatalogoDer'>
+        <div className='shapeCatalogoDer slideInRight'>
           <img src="/shapeCatalogoDer.svg" alt="ShapeCatalogoDer" />
         </div>
       </div>
@@ -123,7 +123,7 @@ export default function ContactoPage() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <div className="bg-white p-8 rounded-2xl border border-gray-200">
+            <div className="bg-white p-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Envíanos tu consulta</h2>
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 {/* Name and Email Row */}
@@ -136,7 +136,7 @@ export default function ContactoPage() {
                       id="name"
                       {...register('name')}
                       placeholder="Tu Nombre Completo"
-                      className="w-full h-12 px-4 text-gray-900 text-base bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-500"
+                      className="w-full h-12 px-4 text-gray-900 text-base bg-white border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-500"
                     />
                     {errors.name && (
                       <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
@@ -152,7 +152,7 @@ export default function ContactoPage() {
                       type="email"
                       {...register('email')}
                       placeholder="tu@email.com"
-                      className="w-full h-12 px-4 text-gray-900 text-base bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-500"
+                      className="w-full h-12 px-4 text-gray-900 text-base bg-white border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-500"
                     />
                     {errors.email && (
                       <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
@@ -170,7 +170,7 @@ export default function ContactoPage() {
                       type="tel"
                       {...register('phone')}
                       placeholder="Tu número de teléfono"
-                      className="w-full h-12 px-4 text-gray-900 text-base bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-500"
+                      className="w-full h-12 px-4 text-gray-900 text-base bg-white border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-500"
                     />
                 </div>
 
@@ -184,7 +184,7 @@ export default function ContactoPage() {
                       {...register('message')}
                       placeholder="Cuéntanos más sobre tu consulta..."
                     rows={6}
-                    className="w-full px-4 py-3 text-gray-900 text-base bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none placeholder-gray-500"
+                    className="w-full px-4 py-3 text-gray-900 text-base bg-white border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none placeholder-gray-500"
                   />
                 </div>
 
@@ -192,11 +192,11 @@ export default function ContactoPage() {
                 <button
                   type="submit"
                   disabled={submitInquiry.isPending}
-                  className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-base rounded-lg transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                  className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-base transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
                 >
                   {submitInquiry.isPending ? (
                     <>
-                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                      <div className="animate-spin h-5 w-5 border-b-2 border-white mr-2"></div>
                       Enviando...
                     </>
                   ) : (
@@ -213,7 +213,7 @@ export default function ContactoPage() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <div className="bg-white p-8 rounded-2xl border border-gray-200">
+            <div className="bg-white p-8">
               <h3 className="text-gray-900 text-2xl font-bold mb-8 flex items-center">
                 <ShoppingCart className="mr-3 h-6 w-6 text-blue-600" />
                 Productos en tu consulta
@@ -225,7 +225,7 @@ export default function ContactoPage() {
                   <p className="text-gray-600 text-lg mb-6">No hay productos en tu carrito</p>
                   <a 
                     href="/catalogo"
-                    className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+                    className="inline-block bg-blue-600 text-white px-6 py-3 hover:bg-blue-700 transition-colors"
                   >
                     Ver Colección
                   </a>
@@ -233,13 +233,13 @@ export default function ContactoPage() {
               ) : (
                 <div className="space-y-4">
                   {state.items.map((item) => (
-                    <div key={item.product.id} className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                    <div key={item.product.id} className="flex items-center space-x-4 p-4 bg-gray-50 border border-gray-200">
                       <div className="flex-shrink-0 w-16 h-16">
                         {item.product.image ? (
                           <img
                             src={getImageUrl(item.product.image)}
                             alt={item.product.name}
-                            className="w-full h-full object-cover rounded-md"
+                            className="w-full h-full object-cover"
                           />
                         ) : (
                           <ProductPlaceholder className="w-full h-full" />
@@ -255,7 +255,7 @@ export default function ContactoPage() {
                       <div className="flex items-center space-x-3">
                         <button
                           onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
-                          className="w-8 h-8 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors flex items-center justify-center"
+                          className="w-8 h-8 bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors flex items-center justify-center"
                         >
                           <Minus className="h-4 w-4" />
                         </button>
@@ -266,14 +266,14 @@ export default function ContactoPage() {
                         
                         <button
                           onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
-                          className="w-8 h-8 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors flex items-center justify-center"
+                          className="w-8 h-8 bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors flex items-center justify-center"
                         >
                           <Plus className="h-4 w-4" />
                         </button>
                         
                         <button
                           onClick={() => removeItem(item.product.id)}
-                          className="w-8 h-8 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition-colors flex items-center justify-center"
+                          className="w-8 h-8 bg-red-100 text-red-600 hover:bg-red-200 transition-colors flex items-center justify-center"
                         >
                           <Trash2 className="h-4 w-4" />
                         </button>

@@ -60,7 +60,7 @@ export function CartSidebar() {
               <p className="text-gray-500">Tu carrito está vacío</p>
               <Link href="/catalogo">
                 <Button 
-                  className="mt-4 bg-blue-600 hover:bg-blue-700 text-white border-blue-600"
+                  className="mt-4 bg-blue-600 hover:bg-blue-700 text-white radius0 border-blue-600"
                   style={{
                     backgroundColor: '#2563eb',
                     borderColor: '#2563eb'
@@ -153,14 +153,14 @@ export function CartSidebar() {
               <Button
                 onClick={clearCart}
                 variant="outline"
-                className="w-full bg-transparent border-black text-black hover:bg-gray-100"
+                className="w-full bg-transparent border-black text-black radius0"
               >
                 Vaciar carrito
               </Button>
               
               <Link href="/contacto">
                 <Button 
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white border-blue-600 mt-1" 
+                  className="w-full bg-blue-600 hover:bg-blue-700 radius0 text-white border-blue-600 mt-1" 
                   onClick={toggleCart}
                   style={{
                     backgroundColor: '#2563eb',
