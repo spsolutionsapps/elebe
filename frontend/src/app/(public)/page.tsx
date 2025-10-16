@@ -264,11 +264,11 @@ export default function HomePage() {
 
 
       {/* envios */}
-      <section className="envios relative z-[100] py-16 mt-20" >
+      <section className="envios relative z-[100] py-16 mt-0 md:mt-20" >
         <div className="container mx-auto px-4">
           <img src="/envios.svg" alt="Envíos" className='d-block mx-auto mb-6' />
 
-          <div className="grid grid-cols-3 gap-6 text-center ">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center ">
             <p className='verde'>_escuchamos y analizamos <br />
               <strong>qué inspira a cada cliente.</strong></p>
 

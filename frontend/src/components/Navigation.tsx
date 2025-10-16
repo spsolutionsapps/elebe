@@ -206,7 +206,8 @@ export function Navigation() {
             {/* Mobile menu button - Sin padding ni background */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden text-white hover:text-gray-300 transition-colors p-0 bg-transparent border-none"
+              className="md:hidden transition-colors p-0 bg-transparent border-none"
+              style={{ color: '#176A7B' }}
             >
               {isMobileMenuOpen ? (
                 <X className="h-6 w-6" />

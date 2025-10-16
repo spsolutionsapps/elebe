@@ -177,7 +177,7 @@ export function BrandsSlider() {
         >
           <div 
             ref={sliderRef}
-            className="flex animate-scroll"
+            className="flex md:animate-scroll"
             style={{
               animation: 'scroll 20s linear infinite'
             }}
@@ -185,8 +185,8 @@ export function BrandsSlider() {
             {duplicatedBrands.map((brand, index) => (
               <div
                 key={`${brand.id}-${index}`}
-                className="flex-shrink-0 mx-2 flex items-center justify-center"
-                style={{ width: '260px', height: '96px' }}
+                className="flex-shrink-0 mx-2 flex items-center justify-center w-[120px] md:w-[260px]"
+                style={{ height: '96px' }}
               >
                 <div className="flex items-center justify-center w-full h-full p-2 transition-colors duration-300">
                     <img
