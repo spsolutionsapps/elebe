@@ -105,45 +105,68 @@ export default function NosotrosPage() {
 
         </div>
 
+      {/* Sección de Texto Principal */}
+      <section className="py-12 relative z-[110]">
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-[36px] text-center text18Mobile font-blue leading-tight mx-auto mb-12">
+            Creamos <em>EXPERIENCIAS</em> para ser vividas, <br /> filmadas y viralizadas.
+          </p>
+
+          {/* Texto descriptivo */}
+          <div className="max-w-4xl mx-auto">
+            <div className="space-y-6 text-center">
+              <p className="text-[18px] font-blue leading-relaxed">
+                Somos una agencia dedicada al diseño y producción de artículos personalizados. 
+                Ofrecemos soluciones creativas para las empresas que necesitan darle exposición a su marca.
+              </p>
+              
+              <p className="text-[18px] font-blue leading-relaxed">
+                Nuestra fábrica está homologada por Disney "International Labor Standards The Walt Disney Company Argentina S.A." Trabajamos con las fábricas más avanzadas del mercado.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* GSAP Scroll Cards Section */}
       <section className="py-0">
         <GSAPScrollCards 
             cards={[
               {
-                id: 'branding-design',
-                title: 'Branding Design',
-                description: 'Branding es más que solo un logo—es la base de la identidad de tu empresa. Creamos identidades visuales que conectan con tu audiencia.',
-                image: '/imprenta.jpg'
+                id: 'kits-produccion',
+                title: 'Kits d produccion',
+                description: 'Diseñamos KITS DE PRODUCTOS pensados para ocasiones especiales como eventos, lanzamientos, inducción de personal, o fechas clave para el calendario de marketing de tu empresa.',
+                image: '/productos.jpg'
               },
               {
-                id: 'digital-printing',
-                title: 'Digital Printing',
-                description: 'Impresión digital de alta calidad para todos tus proyectos. Desde material promocional hasta productos corporativos con la mejor tecnología.',
+                id: 'textiles',
+                title: 'Textiles',
+                description: 'Hace más de 20 años que FABRICAMOS TEXTILES, desarrollamos líneas de producto, molderias a medida. Producimos en pequeña escala para personal o publicidad. También FASÓN para reconocidas marcas .',
                 image: '/marroquineria.jpg'
+              },
+              {
+                id: 'marroquineria',
+                title: 'Marroquineria',
+                description: 'Desarrollos productos de MARROQUINERÍA con el concepto de tu emprendimiento. Mochilas, materas, riñoneras, fundas para dispositivos, bolsos, nécessaires, billeteras, porta documentos, bolsas, etc. ',
+                image: '/marroquineria.jpg'
+              },
+              {
+                id: 'packaging',
+                title: 'Packaging',
+                description: 'Nuestros PACKAGINGS llevan tu concepto hasta los límites! Packs primarios y secundarios. Cajas, tubos, cofres, blisters y mucho más.',
+                image: '/packaging.jpg'
+              },
+              {
+                id: 'imprenta',
+                title: 'Imprenta',
+                description: 'Ofrecemos soluciones de IMPRENTA en todos los soportes, cartulinas, cartones, vinilos, etc. Bolsas, cuadernos, trípticos, brochures, tarjetones, tent cards, credenciales, blisters, stickers, banners, posters, banderas, etc.',
+                image: '/imprenta.jpg'
               },
               {
                 id: 'merchandising',
                 title: 'Merchandising',
-                description: 'Productos promocionales que fortalecen tu marca. Desde tazas hasta ropa corporativa, creamos merchandising que tus clientes amarán.',
+                description: 'MERCHANDISING tradicional. Ponemos tu marca en todo tipo de objetos promocionales. Termos, botellas, lápices, biromes, lanyards, pins, llaveros, gorros, sombreros, medias, tazas, cuadernos, auriculares, mates, vasos térmicos, ',
                 image: '/merchandising.jpg'
-              },
-              {
-                id: 'graphic-design',
-                title: 'Graphic Design',
-                description: 'Diseño gráfico que cuenta tu historia. Nuestros diseñadores especializados crean piezas visuales que destacan y comunican efectivamente.',
-                image: '/packaging.jpg'
-              },
-              {
-                id: 'corporate-gifts',
-                title: 'Corporate Gifts',
-                description: 'Regalos corporativos que dejan una impresión duradera. Personalizamos productos únicos que refuerzan las relaciones comerciales.',
-                image: '/productos.jpg'
-              },
-              {
-                id: 'consulting',
-                title: 'Consulting',
-                description: 'Asesoramiento estratégico para optimizar tu presencia de marca. Te ayudamos a tomar decisiones informadas para el crecimiento de tu empresa.',
-                image: '/experiencias.jpg'
               }
             ]}
             className="min-h-screen"

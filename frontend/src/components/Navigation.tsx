@@ -137,12 +137,12 @@ export function Navigation() {
                       }`}
                       style={{ 
                         fontSize: '18px', 
-                        color: '#176A7B'
+                        color: '#004CAC'
                       }}
                     >
                       {item.label}
                       <span 
-                        className={`absolute bottom-0 left-0 h-0.5 bg-[#176A7B] transition-all duration-300 ease-in-out ${
+                        className={`absolute bottom-0 left-0 h-0.5 bg-[#004CAC] transition-all duration-300 ease-in-out ${
                           isActiveItem(item.href) ? 'w-full' : 'w-0 group-hover:w-full'
                         }`}
                       ></span>
@@ -155,12 +155,12 @@ export function Navigation() {
                       }`}
                       style={{ 
                         fontSize: '18px', 
-                        color: '#176A7B'
+                        color: '#004CAC'
                       }}
                     >
                       {item.label}
                       <span 
-                        className={`absolute bottom-0 left-0 h-0.5 bg-[#176A7B] transition-all duration-300 ease-in-out ${
+                        className={`absolute bottom-0 left-0 h-0.5 bg-[#004CAC] transition-all duration-300 ease-in-out ${
                           isActiveItem(item.href) ? 'w-full' : 'w-0 group-hover:w-full'
                         }`}
                       ></span>
@@ -234,7 +234,7 @@ export function Navigation() {
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="md:hidden transition-colors p-0 bg-transparent border-none"
-              style={{ color: '#176A7B' }}
+              style={{ color: '#004CAC' }}
             >
               {isMobileMenuOpen ? (
                 <X className="h-6 w-6" />
@@ -278,7 +278,7 @@ export function Navigation() {
                         <button
                           onClick={() => setIsCatalogMenuOpen(!isCatalogMenuOpen)}
                           className="block px-0 py-3 rounded-md font-medium font-body w-full text-left"
-                          style={{ fontSize: '18px', color: '#176A7B' }}
+                          style={{ fontSize: '18px', color: '#004CAC' }}
                         >
                           {item.label} {isCatalogMenuOpen ? '▼' : '▶'}
                         </button>
@@ -287,7 +287,7 @@ export function Navigation() {
                             <Link
                               href="/catalogo"
                               className="block px-3 py-1 rounded-md text-sm"
-                              style={{ color: '#176A7B' }}
+                              style={{ color: '#004CAC' }}
                               onClick={() => {
                                 setIsMobileMenuOpen(false)
                                 setIsCatalogMenuOpen(false)
@@ -298,7 +298,7 @@ export function Navigation() {
                             <Link
                               href="/catalogo?category=oficina"
                               className="block px-3 py-1 rounded-md text-sm"
-                              style={{ color: '#176A7B' }}
+                              style={{ color: '#004CAC' }}
                               onClick={() => {
                                 setIsMobileMenuOpen(false)
                                 setIsCatalogMenuOpen(false)
@@ -309,7 +309,7 @@ export function Navigation() {
                             <Link
                               href="/catalogo?category=moda"
                               className="block px-3 py-1 rounded-md text-sm"
-                              style={{ color: '#176A7B' }}
+                              style={{ color: '#004CAC' }}
                               onClick={() => {
                                 setIsMobileMenuOpen(false)
                                 setIsCatalogMenuOpen(false)
@@ -320,7 +320,7 @@ export function Navigation() {
                             <Link
                               href="/catalogo?category=deporte"
                               className="block px-3 py-1 rounded-md text-sm"
-                              style={{ color: '#176A7B' }}
+                              style={{ color: '#004CAC' }}
                               onClick={() => {
                                 setIsMobileMenuOpen(false)
                                 setIsCatalogMenuOpen(false)
@@ -335,7 +335,7 @@ export function Navigation() {
                       <Link
                         href={item.href}
                         className="block px-0 py-3 rounded-md font-medium font-body"
-                        style={{ fontSize: '18px', color: '#176A7B' }}
+                        style={{ fontSize: '18px', color: '#004CAC' }}
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         {item.label}

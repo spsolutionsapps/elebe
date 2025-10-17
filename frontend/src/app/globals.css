@@ -151,7 +151,7 @@
   background-color: #0e1721;
 }
 
-.bg-blue {background-color: #004CAC;}
+.bg-blue {background-color: #1e4ba6;}
 
 .border-white {border: 1px solid white;}
 .noBorderRadius {border-radius: 0 !important;}
@@ -165,6 +165,10 @@
   padding: 5px;
   color: white !important;
 }
+.btnAzul {background-color: #1e4ba6;
+  color: white;
+}
+
 
 .btnAmarillo {background-color: rgb(247, 218, 77);
   color: rgb(0, 93, 185);
@@ -177,6 +181,22 @@
 }
 
 @media (min-width: 1024px) {
+
+.bFooter {
+  position: absolute;
+  width: 350px;
+  height: 250px;
+  bottom: 0;
+  left: -35px;
+}
+
+.footerDer {
+  position: absolute;
+  width: 350px;
+  height: 250px;
+  bottom: 0;
+  right: -195px;
+}
 
 /* shapes */
 .shapeAmarilloIzq {
@@ -235,6 +255,7 @@
 .p20 {padding: 0 26px;}
 
 .verde {color: #176A7B;}
+.verdeBg {background-color: #176A7B;}
 .bgRosa {background-color: #e9b99f;}
 .bgAmarillo {background-color: #f8da3f;}
 .bgCyan {background-color: #6ebcd2;}

@@ -93,7 +93,7 @@ export function GSAPScrollCards({ cards, className = '' }: GSAPScrollCardsProps)
   return (
     <>
       {/* Desktop: Scroll horizontal */}
-      <div ref={containerRef} className={`hidden md:block h-screen overflow-hidden ${className}`} style={{ paddingTop: '120px' }}>
+      <div ref={containerRef} className={`hidden md:block h-screen overflow-hidden ${className}`} style={{ paddingTop: '100px' }}>
         <div 
           ref={horizontalRef}
           className="flex items-center gap-[30px]"
@@ -103,23 +103,17 @@ export function GSAPScrollCards({ cards, className = '' }: GSAPScrollCardsProps)
             <div
               key={card.id}
               className="scroll-card flex-shrink-0 flex items-center justify-center"
-              style={{ width: '800px', height: '600px' }}
+              style={{ width: '800px', height: '467px' }}
             >
-            <div className="w-full h-full bg-white shadow-lg overflow-hidden">
+            <div className="w-full h-full bg-white overflow-hidden">
               {/* Contenido arriba */}
               <div className="p-8 bg-gray-50">
                 <h3 className="text-3xl font-bold mb-6 text-gray-900">
                   {card.title}
                 </h3>
-                <p className="text-gray-600 text-lg leading-relaxed mb-8">
+                <p className="text-gray-600 text-lg leading-relaxed">
                   {card.description}
                 </p>
-                <button className="flex items-center text-blue-600 font-semibold text-lg w-fit">
-                  VIEW DETAILS
-                  <svg className="ml-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </button>
               </div>
               
               {/* Imagen abajo */}
@@ -142,7 +136,7 @@ export function GSAPScrollCards({ cards, className = '' }: GSAPScrollCardsProps)
           {cards.map((card, index) => (
             <div
               key={`mobile-${card.id}`}
-              className="bg-white shadow-lg rounded-2xl overflow-hidden"
+              className="bg-white rounded-2xl overflow-hidden"
             >
               <div className="w-full h-48">
                 <img
@@ -156,15 +150,9 @@ export function GSAPScrollCards({ cards, className = '' }: GSAPScrollCardsProps)
                 <h3 className="text-2xl font-bold mb-4 text-gray-900">
                   {card.title}
                 </h3>
-                <p className="text-gray-600 text-base leading-relaxed mb-6">
+                <p className="text-gray-600 text-base leading-relaxed">
                   {card.description}
                 </p>
-                <button className="flex items-center text-blue-600 font-semibold text-base w-fit">
-                  VIEW DETAILS
-                  <svg className="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </button>
               </div>
             </div>
           ))}
