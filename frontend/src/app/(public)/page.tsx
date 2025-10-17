@@ -116,8 +116,8 @@ export default function HomePage() {
                     aria-label="Slide anterior"
                   >
                     <div className="relative w-4 h-4">
-                      <div className="absolute top-1/2 left-0 w-3 h-0.5 bg-white transform -translate-y-1/2 rotate-45 origin-left group-hover:bg-white/80 transition-colors duration-300"></div>
-                      <div className="absolute top-1/2 left-0 w-3 h-0.5 bg-white transform -translate-y-1/2 -rotate-45 origin-left group-hover:bg-white/80 transition-colors duration-300"></div>
+                      <div className="absolute top-1/2 left-0 w-3 h-0.5 bg-white hover:bg-white/80 transform -translate-y-1/2 rotate-45 origin-left  transition-colors duration-300"></div>
+                      <div className="absolute top-1/2 left-0 w-3 h-0.5 bg-white hover:bg-white/80 transform -translate-y-1/2 -rotate-45 origin-left  transition-colors duration-300"></div>
                     </div>
                   </button>
 
@@ -128,9 +128,24 @@ export default function HomePage() {
                         key={index}
                         onClick={() => sliderControls.handleDotClick(index)}
                         className={`w-2 h-2 rounded-full transition-all duration-300 ${index === sliderControls.currentIndex
-                          ? 'bg-white scale-125 shadow-lg'
-                          : 'bg-white/40 hover:bg-white/70 hover:scale-110'
+                          ? 'scale-125 shadow-lg'
+                          : 'hover:scale-110'
                           }`}
+                        style={{
+                          backgroundColor: index === sliderControls.currentIndex 
+                            ? 'rgb(23, 106, 123)' 
+                            : 'rgba(23, 106, 123, 0.5)'
+                        }}
+                        onMouseEnter={(e) => {
+                          if (index !== sliderControls.currentIndex) {
+                            e.currentTarget.style.backgroundColor = 'rgba(23, 106, 123, 0.7)'
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (index !== sliderControls.currentIndex) {
+                            e.currentTarget.style.backgroundColor = 'rgba(23, 106, 123, 0.5)'
+                          }
+                        }}
                       />
                     ))}
                   </div>
@@ -158,7 +173,7 @@ export default function HomePage() {
       <section className="quienes-somos-section py-16 relative z-[110]">
         <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-[36px] text-center text18Mobile font-blue leading-tight mx-auto mb-12">
-          Creamos <em>EXPERIENCIAS</em> para ser vividas, filmadas y viralizadas.
+          Creamos <em>EXPERIENCIAS</em> para ser <br /> vividas, filmadas y viralizadas.
           </p>
 
 
@@ -177,7 +192,10 @@ export default function HomePage() {
 
               {/* Botón para ir a Nosotros */}
               <div className="flex justify-center lg:justify-start mt-6">
-                <Link href="/nosotros">
+                <Link 
+                  href="/nosotros"
+                  className="underline hover:no-underline transition-all duration-300 text-[#004CAC] mt-6 text-lg"
+                >
                     Conocé más de la <em>agencia</em>
                 </Link>
               </div>
@@ -238,7 +256,7 @@ export default function HomePage() {
 
 
 
-      <div className="space-y-0 relative z-[100] bgRosa">
+      <div className="space-y-0 relative z-[100]" style={{ backgroundColor: '#f9db46' }}>
 
         {/* Featured Products */}
         <section className="featured-products-section relative z-[100] py-10" >

@@ -122,8 +122,9 @@ export default function ContactoPage() {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
+            className="flex"
           >
-            <div className="bg-white p-8">
+            <div className="bg-white p-8 flex-1 flex flex-col">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Envíanos tu consulta</h2>
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 {/* Name and Email Row */}
@@ -212,92 +213,98 @@ export default function ContactoPage() {
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
+            className="flex"
           >
-            <div className="bg-white p-8">
+            <div className="bg-white p-8 flex-1 flex flex-col">
               <h3 className="text-gray-900 text-2xl font-bold mb-8 flex items-center">
                 <ShoppingCart className="mr-3 h-6 w-6 text-blue-600" />
                 Productos en tu consulta
               </h3>
 
-              {state.items.length === 0 ? (
-                <div className="text-center py-12">
-                  <ShoppingCart className="h-16 w-16 text-gray-400 mx-auto mb-6" />
-                  <p className="text-gray-600 text-lg mb-6">No hay productos en tu carrito</p>
-                  <a 
-                    href="/catalogo"
-                    className="inline-block bg-blue-600 text-white px-6 py-3 hover:bg-blue-700 transition-colors"
-                  >
-                    Ver Colección
-                  </a>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {state.items.map((item) => (
-                    <div key={item.product.id} className="flex items-center space-x-4 p-4 bg-gray-50 border border-gray-200">
-                      <div className="flex-shrink-0 w-16 h-16">
-                        {item.product.image ? (
-                          <img
-                            src={getImageUrl(item.product.image)}
-                            alt={item.product.name}
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <ProductPlaceholder className="w-full h-full" />
-                        )}
-                      </div>
-                      
-                      <div className="flex-1 min-w-0">
-                        <h4 className="text-gray-900 font-medium truncate">
-                          {item.product.name}
-                        </h4>
-                      </div>
+              <div className="flex-1">
+                {state.items.length === 0 ? (
+                  <div className="text-center py-12">
+                    <ShoppingCart className="h-16 w-16 text-gray-400 mx-auto mb-6" />
+                    <p className="text-gray-600 text-lg mb-6">No hay productos en tu carrito</p>
+                    <a 
+                      href="/catalogo"
+                      className="inline-block bg-blue-600 text-white px-6 py-3 hover:bg-blue-700 transition-colors"
+                    >
+                      Ver Colección
+                    </a>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {state.items.map((item) => (
+                      <div key={item.product.id} className="flex items-center space-x-4 p-4 bg-gray-50 border border-gray-200">
+                        <div className="flex-shrink-0 w-16 h-16">
+                          {item.product.image ? (
+                            <img
+                              src={getImageUrl(item.product.image)}
+                              alt={item.product.name}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <ProductPlaceholder className="w-full h-full" />
+                          )}
+                        </div>
+                        
+                        <div className="flex-1 min-w-0">
+                          <h4 className="text-gray-900 font-medium truncate">
+                            {item.product.name}
+                          </h4>
+                        </div>
 
-                      <div className="flex items-center space-x-3">
-                        <button
-                          onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
-                          className="w-8 h-8 bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors flex items-center justify-center"
-                        >
-                          <Minus className="h-4 w-4" />
-                        </button>
-                        
-                        <span className="text-gray-900 font-medium w-8 text-center">
-                          {item.quantity}
-                        </span>
-                        
-                        <button
-                          onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
-                          className="w-8 h-8 bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors flex items-center justify-center"
-                        >
-                          <Plus className="h-4 w-4" />
-                        </button>
-                        
-                        <button
-                          onClick={() => removeItem(item.product.id)}
-                          className="w-8 h-8 bg-red-100 text-red-600 hover:bg-red-200 transition-colors flex items-center justify-center"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </button>
+                        <div className="flex items-center space-x-3">
+                          <button
+                            onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
+                            className="w-8 h-8 bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors flex items-center justify-center"
+                          >
+                            <Minus className="h-4 w-4" />
+                          </button>
+                          
+                          <span className="text-gray-900 font-medium w-8 text-center">
+                            {item.quantity}
+                          </span>
+                          
+                          <button
+                            onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
+                            className="w-8 h-8 bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors flex items-center justify-center"
+                          >
+                            <Plus className="h-4 w-4" />
+                          </button>
+                          
+                          <button
+                            onClick={() => removeItem(item.product.id)}
+                            className="w-8 h-8 bg-red-100 text-red-600 hover:bg-red-200 transition-colors flex items-center justify-center"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              )}
+                    ))}
+                  </div>
+                )}
+              </div>
 
               {/* Contact Info */}
               <div className="mt-12 pt-8 border-t border-gray-200">
                 <h4 className="text-gray-900 text-xl font-bold mb-6">Información de Contacto</h4>
                 <div className="space-y-4">
-                  <div>
-                    <h5 className="font-semibold text-gray-900">Email</h5>
-                    <p className="text-gray-600">info@lbpremium.com</p>
+                  {/* Email y Teléfono en la misma fila en desktop */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <h5 className="font-semibold text-gray-900 text-sm">Email</h5>
+                      <p className="text-gray-600 text-sm">info@lbpremium.com</p>
+                    </div>
+                    <div>
+                      <h5 className="font-semibold text-gray-900 text-sm">Teléfono</h5>
+                      <p className="text-gray-600 text-sm">+1 (555) 123-4567</p>
+                    </div>
                   </div>
                   <div>
-                    <h5 className="font-semibold text-gray-900">Teléfono</h5>
-                    <p className="text-gray-600">+1 (555) 123-4567</p>
-                  </div>
-                  <div>
-                    <h5 className="font-semibold text-gray-900">Horario de atención</h5>
-                    <p className="text-gray-600">Lunes a Sábado: 10:00 AM - 8:00 PM</p>
+                    <h5 className="font-semibold text-gray-900 text-sm">Horario de atención</h5>
+                    <p className="text-gray-600 text-sm">Lunes a Sábado: 10:00 AM - 8:00 PM</p>
                   </div>
                 </div>
               </div>

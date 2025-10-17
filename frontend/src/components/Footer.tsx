@@ -7,12 +7,12 @@ import Link from 'next/link'
 export function Footer() {
 
   return (
-    <footer>
+    <footer className="relative">
       {/* Newsletter Section */}
       <div className="py-12">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-6">
-            <h2 className="text-white text-2xl font-bold uppercase tracking-wide">
+            <h2 className="text-[#004CAC] text-2xl font-bold uppercase tracking-wide">
               Suscríbete a Nuestro Newsletter
             </h2>
             <NewsletterForm />
@@ -38,19 +38,19 @@ export function Footer() {
 
             {/* Navigation Links */}
             <div className="flex flex-wrap justify-center md:justify-center gap-8 mb-6 md:mb-0">
-              <Link href="/" className="text-gray-900 hover:text-blue-600 transition-colors font-medium">
+              <Link href="/" className="text-[#004CAC] hover:text-[#004CAC]/80 transition-colors font-medium">
                 Inicio
               </Link>
-              <Link href="/catalogo" className="text-gray-900 hover:text-blue-600 transition-colors font-medium">
+              <Link href="/catalogo" className="text-[#004CAC] hover:text-[#004CAC]/80 transition-colors font-medium">
                 Catálogo
               </Link>
-              <Link href="/servicios" className="text-gray-900 hover:text-blue-600 transition-colors font-medium">
+              <Link href="/servicios" className="text-[#004CAC] hover:text-[#004CAC]/80 transition-colors font-medium">
                 Servicios
               </Link>
-              <Link href="/nosotros" className="text-gray-900 hover:text-blue-600 transition-colors font-medium">
+              <Link href="/nosotros" className="text-[#004CAC] hover:text-[#004CAC]/80 transition-colors font-medium">
                 Nosotros
               </Link>
-              <Link href="/contacto" className="text-gray-900 hover:text-blue-600 transition-colors font-medium">
+              <Link href="/contacto" className="text-[#004CAC] hover:text-[#004CAC]/80 transition-colors font-medium">
                 Contacto
               </Link>
             </div>
@@ -61,7 +61,7 @@ export function Footer() {
                 href="https://www.instagram.com/lbpremium" 
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-8 h-8 flex items-center justify-center text-gray-700 hover:text-blue-600 transition-colors"
+                className="w-8 h-8 flex items-center justify-center text-[#004CAC] hover:text-[#004CAC]/80 transition-colors"
               >
                 <Instagram className="h-5 w-5" />
               </a>
@@ -69,7 +69,7 @@ export function Footer() {
                 href="https://www.linkedin.com/company/lbpremium" 
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-8 h-8 flex items-center justify-center text-gray-700 hover:text-blue-600 transition-colors"
+                className="w-8 h-8 flex items-center justify-center text-[#004CAC] hover:text-[#004CAC]/80 transition-colors"
               >
                 <Linkedin className="h-5 w-5" />
               </a>
@@ -83,27 +83,37 @@ export function Footer() {
           <div className="flex flex-col md:flex-row justify-between items-center text-sm">
             {/* Copyright */}
             <div className="mb-4 md:mb-0">
-              <p className="text-gray-500">
+              <p className="text-[#004CAC]">
                 © Copyright 2025, Todos los Derechos Reservados
               </p>
             </div>
 
             {/* Contact Information */}
-            <div className="flex flex-wrap justify-center md:justify-end gap-6 text-gray-700">
+            <div className="flex flex-wrap justify-center md:justify-end gap-6 text-[#004CAC]">
               <span>Av. Principal 1234 Ciudad, Buenos Aires 1000</span>
               <a 
                 href="tel:+541112345678" 
-                className="underline hover:text-blue-600 transition-colors"
+                className="underline hover:text-[#004CAC]/80 transition-colors text-[#004CAC]"
               >
                 +54 11 1234-5678
               </a>
               <a 
                 href="mailto:info@lbpremium.com" 
-                className="underline hover:text-blue-600 transition-colors"
+                className="underline hover:text-[#004CAC]/80 transition-colors text-[#004CAC]"
               >
                 info@lbpremium.com
               </a>
             </div>
+
+          <div className='bFooter'> 
+            <img src="/bFooter.svg" alt="LB Premium"  />
+          </div>
+
+          <div className='footerDer'> 
+            <img src="/footerDer.svg" alt="LB Premium"  />
+          </div>
+
+            
           </div>
         </div>
       </div>
