@@ -82,8 +82,8 @@ export function Footer() {
           {/* Second Row */}
           <div className="flex flex-col md:flex-row justify-between items-center text-sm">
             {/* Copyright */}
-            <div className="mb-4 md:mb-0">
-              <p className="text-[#004CAC]">
+            <div className="mb-4 md:mb-0 text-center md:text-left">
+              <p className="text-[#004CAC] text-sm md:text-base">
                 © Copyright 2025, Todos los Derechos Reservados
               </p>
             </div>
@@ -105,11 +105,11 @@ export function Footer() {
               </a>
             </div>
 
-          <div className='bFooter'> 
+          <div className='bFooter hidden md:block'> 
             <img src="/bFooter.svg" alt="LB Premium"  />
           </div>
 
-          <div className='footerDer'> 
+          <div className='footerDer hidden md:block'> 
             <img src="/footerDer.svg" alt="LB Premium"  />
           </div>
 

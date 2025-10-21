@@ -262,7 +262,7 @@ function CatalogoContent() {
                 </Link>
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 ">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-4 sm:px-0">
                 {filteredProducts.map((product) => {
                   const productSlug = generateSlug(product.name)
                   return (
@@ -271,14 +271,14 @@ function CatalogoContent() {
                       href={`/producto/${productSlug}`}
                       className="group block"
                     >
-                      <div className="rounded-lg overflow-hidden">
+                      <div className="overflow-hidden">
                         {/* Imagen del producto */}
                         <div className="w-full h-64 bg-transparent">
                           {product.image ? (
                             <img
                               src={getImageUrl(product.image)}
                               alt={product.name}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 radius20"
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                             />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center bg-gray-100">
@@ -288,14 +288,14 @@ function CatalogoContent() {
                         </div>
                         
                         {/* Barra inferior con nombre del producto */}
-                        <div className="bg-black text-white p-3 text-left">
-                          <h2 className="text-sm font-medium truncate">
-                            {product.name}
-                          </h2>
-                          <p className="text-xs text-gray-300 mt-1">
-                            {product.category}
-                          </p>
-                        </div>
+                        <div className="space-y-2 mt-4">
+                            <h3 className="font-semibold verde text-md line-clamp-2 group-hover:text-blue transition-colors">
+                              {product.name}
+                            </h3>
+                            <p className="text-xs sliderCategory verde font-medium">
+                              {product.category}
+                            </p>
+                          </div>
                       </div>
                     </Link>
                   )
