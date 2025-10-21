@@ -4,6 +4,9 @@ import "@/styles/custom.css";
 import { Providers } from "@/components/Providers";
 import { ToastProvider } from '@/components/ToastProvider';
 import { FontProvider } from '@/components/FontProvider';
+// Importar polyfill para fetch durante el build
+import '@/lib/fetchPolyfill';
+import '@/lib/buildTimeFetch';
 
 export const metadata: Metadata = {
   title: "LB Premium - Artículos Personalizados",

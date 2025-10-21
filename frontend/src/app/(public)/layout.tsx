@@ -13,7 +13,7 @@ export default function PublicLayout({
 }) {
   return (
     <CartProvider>
-      <div className="min-h-screen overflow-x-hidden flex flex-col bgElebe">
+      <div className="min-h-screen flex flex-col bgElebe" style={{ overflow: 'hidden' }}>
         <Navigation />
         <main className="flex-1 mx-auto pt-8 w-full">
           {children}

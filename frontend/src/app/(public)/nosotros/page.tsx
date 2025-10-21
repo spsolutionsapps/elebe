@@ -1,10 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Users, Award, Target, Heart, TrendingUp, Globe, Zap, Shield, Star, ArrowRight, CheckCircle, Play } from 'lucide-react'
 import { getImageUrl } from '@/lib/imageUtils'
 import { API_CONFIG } from '@/lib/config'
-import { GSAPScrollCards } from '@/components/GSAPScrollCards'
+import { ScrollAnimated } from '@/components/ScrollAnimated'
 
 interface About {
   id: string
@@ -60,9 +59,9 @@ export default function NosotrosPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600 mx-auto mb-4"></div>
+          <div style={{borderRadius: '150px'}}  className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600 mx-auto mb-4"></div>
           <p className="text-gray-600 text-lg">Cargando...</p>
         </div>
       </div>
@@ -87,19 +86,19 @@ export default function NosotrosPage() {
 
           
           <div className='shapeAmarilloIzq slide-in-left'>
-            <img src="/shapeAmarilloizq.svg" alt="Shape Catalogo Izq" />
+            <img src="/shapeAmarilloizq.svg" alt="Shape Catalogo Izq" loading="lazy" />
           </div>
 
           <div className='logoB slide-in-top'>
-            <img src="/letraB.svg" alt="logo B" />
+            <img src="/letraB.svg" alt="logo B" loading="lazy" />
           </div>
 
           <div className='logoCorazon slide-in-center'>
-            <img src="/logocorazon.svg" alt="logo Corazón" />
+            <img src="/logocorazon.svg" alt="logo Corazón" loading="lazy" />
           </div>
 
           <div className='quienesSomosDerecha slide-in-right'>
-            <img src="/quienesSomosDerecha.svg" alt="Shape Catalogo Der" />
+            <img src="/quienesSomosDerecha.svg" alt="Shape Catalogo Der" loading="lazy" />
           </div>
 
 
@@ -128,49 +127,155 @@ export default function NosotrosPage() {
         </div>
       </section>
 
-      {/* GSAP Scroll Cards Section */}
-      <section className="py-0">
-        <GSAPScrollCards 
-            cards={[
-              {
-                id: 'kits-produccion',
-                title: 'Kits d produccion',
-                description: 'Diseñamos KITS DE PRODUCTOS pensados para ocasiones especiales como eventos, lanzamientos, inducción de personal, o fechas clave para el calendario de marketing de tu empresa.',
-                image: '/productos.jpg'
-              },
-              {
-                id: 'textiles',
-                title: 'Textiles',
-                description: 'Hace más de 20 años que FABRICAMOS TEXTILES, desarrollamos líneas de producto, molderias a medida. Producimos en pequeña escala para personal o publicidad. También FASÓN para reconocidas marcas .',
-                image: '/marroquineria.jpg'
-              },
-              {
-                id: 'marroquineria',
-                title: 'Marroquineria',
-                description: 'Desarrollos productos de MARROQUINERÍA con el concepto de tu emprendimiento. Mochilas, materas, riñoneras, fundas para dispositivos, bolsos, nécessaires, billeteras, porta documentos, bolsas, etc. ',
-                image: '/marroquineria.jpg'
-              },
-              {
-                id: 'packaging',
-                title: 'Packaging',
-                description: 'Nuestros PACKAGINGS llevan tu concepto hasta los límites! Packs primarios y secundarios. Cajas, tubos, cofres, blisters y mucho más.',
-                image: '/packaging.jpg'
-              },
-              {
-                id: 'imprenta',
-                title: 'Imprenta',
-                description: 'Ofrecemos soluciones de IMPRENTA en todos los soportes, cartulinas, cartones, vinilos, etc. Bolsas, cuadernos, trípticos, brochures, tarjetones, tent cards, credenciales, blisters, stickers, banners, posters, banderas, etc.',
-                image: '/imprenta.jpg'
-              },
-              {
-                id: 'merchandising',
-                title: 'Merchandising',
-                description: 'MERCHANDISING tradicional. Ponemos tu marca en todo tipo de objetos promocionales. Termos, botellas, lápices, biromes, lanyards, pins, llaveros, gorros, sombreros, medias, tazas, cuadernos, auriculares, mates, vasos térmicos, ',
-                image: '/merchandising.jpg'
-              }
-            ]}
-            className="min-h-screen"
-          />
+      {/* Secciones de Servicios */}
+      <section className="py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Kits de Producción */}
+          <ScrollAnimated direction="left">
+            <div className="mb-20 p-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div className="order-1">
+                  <h3 className="text-3xl font-bold font-blue mb-6">Kits de Producción</h3>
+                  <p className="text-lg font-blue leading-relaxed">
+                    Diseñamos KITS DE PRODUCTOS pensados para ocasiones especiales como eventos, lanzamientos, 
+                    inducción de personal, o fechas clave para el calendario de marketing de tu empresa.
+                  </p>
+                </div>
+                <div className="order-2">
+                  <img 
+                    src="/productos.jpg" 
+                    alt="Kits de Producción" 
+                    className="w-full h-80 object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              </div>
+            </div>
+          </ScrollAnimated>
+
+          {/* Textiles */}
+          <ScrollAnimated direction="right">
+            <div className="mb-20 p-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div className="order-2 lg:order-1">
+                  <img 
+                    src="/textiles.jpg" 
+                    alt="Textiles" 
+                    className="w-full h-80 object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <div className="order-1 lg:order-2">
+                  <h3 className="text-3xl font-bold font-blue mb-6">Textiles</h3>
+                  <p className="text-lg font-blue leading-relaxed">
+                    Hace más de 20 años que FABRICAMOS TEXTILES, desarrollamos líneas de producto, molderias a medida. 
+                    Producimos en pequeña escala para personal o publicidad. También FASÓN para reconocidas marcas.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </ScrollAnimated>
+
+          {/* Marroquinería */}
+          <ScrollAnimated direction="left">
+            <div className="mb-20 p-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div className="order-1">
+                  <h3 className="text-3xl font-bold font-blue mb-6">Marroquinería</h3>
+                  <p className="text-lg font-blue leading-relaxed">
+                    Desarrollos productos de MARROQUINERÍA con el concepto de tu emprendimiento. Mochilas, materas, 
+                    riñoneras, fundas para dispositivos, bolsos, nécessaires, billeteras, porta documentos, bolsas, etc.
+                  </p>
+                </div>
+                <div className="order-2">
+                  <img 
+                    src="/marroquineria.jpg" 
+                    alt="Marroquinería" 
+                    className="w-full h-80 object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              </div>
+            </div>
+          </ScrollAnimated>
+
+          {/* Packaging */}
+          <ScrollAnimated direction="right">
+            <div className="mb-20 p-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div className="order-2 lg:order-1">
+                  <img 
+                    src="/packaging.jpg" 
+                    alt="Packaging" 
+                    className="w-full h-80 object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <div className="order-1 lg:order-2">
+                  <h3 className="text-3xl font-bold font-blue mb-6">Packaging</h3>
+                  <p className="text-lg font-blue leading-relaxed">
+                    Nuestros PACKAGINGS llevan tu concepto hasta los límites! Packs primarios y secundarios. 
+                    Cajas, tubos, cofres, blisters y mucho más.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </ScrollAnimated>
+
+          {/* Imprenta */}
+          <ScrollAnimated direction="left">
+            <div className="mb-20 p-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div className="order-1">
+                  <h3 className="text-3xl font-bold font-blue mb-6">Imprenta</h3>
+                  <p className="text-lg font-blue leading-relaxed">
+                    Ofrecemos soluciones de IMPRENTA en todos los soportes, cartulinas, cartones, vinilos, etc. 
+                    Bolsas, cuadernos, trípticos, brochures, tarjetones, tent cards, credenciales, blisters, 
+                    stickers, banners, posters, banderas, etc.
+                  </p>
+                </div>
+                <div className="order-2">
+                  <img 
+                    src="/imprenta.jpg" 
+                    alt="Imprenta" 
+                    className="w-full h-80 object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              </div>
+            </div>
+          </ScrollAnimated>
+
+          {/* Merchandising */}
+          <ScrollAnimated direction="right">
+            <div className="mb-20 p-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div className="order-2 lg:order-1">
+                  <img 
+                    src="/merchandising.jpg" 
+                    alt="Merchandising" 
+                    className="w-full h-80 object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <div className="order-1 lg:order-2">
+                  <h3 className="text-3xl font-bold font-blue mb-6">Merchandising</h3>
+                  <p className="text-lg font-blue leading-relaxed">
+                    MERCHANDISING tradicional. Ponemos tu marca en todo tipo de objetos promocionales. 
+                    Termos, botellas, lápices, biromes, lanyards, pins, llaveros, gorros, sombreros, medias, 
+                    tazas, cuadernos, auriculares, mates, vasos térmicos.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </ScrollAnimated>
+        </div>
       </section>
 
     </div>  

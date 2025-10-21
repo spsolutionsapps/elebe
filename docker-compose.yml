@@ -30,7 +30,7 @@ services:
       - FRONTEND_URL=${FRONTEND_URL:-http://146.190.116.222:3000}
       - ADMIN_URL=${ADMIN_URL:-http://146.190.116.222:3002}
     ports:
-      - "${PORT:-3001}:${PORT:-3001}"
+      - "3002:3001"
     volumes:
       - ./backend/uploads:/app/uploads
     depends_on:
@@ -38,7 +38,7 @@ services:
         condition: service_healthy
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://146.190.116.222:${PORT:-3001}/api/inquiries/test"]
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://146.190.116.222:3002/api/inquiries/test"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -51,8 +51,8 @@ services:
     container_name: lb-premium-frontend
     environment:
       - NODE_ENV=development
-      - NEXT_PUBLIC_API_URL=http://146.190.116.222:3001/api
-      - NEXT_PUBLIC_BACKEND_URL=http://146.190.116.222:3001
+      - NEXT_PUBLIC_API_URL=http://146.190.116.222:3002/api
+      - NEXT_PUBLIC_BACKEND_URL=http://146.190.116.222:3002
     ports:
       - "${FRONTEND_PORT:-3000}:3000"
     depends_on:

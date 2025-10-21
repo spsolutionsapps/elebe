@@ -20,6 +20,10 @@ export const API_CONFIG = {
   
   // Timeout para requests
   TIMEOUT: 10000,
+  
+  // Configuración de reintentos
+  MAX_RETRIES: 3,
+  RETRY_DELAY: 1000,
 } as const;
 
 // Configuración de imágenes
