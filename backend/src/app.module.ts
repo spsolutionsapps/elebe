@@ -19,6 +19,7 @@ import { CartModule } from './cart/cart.module';
 import { HealthModule } from './health/health.module';
 import { CategoriesModule } from './categories/categories.module';
 import { NewsletterModule } from './newsletter/newsletter.module';
+import { MigrationsModule } from './migrations/migrations.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { NewsletterModule } from './newsletter/newsletter.module';
     HealthModule,
     CategoriesModule,
     NewsletterModule,
+    MigrationsModule,
   ],
 })
 export class AppModule {}
