@@ -91,7 +91,7 @@ export default function ContactoPage() {
   }
 
   return (
-    <div className="min-h-screen paddingDesktop62" style={{ backgroundColor: '#F3E9CD' }}>
+    <div className="min-h-screen paddingDesktop62 mt-[62px] md:mt-0" style={{ backgroundColor: '#F3E9CD' }}>
      
       {/* Banner Section */}
       <div className="w-full p-8 relative overflow-hidden flexCentradoContacto" style={{ backgroundColor: '#4FBED5' }}>
