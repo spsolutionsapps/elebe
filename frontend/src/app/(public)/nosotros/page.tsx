@@ -94,7 +94,7 @@ export default function NosotrosPage() {
           </div>
 
           <div className='logoCorazon slide-in-center'>
-            <img src="/logocorazonFinal.svg" alt="logo Corazón" loading="lazy" />
+            <img src="/logocorazon.svg" alt="logo Corazón" loading="lazy" />
           </div>
 
           <div className='quienesSomosDerecha slide-in-right'>
