@@ -47,8 +47,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         { name: 'Categorías', href: '/admin/categories', icon: Grid3X3 },
         { name: 'Productos', href: '/admin/products', icon: Package },
         { name: 'Productos Destacados', href: '/admin/featured-products', icon: Package },
-        { name: 'Servicios', href: '/admin/services', icon: Settings },
-        { name: 'Nosotros', href: '/admin/about', icon: FileText },
+        // { name: 'Servicios', href: '/admin/services', icon: Settings },
+        // { name: 'Nosotros', href: '/admin/about', icon: FileText },
         { name: 'Marcas', href: '/admin/brands', icon: Building2 },
       ]
     },
