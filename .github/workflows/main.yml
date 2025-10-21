@@ -38,5 +38,8 @@ jobs:
             docker compose pull   # pull new images if needed
             docker compose up -d --build --remove-orphans
 
+            cd backend
+            npx prisma migrate deploy
+
             echo "✅ Deployment finished!"
           EOF
