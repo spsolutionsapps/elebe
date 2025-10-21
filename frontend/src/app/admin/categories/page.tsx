@@ -49,9 +49,20 @@ export default function CategoriesPage() {
     try {
       const response = await fetch(getApiUrl('/categories'))
       const data = await response.json()
-      setCategories(data)
+      
+      // Log the response for debugging
+      console.log('Categories API response:', data)
+      
+      // Ensure data is an array
+      if (Array.isArray(data)) {
+        setCategories(data)
+      } else {
+        console.error('Categories API returned non-array data:', data)
+        setCategories([])
+      }
     } catch (error) {
       console.error('Error fetching categories:', error)
+      setCategories([])
     } finally {
       setLoading(false)
     }
@@ -208,7 +219,7 @@ export default function CategoriesPage() {
 
       {/* Lista de Categorías */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {categories.map((category) => (
+        {Array.isArray(categories) && categories.map((category) => (
           <Card className="bg-white rounded-lg p-2" key={category.id}>
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
@@ -257,6 +268,13 @@ export default function CategoriesPage() {
             </CardContent>
           </Card>
         ))}
+        
+        {/* Show message when no categories */}
+        {Array.isArray(categories) && categories.length === 0 && (
+          <div className="col-span-full text-center py-8">
+            <p className="text-gray-500">No hay categorías disponibles</p>
+          </div>
+        )}
       </div>
 
       {/* Alert Modal */}
