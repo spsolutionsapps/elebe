@@ -23,7 +23,7 @@ jobs:
     - name: Apply Database Migrations
       working-directory: ./backend
       env:
-        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        DATABASE_URL: postgresql://postgres:postgres123@postgres:5432/lb_premium
       run: |
         echo "Aplicando migraciones a la base de datos de producción..."
         npx prisma migrate deploy
@@ -32,7 +32,7 @@ jobs:
     - name: Generate Prisma Client
       working-directory: ./backend
       env:
-        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        DATABASE_URL: postgresql://postgres:postgres123@postgres:5432/lb_premium
       run: |
         echo "Generando cliente de Prisma..."
         npx prisma generate
@@ -41,7 +41,7 @@ jobs:
     - name: Verify Database Schema
       working-directory: ./backend
       env:
-        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        DATABASE_URL: postgresql://postgres:postgres123@postgres:5432/lb_premium
       run: |
         echo "Verificando esquema de base de datos..."
         npx prisma migrate status
