@@ -24,10 +24,10 @@ export class AuthService {
     // }
     
     // Temporal: Usuario hardcodeado para pruebas
-    if (email === 'admin@fashionstyle.com' && password === 'admin123') {
+    if (email === 'elebe.merch@gmail.com' && password === 'u1u2u3u4u5') {
       return {
         id: 'temp-user-id',
-        email: 'admin@fashionstyle.com',
+        email: 'elebe.merch@gmail.com',
         name: 'Administrador',
         role: 'admin'
       };
@@ -69,7 +69,7 @@ export class AuthService {
     // Temporal: Retornar usuario hardcodeado
     return {
       id: 'temp-user-id',
-      email: 'admin@fashionstyle.com',
+      email: 'elebe.merch@gmail.com',
       name: 'Administrador',
       role: 'admin'
     };
@@ -79,7 +79,7 @@ export class AuthService {
     // Solo para desarrollo - crear token sin validación
     const devUser = {
       id: 'dev-user-id',
-      email: 'admin@fashionstyle.com',
+      email: 'elebe.merch@gmail.com',
       name: 'Admin Dev',
       role: 'admin'
     };
