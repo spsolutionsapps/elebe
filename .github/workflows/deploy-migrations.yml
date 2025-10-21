@@ -1,0 +1,55 @@
+name: Deploy Migrations to Digital Ocean
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'backend/prisma/migrations/**'
+      - 'backend/prisma/schema.prisma'
+  workflow_dispatch: # Permite ejecutar manualmente
+
+jobs:
+  deploy-migrations:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: backend/package-lock.json
+        
+    - name: Install dependencies
+      working-directory: ./backend
+      run: npm ci
+      
+    - name: Apply Database Migrations
+      working-directory: ./backend
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      run: |
+        echo "Aplicando migraciones a la base de datos de producción..."
+        npx prisma migrate deploy
+        echo "Migraciones aplicadas exitosamente"
+        
+    - name: Generate Prisma Client
+      working-directory: ./backend
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      run: |
+        echo "Generando cliente de Prisma..."
+        npx prisma generate
+        echo "Cliente de Prisma generado exitosamente"
+        
+    - name: Verify Database Schema
+      working-directory: ./backend
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      run: |
+        echo "Verificando esquema de base de datos..."
+        npx prisma migrate status
+        echo "Esquema verificado correctamente"
