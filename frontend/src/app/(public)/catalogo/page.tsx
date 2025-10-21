@@ -122,8 +122,9 @@ function CatalogoContent() {
       <div className="min-h-screen bg-transparent py-12">
         <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-center h-64">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-          </div>
+          <div style={{borderRadius: '150px'}} className="animate-spin h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-300 font-body">Cargando...</p>
+        </div>
         </div>
       </div>
     )
@@ -177,7 +178,7 @@ function CatalogoContent() {
           )}
 
           <div className='shapeCatalogoIzq'>
-            <img src="/shapeCatalogoIzq.svg" alt="ShapeCatalogoIzq" />
+          <img src="/catalogo-izquierda.svg" alt="shape catalogo izq" />
           </div>
 
           <div className='shapeCatalogoDer'>
