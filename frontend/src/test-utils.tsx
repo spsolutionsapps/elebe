@@ -139,3 +139,6 @@ export const createMockInquiry = (overrides = {}) => ({
 // Re-export everything
 export * from '@testing-library/react'
 export { customRender as render }
+
+// Re-export specific testing utilities
+export { screen, fireEvent, waitFor as testingWaitFor } from '@testing-library/dom'
