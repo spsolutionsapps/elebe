@@ -4,10 +4,10 @@ import { lazy, Suspense } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 
-// Lazy loading del contenido de la página de contacto
-const ContactoPageContent = lazy(() => import('./ContactoPageContent'))
+// Lazy loading de la página de contacto
+const ContactoPage = lazy(() => import('@/app/(public)/contacto/page'))
 
-// Componente de loading personalizado para contacto
+// Componente de loading personalizado
 const ContactoLoadingSkeleton = () => (
   <div className="space-y-8">
     {/* Hero section skeleton */}
@@ -63,10 +63,10 @@ const ContactoLoadingSkeleton = () => (
   </div>
 )
 
-export default function ContactoPage() {
+export default function ContactoPageLazy() {
   return (
     <Suspense fallback={<ContactoLoadingSkeleton />}>
-      <ContactoPageContent />
+      <ContactoPage />
     </Suspense>
   )
 }

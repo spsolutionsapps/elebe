@@ -4,10 +4,10 @@ import { lazy, Suspense } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 
-// Lazy loading del contenido de la página de consultas
-const InquiriesPageContent = lazy(() => import('./InquiriesPageContent'))
+// Lazy loading de la página de consultas
+const InquiriesPage = lazy(() => import('@/app/admin/inquiries/page'))
 
-// Componente de loading personalizado para consultas
+// Componente de loading personalizado
 const InquiriesLoadingSkeleton = () => (
   <div className="space-y-6">
     {/* Header skeleton */}
@@ -61,10 +61,10 @@ const InquiriesLoadingSkeleton = () => (
   </div>
 )
 
-export default function InquiriesPage() {
+export default function InquiriesPageLazy() {
   return (
     <Suspense fallback={<InquiriesLoadingSkeleton />}>
-      <InquiriesPageContent />
+      <InquiriesPage />
     </Suspense>
   )
 }

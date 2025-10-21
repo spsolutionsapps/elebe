@@ -4,10 +4,10 @@ import { lazy, Suspense } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 
-// Lazy loading del contenido de la página de tareas
-const TasksPageContent = lazy(() => import('./TasksPageContent'))
+// Lazy loading de la página de tareas
+const TasksPage = lazy(() => import('@/app/admin/tasks/page'))
 
-// Componente de loading personalizado para tareas
+// Componente de loading personalizado
 const TasksLoadingSkeleton = () => (
   <div className="space-y-6">
     {/* Header skeleton */}
@@ -47,10 +47,10 @@ const TasksLoadingSkeleton = () => (
   </div>
 )
 
-export default function TasksPage() {
+export default function TasksPageLazy() {
   return (
     <Suspense fallback={<TasksLoadingSkeleton />}>
-      <TasksPageContent />
+      <TasksPage />
     </Suspense>
   )
 }
