@@ -56,16 +56,17 @@ model VerificationToken {
 }
 
 model Slide {
-  id         String   @id @default(cuid())
-  title      String?
-  subtitle   String?
-  image      String
-  order      Int      @default(0)
-  isActive   Boolean  @default(true)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  buttonText String?
-  buttonLink String?
+  id          String   @id @default(cuid())
+  title       String?
+  subtitle    String?
+  description String?
+  image       String
+  order       Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  buttonText  String?
+  buttonLink  String?
 }
 
 model Product {
@@ -94,6 +95,8 @@ model Product {
   isFeatured          Boolean          @default(false)
   views               Int              @default(0)
   inquiries           InquiryProduct[]
+
+  @@index([views(sort: Desc)])
 }
 
 model About {
@@ -108,13 +111,13 @@ model About {
 
 model Service {
   id          String   @id @default(cuid())
-  title       String
   description String
   image       String?
   isActive    Boolean  @default(true)
-  order       Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  order       Int      @default(0)
+  title       String
 }
 
 model Inquiry {
@@ -256,10 +259,8 @@ model CartItem {
   notes       String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  addedAt     DateTime @default(now())
   cart        Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
 
-  @@unique([cartId, productId])
   @@map("cart_items")
 }
 
