@@ -151,7 +151,7 @@ export function CatalogMegaMenu({ isOpen, onClose }: CatalogMegaMenuProps) {
             </div>
 
             <div className='shapeMenuIzq'>
-              <img src="/shapeMenuIzq.svg" alt="ShapeMenuIzq" />
+              <img src="/shapeSubMenuizq.svg" alt="ShapeMenuIzq" />
             </div>
 
           </div>
