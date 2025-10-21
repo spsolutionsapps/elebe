@@ -106,7 +106,7 @@ export default function ContactoPage() {
        
 
         <div className='shapeCatalogoIzq'>
-          <img src="/shapeCatalogoIzq.svg" alt="ShapeCatalogoIzq" />
+          <img src="/catalogo-izquierda.svg" alt="shape catalogo izq" />
         </div>
 
         <div className='shapeCatalogoDer slideInRight'>
