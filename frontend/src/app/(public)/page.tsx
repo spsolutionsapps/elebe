@@ -194,7 +194,7 @@ export default function HomePage() {
               <div className="flex justify-center lg:justify-start mt-6">
                 <Link 
                   href="/nosotros"
-                  className="underline hover:no-underline transition-all duration-300 text-[#004CAC] mt-6 text-lg"
+                  className="underline transition-all duration-300 text-[#004CAC] mt-6 text-lg"
                 >
                     Conocé más de la <em>agencia</em>
                 </Link>

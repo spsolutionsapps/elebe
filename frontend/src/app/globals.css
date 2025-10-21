@@ -482,7 +482,7 @@ body:has([data-pathname*="/admin"]) .rounded-full {
   height: 274px;
 }
 
-/* Animaciones de Slide-In */
+/* Animaciones de Slide-In para header */
 .slide-in-left {
   animation: slideInLeft 1s ease-out forwards;
   opacity: 0;
@@ -549,6 +549,21 @@ body:has([data-pathname*="/admin"]) .rounded-full {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
+}
+
+/* Optimizaciones de rendimiento para imágenes */
+img {
+  content-visibility: auto;
+}
+
+/* Mejoras de rendimiento para animaciones */
+.transition-all {
+  will-change: transform, opacity;
+}
+
+/* Optimización para elementos con animaciones */
+[data-scroll-animated] {
+  contain: layout style paint;
 }
 
 @media (max-width: 1024px) {

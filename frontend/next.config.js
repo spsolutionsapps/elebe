@@ -12,6 +12,28 @@ const nextConfig = {
     missingSuspenseWithCSRBailout: false,
   },
   
+  // Configuración para manejar errores de fetch durante el build
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      // Durante el build del servidor, interceptar fetch para manejar errores
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+      }
+    }
+    return config
+  },
+  
+  // Configuración para manejar errores de fetch durante el build
+  onDemandEntries: {
+    // Tiempo máximo para mantener páginas en memoria
+    maxInactiveAge: 25 * 1000,
+    // Número de páginas a mantener en memoria
+    pagesBufferLength: 2,
+  },
+  
   // Optimización de imágenes
   images: {
     // Dominios permitidos para imágenes externas

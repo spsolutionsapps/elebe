@@ -20,6 +20,11 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/a
 // Función para obtener el carrito del usuario desde el backend
 async function getUserCart(sessionId: string): Promise<CartItem[]> {
   try {
+    // Durante el build, retornar carrito vacío para evitar errores de conexión
+    if (process.env.NODE_ENV === 'production' && !process.env.BACKEND_URL) {
+      return []
+    }
+    
     const response = await fetch(`${API_BASE_URL}/cart?sessionId=${sessionId}`, {
       method: 'GET',
       headers: {

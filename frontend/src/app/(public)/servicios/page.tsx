@@ -1,6 +1,7 @@
 import { Settings, CheckCircle } from 'lucide-react'
 import { getImageUrl } from '@/lib/imageUtils'
 import { API_CONFIG, getApiUrl } from '@/lib/config'
+import { buildSafePageData } from '@/lib/buildSafeApi'
 
 interface Service {
   id: string
@@ -14,22 +15,14 @@ interface Service {
 }
 
 async function getServices(): Promise<Service[]> {
-  try {
-    const response = await fetch(getApiUrl('/services'), { 
+  // Usar buildSafePageData para manejar build time gracefully
+  return await buildSafePageData<Service[]>(
+    '/services',
+    [], // Fallback: array vacío
+    { 
       next: { revalidate: 3600 } // Revalidar cada hora
-    })
-    
-    if (response.ok) {
-      const data = await response.json()
-      return data
-    } else {
-      console.error('❌ Error response:', response.status, response.statusText)
-      return []
     }
-  } catch (error) {
-    console.error('Error fetching services:', error)
-    return []
-  }
+  )
 }
 
 export default async function ServiciosPage() {
