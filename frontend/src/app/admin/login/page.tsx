@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import apiClient from '@/lib/api-client'
 import { useToast } from '@/hooks/useToast'
+import { Eye, EyeOff } from 'lucide-react'
 
 export default function LoginPage() {
   const { showSuccess, showError } = useToast()
@@ -15,7 +16,12 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   const router = useRouter()
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword)
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -73,7 +79,7 @@ export default function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              placeholder="admin@fashionstyle.com"
+              placeholder="elebe.merch@gmail.com"
             />
           </div>
           
@@ -81,14 +87,28 @@ export default function LoginPage() {
             <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
               Contraseña
             </label>
-            <Input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              placeholder="••••••••"
-            />
+            <div className="relative">
+              <Input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                placeholder="••••••••"
+                className="pr-10"
+              />
+              <button
+                type="button"
+                onClick={togglePasswordVisibility}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                {showPassword ? (
+                  <EyeOff className="h-4 w-4" />
+                ) : (
+                  <Eye className="h-4 w-4" />
+                )}
+              </button>
+            </div>
           </div>
 
           {error && (
@@ -107,8 +127,8 @@ export default function LoginPage() {
         </form>
 
         <div className="mt-4 text-center text-sm text-gray-600">
-          <p>Email: admin@fashionstyle.com</p>
-          <p>Contraseña: admin123</p>
+          <p>Email: elebe.merch@gmail.com</p>
+          <p>Contraseña: u1u2u3u4u5</p>
         </div>
       </div>
     </div>

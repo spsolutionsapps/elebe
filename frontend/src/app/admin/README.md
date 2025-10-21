@@ -32,8 +32,8 @@ Este directorio contiene todas las páginas del panel de administración.
 ## Acceso
 
 ### Credenciales por Defecto
-- **Email**: admin@lbpremium.com
-- **Contraseña**: admin123
+- **Email**: elebe.merch@gmail.com
+- **Contraseña**: u1u2u3u4u5
 
 ### URL
 - Panel: `/admin`
