@@ -15,7 +15,7 @@ export const useScrollAnimation = (
     triggerOnce = true
   } = options
 
-  const elementRef = useRef<HTMLElement>(null)
+  const elementRef = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
