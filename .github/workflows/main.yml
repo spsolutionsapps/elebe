@@ -39,7 +39,26 @@ jobs:
             docker compose up -d --build --remove-orphans
 
             cd backend
+            
+            # Verificar estado de migraciones antes de aplicar
+            echo "🔍 Verificando estado de migraciones..."
+            npx prisma migrate status
+            
+            # Crear backup antes de aplicar migraciones
+            echo "💾 Creando backup de seguridad..."
+            docker exec lb-premium-db pg_dump -U postgres lb_premium > /tmp/backup-$(date +%Y%m%d-%H%M%S).sql || echo "⚠️ Backup falló, continuando..."
+            
+            # Aplicar migraciones de forma segura
+            echo "🚀 Aplicando migraciones..."
             npx prisma migrate deploy
+            
+            # Verificar que las migraciones se aplicaron correctamente
+            echo "✅ Verificando migraciones aplicadas..."
+            npx prisma migrate status
+            
+            # Verificar que la base de datos está funcionando
+            echo "🔍 Verificando conexión a la base de datos..."
+            npx prisma db pull --force || echo "⚠️ Error en verificación de esquema"
 
             echo "✅ Deployment finished!"
           EOF

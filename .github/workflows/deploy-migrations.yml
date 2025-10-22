@@ -1,12 +1,14 @@
 name: Deploy Migrations to Digital Ocean
 
-on:
-  push:
-    branches: [ main, master ]
-    paths:
-      - 'backend/prisma/migrations/**'
-      - 'backend/prisma/schema.prisma'
-  workflow_dispatch: # Permite ejecutar manualmente
+# DISABLED: This workflow is disabled to prevent conflicts with main.yml
+# The main.yml workflow now handles migrations safely
+# on:
+#   push:
+#     branches: [ main, master ]
+#     paths:
+#       - 'backend/prisma/migrations/**'
+#       - 'backend/prisma/schema.prisma'
+#   workflow_dispatch: # Permite ejecutar manualmente
 
 jobs:
   deploy-migrations:
