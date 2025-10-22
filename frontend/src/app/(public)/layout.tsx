@@ -1,6 +1,6 @@
 'use client'
 
-import { Navigation } from '@/components/Navigation'
+import { Navigation } from '@/components/navigation'
 import { CartSidebar } from '@/components/CartSidebar'
 import { Footer } from '@/components/Footer'
 import { ScrollToTopButton } from '@/components/ScrollToTopButton'

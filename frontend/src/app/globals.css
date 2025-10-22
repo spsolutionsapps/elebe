@@ -578,6 +578,14 @@ display: none;
   p {
     font-size: 18px;
   }
+
+  .menuMobileShape {
+    position: absolute;
+    bottom: 0;
+    right: -165px;
+  }
+
+
 }
 
 
@@ -656,3 +664,5 @@ display: none;
   }
 
 }
+
+.slide-subtitle {display: none !important;}
