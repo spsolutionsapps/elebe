@@ -1,6 +1,6 @@
 # 📸 Guía de Upload de Imágenes
 
-## 🎯 **Funcionalidad Implementada** a
+## 🎯 **Funcionalidad Implementada** 
 
 El sistema ahora incluye un componente de upload de imágenes con las siguientes características:
 
