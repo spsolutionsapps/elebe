@@ -30,16 +30,7 @@ export interface Product {
   featuredOrder?: number | null
 }
 
-export interface Service {
-  id: string
-  title: string
-  description: string
-  image?: string | null
-  order: number
-  isActive: boolean
-  createdAt: Date
-  updatedAt: Date
-}
+ 
 
 export interface Slide {
   id: string

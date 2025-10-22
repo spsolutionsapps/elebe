@@ -22,16 +22,7 @@ export class MigrationsController {
         console.log('❌ Tabla Category no existe');
         categoryExists = false;
       }
-
-      try {
-        await this.prisma.service.findFirst();
-        serviceExists = true;
-        console.log('✅ Tabla Service existe');
-      } catch (error) {
-        console.log('❌ Tabla Service no existe');
-        serviceExists = false;
-      }
-
+ 
       return {
         success: true,
         message: 'Estado de migraciones verificado',

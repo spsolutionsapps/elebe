@@ -5,11 +5,7 @@
 -- Indexes for Slide model
 CREATE INDEX IF NOT EXISTS "Slide_isActive_order_idx" ON "Slide"("isActive", "order");
 CREATE INDEX IF NOT EXISTS "Slide_order_idx" ON "Slide"("order");
-
--- Indexes for Service model  
-CREATE INDEX IF NOT EXISTS "Service_isActive_order_idx" ON "Service"("isActive", "order");
-CREATE INDEX IF NOT EXISTS "Service_order_idx" ON "Service"("order");
-
+ 
 -- Indexes for Product model
 CREATE INDEX IF NOT EXISTS "Product_isActive_idx" ON "Product"("isActive");
 CREATE INDEX IF NOT EXISTS "Product_isFeatured_featuredOrder_idx" ON "Product"("isFeatured", "featuredOrder");

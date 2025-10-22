@@ -5,7 +5,7 @@ import { CacheModule } from './cache/cache.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ProductsModule } from './products/products.module';
-import { ServicesModule } from './services/services.module';
+ 
 import { SlidesModule } from './slides/slides.module';
 import { AboutModule } from './about/about.module';
 import { InquiriesModule } from './inquiries/inquiries.module';
@@ -31,7 +31,6 @@ import { MigrationsModule } from './migrations/migrations.module';
     AuthModule,
     UsersModule,
     ProductsModule,
-    ServicesModule,
     SlidesModule,
     AboutModule,
     InquiriesModule,

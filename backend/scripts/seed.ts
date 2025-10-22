@@ -15,6 +15,7 @@ async function main() {
       image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800',
       order: 1,
       isActive: true,
+      updatedAt: new Date(),
     },
     {
       id: 'slide-2',
@@ -23,6 +24,7 @@ async function main() {
       image: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=800',
       order: 2,
       isActive: true,
+      updatedAt: new Date(),
     },
     {
       id: 'slide-3',
@@ -31,6 +33,7 @@ async function main() {
       image: 'https://images.unsplash.com/photo-1445205170230-053b83016050?w=800',
       order: 3,
       isActive: true,
+      updatedAt: new Date(),
     },
   ];
 
@@ -54,6 +57,7 @@ async function main() {
       images: [],
       isActive: true,
       views: 0,
+      updatedAt: new Date(),
     },
     {
       id: 'product-2',
@@ -64,6 +68,7 @@ async function main() {
       images: [],
       isActive: true,
       views: 0,
+      updatedAt: new Date(),
     },
     {
       id: 'product-3',
@@ -74,6 +79,7 @@ async function main() {
       images: [],
       isActive: true,
       views: 0,
+      updatedAt: new Date(),
     },
   ];
 
@@ -85,42 +91,6 @@ async function main() {
     });
   }
 
-  // Crear servicios
-  console.log('🛍️ Creando servicios...');
-  const services = [
-    {
-      id: 'service-1',
-      title: 'Asesoría de Estilo',
-      description: 'Consulta personalizada para encontrar tu estilo único',
-      image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400',
-      order: 1,
-      isActive: true,
-    },
-    {
-      id: 'service-2',
-      title: 'Personalización de Prendas',
-      description: 'Adaptamos las prendas a tu medida perfecta',
-      image: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=400',
-      order: 2,
-      isActive: true,
-    },
-    {
-      id: 'service-3',
-      title: 'Envío Express',
-      description: 'Entrega rápida en 24-48 horas',
-      image: 'https://images.unsplash.com/photo-1445205170230-053b83016050?w=400',
-      order: 3,
-      isActive: true,
-    },
-  ];
-
-  for (const service of services) {
-    await prisma.service.upsert({
-      where: { id: service.id },
-      update: service,
-      create: service,
-    });
-  }
 
   // Crear información sobre nosotros
   console.log('ℹ️ Creando información sobre nosotros...');
@@ -131,6 +101,7 @@ async function main() {
       content: 'Somos una empresa familiar con más de 20 años de experiencia en el mundo de la moda. Nos especializamos en crear prendas únicas y elegantes que reflejen la personalidad de cada cliente.',
       images: ['https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400'],
       isActive: true,
+      updatedAt: new Date(),
     },
     {
       id: 'about-2',
@@ -138,6 +109,7 @@ async function main() {
       content: 'Proporcionar a nuestros clientes prendas de alta calidad que combinen estilo, comodidad y elegancia, siempre manteniendo los más altos estándares de calidad y servicio.',
       images: ['https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=400'],
       isActive: true,
+      updatedAt: new Date(),
     },
   ];
 

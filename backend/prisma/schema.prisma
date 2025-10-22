@@ -109,16 +109,6 @@ model About {
   updatedAt DateTime @updatedAt
 }
 
-model Service {
-  id          String   @id @default(cuid())
-  description String
-  image       String?
-  isActive    Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  order       Int      @default(0)
-  title       String
-}
 
 model Inquiry {
   id                  String            @id @default(cuid())
