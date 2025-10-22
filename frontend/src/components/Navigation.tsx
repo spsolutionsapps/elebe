@@ -3,14 +3,21 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { ShoppingCart, Menu, X, Search } from 'lucide-react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, useMemo, memo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { CatalogMegaMenu } from '@/components/CatalogMegaMenu'
 import { useRouter, usePathname } from 'next/navigation'
 import { useCart } from '@/contexts/CartContext'
 import { CartSidebar } from '@/components/CartSidebar'
 
-export function Navigation() {
+// Definir tipos para mejor tipado
+interface NavItem {
+  href: string
+  label: string
+  hidden?: boolean
+}
+
+const Navigation = memo(function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isCatalogMenuOpen, setIsCatalogMenuOpen] = useState(false)
   const [catalogHoverTimeout, setCatalogHoverTimeout] = useState<NodeJS.Timeout | null>(null)
@@ -24,7 +31,70 @@ export function Navigation() {
   // Usar el hook del carrito
   const { state: cart, toggleCart } = useCart()
 
-  // Detectar si estamos en página de producto - removido para mantener header consistente
+  // Memoizar el array de navegación para evitar recreaciones innecesarias
+  const navItems: NavItem[] = useMemo(() => [
+    { href: '/', label: 'Inicio' },
+    { href: '/catalogo', label: 'Catálogo' },
+    { href: '/servicios', label: 'Servicios', hidden: true },
+    { href: '/nosotros', label: 'Nosotros' },
+    { href: '/contacto', label: 'Contacto' },
+  ], [])
+
+  // Función para determinar si un item está activo - memoizada
+  const isActiveItem = useCallback((href: string) => {
+    if (href === '/') {
+      return pathname === '/'
+    }
+    return pathname.startsWith(href)
+  }, [pathname])
+
+  // Handler de búsqueda optimizado
+  const handleSearch = useCallback((e: React.FormEvent) => {
+    e.preventDefault()
+    if (searchTerm.trim()) {
+      router.push(`/catalogo?search=${encodeURIComponent(searchTerm.trim())}`)
+      setSearchTerm('')
+      setIsSearchOpen(false)
+    }
+  }, [searchTerm, router])
+
+  // Handlers para el menú móvil optimizados
+  const toggleMobileMenu = useCallback(() => {
+    setIsMobileMenuOpen(prev => !prev)
+  }, [])
+
+  const closeMobileMenu = useCallback(() => {
+    setIsMobileMenuOpen(false)
+  }, [])
+
+  // Handlers para el catálogo optimizados
+  const handleCatalogMouseEnter = useCallback(() => {
+    if (catalogHoverTimeout) {
+      clearTimeout(catalogHoverTimeout)
+      setCatalogHoverTimeout(null)
+    }
+    setIsCatalogMenuOpen(true)
+  }, [catalogHoverTimeout])
+
+  const handleCatalogMouseLeave = useCallback(() => {
+    const timeout = setTimeout(() => {
+      setIsCatalogMenuOpen(false)
+    }, 200)
+    setCatalogHoverTimeout(timeout)
+  }, [])
+
+  const toggleCatalogMenu = useCallback(() => {
+    setIsCatalogMenuOpen(prev => !prev)
+  }, [])
+
+  const closeCatalogMenu = useCallback(() => {
+    setIsCatalogMenuOpen(false)
+  }, [])
+
+  // Handler para toggle de búsqueda optimizado
+  const toggleSearch = useCallback(() => {
+    setIsSearchOpen(prev => !prev)
+  }, [])
 
   // Limpiar timeout al desmontar
   useEffect(() => {
@@ -35,51 +105,26 @@ export function Navigation() {
     }
   }, [catalogHoverTimeout])
 
-  // Controlar la visibilidad del header basado en el scroll
-  useEffect(() => {
-    const controlHeader = () => {
-      const currentScrollY = window.scrollY
-      
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        // Scrolling down - hide header and close catalog menu
-        setIsHeaderVisible(false)
-        setIsCatalogMenuOpen(false)
-      } else {
-        // Scrolling up - show header
-        setIsHeaderVisible(true)
-      }
-      
-      setLastScrollY(currentScrollY)
+  // Controlar la visibilidad del header basado en el scroll - optimizado
+  const controlHeader = useCallback(() => {
+    const currentScrollY = window.scrollY
+    
+    if (currentScrollY > lastScrollY && currentScrollY > 100) {
+      // Scrolling down - hide header and close catalog menu
+      setIsHeaderVisible(false)
+      setIsCatalogMenuOpen(false)
+    } else {
+      // Scrolling up - show header
+      setIsHeaderVisible(true)
     }
-
-    window.addEventListener('scroll', controlHeader)
-    return () => window.removeEventListener('scroll', controlHeader)
+    
+    setLastScrollY(currentScrollY)
   }, [lastScrollY])
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (searchTerm.trim()) {
-      router.push(`/catalogo?search=${encodeURIComponent(searchTerm.trim())}`)
-      setSearchTerm('')
-      setIsSearchOpen(false)
-    }
-  }
-
-  const navItems = [
-    { href: '/', label: 'Inicio' },
-    { href: '/catalogo', label: 'Catálogo' },
-    { href: '/servicios', label: 'Servicios', hidden: true },
-    { href: '/nosotros', label: 'Nosotros' },
-    { href: '/contacto', label: 'Contacto' },
-  ]
-
-  // Función para determinar si un item está activo
-  const isActiveItem = (href: string) => {
-    if (href === '/') {
-      return pathname === '/'
-    }
-    return pathname.startsWith(href)
-  }
+  useEffect(() => {
+    window.addEventListener('scroll', controlHeader)
+    return () => window.removeEventListener('scroll', controlHeader)
+  }, [controlHeader])
 
   return (
     <nav 
@@ -111,23 +156,8 @@ export function Navigation() {
                 <div 
                   key={item.href} 
                   className={`relative ${item.hidden ? 'hidden' : ''}`}
-                  onMouseEnter={() => {
-                    if (item.label === 'Catálogo') {
-                      if (catalogHoverTimeout) {
-                        clearTimeout(catalogHoverTimeout)
-                        setCatalogHoverTimeout(null)
-                      }
-                      setIsCatalogMenuOpen(true)
-                    }
-                  }}
-                  onMouseLeave={() => {
-                    if (item.label === 'Catálogo') {
-                      const timeout = setTimeout(() => {
-                        setIsCatalogMenuOpen(false)
-                      }, 200)
-                      setCatalogHoverTimeout(timeout)
-                    }
-                  }}
+                  onMouseEnter={item.label === 'Catálogo' ? handleCatalogMouseEnter : undefined}
+                  onMouseLeave={item.label === 'Catálogo' ? handleCatalogMouseLeave : undefined}
                 >
                   {item.label === 'Catálogo' ? (
                     <Link
@@ -169,7 +199,7 @@ export function Navigation() {
                   {item.label === 'Catálogo' && (
                     <CatalogMegaMenu 
                       isOpen={isCatalogMenuOpen} 
-                      onClose={() => setIsCatalogMenuOpen(false)} 
+                      onClose={closeCatalogMenu} 
                     />
                   )}
                 </div>
@@ -181,11 +211,11 @@ export function Navigation() {
           <div className="flex items-center space-x-4 flex-shrink-0">
             {/* Search Button - Solo visible en desktop */}
             <div className="relative hidden md:block">
-              <div 
-                className="w-12 h-12 rounded-full flex items-center justify-center cursor-pointer transition-colors"
-                style={{ backgroundColor: '#176A7B' }}
-                onClick={() => setIsSearchOpen(!isSearchOpen)}
-              >
+                <div 
+                  className="w-12 h-12 rounded-full flex items-center justify-center cursor-pointer transition-colors"
+                  style={{ backgroundColor: '#176A7B' }}
+                  onClick={toggleSearch}
+                >
                 <Search className="h-6 w-6 text-white" />
               </div>
             </div>
@@ -232,7 +262,7 @@ export function Navigation() {
 
             {/* Mobile menu button - Sin padding ni background */}
             <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              onClick={toggleMobileMenu}
               className="md:hidden transition-colors p-0 bg-transparent border-none"
               style={{ color: '#004CAC' }}
             >
@@ -276,7 +306,7 @@ export function Navigation() {
                     {item.label === 'Catálogo' ? (
                       <div>
                         <button
-                          onClick={() => setIsCatalogMenuOpen(!isCatalogMenuOpen)}
+                          onClick={toggleCatalogMenu}
                           className="block px-0 py-3 rounded-md font-medium font-body w-full text-left"
                           style={{ fontSize: '18px', color: '#004CAC' }}
                         >
@@ -289,8 +319,8 @@ export function Navigation() {
                               className="block px-3 py-1 rounded-md text-sm"
                               style={{ color: '#004CAC' }}
                               onClick={() => {
-                                setIsMobileMenuOpen(false)
-                                setIsCatalogMenuOpen(false)
+                                closeMobileMenu()
+                                closeCatalogMenu()
                               }}
                             >
                               Todas las categorías
@@ -300,8 +330,8 @@ export function Navigation() {
                               className="block px-3 py-1 rounded-md text-sm"
                               style={{ color: '#004CAC' }}
                               onClick={() => {
-                                setIsMobileMenuOpen(false)
-                                setIsCatalogMenuOpen(false)
+                                closeMobileMenu()
+                                closeCatalogMenu()
                               }}
                             >
                               Oficina
@@ -311,8 +341,8 @@ export function Navigation() {
                               className="block px-3 py-1 rounded-md text-sm"
                               style={{ color: '#004CAC' }}
                               onClick={() => {
-                                setIsMobileMenuOpen(false)
-                                setIsCatalogMenuOpen(false)
+                                closeMobileMenu()
+                                closeCatalogMenu()
                               }}
                             >
                               Moda
@@ -322,8 +352,8 @@ export function Navigation() {
                               className="block px-3 py-1 rounded-md text-sm"
                               style={{ color: '#004CAC' }}
                               onClick={() => {
-                                setIsMobileMenuOpen(false)
-                                setIsCatalogMenuOpen(false)
+                                closeMobileMenu()
+                                closeCatalogMenu()
                               }}
                             >
                               Deporte
@@ -336,7 +366,7 @@ export function Navigation() {
                         href={item.href}
                         className="block px-0 py-3 rounded-md font-medium font-body"
                         style={{ fontSize: '18px', color: '#004CAC' }}
-                        onClick={() => setIsMobileMenuOpen(false)}
+                        onClick={closeMobileMenu}
                       >
                         {item.label}
                       </Link>
@@ -353,4 +383,6 @@ export function Navigation() {
       <CartSidebar />
     </nav>
   )
-}
+})
+
+export { Navigation }

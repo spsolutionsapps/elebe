@@ -1,13 +1,13 @@
 'use client'
 
-import { useEffect, useRef, useState, useCallback } from 'react'
+import { useEffect, useRef, useState, useCallback, useMemo, memo } from 'react'
 import { ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Slide } from '@/types'
 import { getImageUrl } from '@/lib/imageUtils'
 import { gsap } from 'gsap'
 
-// Función helper para procesar HTML de manera segura
+// Función helper para procesar HTML de manera segura - memoizada
 const processHtmlContent = (html: string): string => {
   if (!html) return ''
   
@@ -23,13 +23,13 @@ const processHtmlContent = (html: string): string => {
   return decoded
 }
 
-// Función para detectar si el contenido contiene HTML
+// Función para detectar si el contenido contiene HTML - memoizada
 const containsHtml = (text: string): boolean => {
   if (!text) return false
   return /<[^>]*>/g.test(text)
 }
 
-// Función para renderizar contenido con o sin HTML
+// Función para renderizar contenido con o sin HTML - memoizada
 const renderTitle = (title: string): { __html: string } => {
   if (!title) return { __html: '' }
   
@@ -55,7 +55,7 @@ interface GSAPSliderProps {
   }) => void
 }
 
-export function GSAPSlider({ slides, onControls }: GSAPSliderProps) {
+const GSAPSlider = memo(function GSAPSlider({ slides, onControls }: GSAPSliderProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const slidesRef = useRef<HTMLDivElement[]>([])
   const textRefs = useRef<HTMLDivElement[]>([])
@@ -261,24 +261,35 @@ export function GSAPSlider({ slides, onControls }: GSAPSliderProps) {
     }, 500)
   }, [slides.length, animateTexts])
 
-  const handleNext = () => {
+  // Handlers optimizados con useCallback
+  const handleNext = useCallback(() => {
     setIsPlaying(false)
     animateSlider('next')
-  }
+  }, [animateSlider])
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     setIsPlaying(false)
     animateSlider('prev')
-  }
+  }, [animateSlider])
 
-  const handlePlayPause = () => {
+  const handlePlayPause = useCallback(() => {
     setIsPlaying(!isPlaying)
-  }
+  }, [isPlaying])
 
-  const handleDotClick = (index: number) => {
+  const handleDotClick = useCallback((index: number) => {
     setIsPlaying(false)
     animateSlider('to', index)
-  }
+  }, [animateSlider])
+
+  // Memoizar la función renderTitle para evitar recreaciones
+  const memoizedRenderTitle = useCallback((title: string) => {
+    return renderTitle(title)
+  }, [])
+
+  // Memoizar el procesamiento de imágenes
+  const getOptimizedImageUrl = useCallback((image: string) => {
+    return getImageUrl(image)
+  }, [])
 
   // Pasar controles al callback
   useEffect(() => {
@@ -292,7 +303,7 @@ export function GSAPSlider({ slides, onControls }: GSAPSliderProps) {
         isPlaying
       })
     }
-  }, [currentIndex, isPlaying, onControls])
+  }, [currentIndex, isPlaying, onControls, handleNext, handlePrev, handleDotClick, handlePlayPause])
 
   if (!slides || slides.length === 0) {
     return (
@@ -302,8 +313,6 @@ export function GSAPSlider({ slides, onControls }: GSAPSliderProps) {
     )
   }
 
-
-  //rounded-3xl iba aca
   return (
     <div className="relative w-full h-[calc(100vh-8rem-60px)] overflow-hidden mx-auto" style={{ marginTop: '2rem' }}>
       {/* Contenedor principal del slider */}
@@ -324,8 +333,9 @@ export function GSAPSlider({ slides, onControls }: GSAPSliderProps) {
             {/* Imagen del slide */}
             <div className="relative h-full bg-gradient-to-br from-gray-900 to-gray-700 overflow-hidden">
               <img
-                src={getImageUrl(slide.image)}
+                src={getOptimizedImageUrl(slide.image)}
                 alt={slide.title}
+                loading="lazy"
                 className="w-full h-full object-cover transition-transform duration-1000 hover:scale-110"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none'
@@ -355,7 +365,7 @@ export function GSAPSlider({ slides, onControls }: GSAPSliderProps) {
                    {/* Título */}
                     <h1 
                       className="slide-title text-4xl md:text-6xl lg:text-7xl font-bold leading-tight"
-                      dangerouslySetInnerHTML={renderTitle(slide.title || '')}
+                      dangerouslySetInnerHTML={memoizedRenderTitle(slide.title || '')}
                     />
                     
                     {/* Subtítulo */}
@@ -414,4 +424,6 @@ export function GSAPSlider({ slides, onControls }: GSAPSliderProps) {
       )}
     </div>
   )
-}
+})
+
+export { GSAPSlider }
