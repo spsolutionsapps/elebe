@@ -1,10 +1,12 @@
 name:  migrations to prod manually
 
 on:
-  push:
-    branches:
-      - main
-  workflow_dispatch: # Permite ejecutar manualmente
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: Why are you running migrations?
+        required: true
+        type: string
 jobs:
   deploy:
     runs-on: ubuntu-latest
