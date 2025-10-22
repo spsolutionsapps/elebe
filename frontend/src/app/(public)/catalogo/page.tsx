@@ -167,7 +167,7 @@ function CatalogoContent() {
           </div>
 
           {searchParam && (
-            <div className="text-center mt-6">
+            <div className="text-center mt-6 md:hidden">
               <Link 
                 href="/catalogo" 
                 className="inline-block text-white hover:text-gray-100 underline"
