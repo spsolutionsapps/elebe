@@ -144,9 +144,7 @@ export function MobileNavigation({
             ))}
             
             {/* Footer del menú móvil */}
-            <div className="mt-auto pt-4 menuMobileShape">
-              <img src="/quienesSomosDerecha.svg" alt="LB Premium" className="w-full" />
-            </div>
+            <div className="mt-auto pt-4 menuMobileShape" />
             </div>
           </motion.div>
         </>
