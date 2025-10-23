@@ -166,17 +166,6 @@ function CatalogoContent() {
             </div>
           </div>
 
-          {searchParam && (
-            <div className="text-center mt-6 md:hidden">
-              <Link 
-                href="/catalogo" 
-                className="inline-block text-white hover:text-gray-100 underline"
-              >
-                ← Ver todos los productos
-              </Link>
-            </div>
-          )}
-
           <div className='shapeCatalogoIzq'>
           <img src="/catalogo-izquierda.svg" alt="shape catalogo izq" />
           </div>

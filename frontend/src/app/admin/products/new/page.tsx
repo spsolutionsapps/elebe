@@ -117,9 +117,10 @@ export default function NewProductPage() {
         const newProduct = await response.json()
         console.log('✅ Frontend: Product created successfully:', newProduct)
         showAlert({
-          title: 'Éxito',
-          message: '¡Producto creado exitosamente!',
-          type: 'success'
+          title: 'Producto Publicado',
+          message: 'El producto se ha creado exitosamente y ya está visible en el catálogo.',
+          type: 'success',
+          autoCloseDelay: 4000
         })
         // Redirigir a la lista de productos después de cerrar el modal
         setTimeout(() => {

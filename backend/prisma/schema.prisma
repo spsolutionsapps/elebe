@@ -56,17 +56,23 @@ model VerificationToken {
 }
 
 model Slide {
-  id          String   @id @default(cuid())
-  title       String?
-  subtitle    String?
-  description String?
-  image       String
-  order       Int      @default(0)
-  isActive    Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  buttonText  String?
-  buttonLink  String?
+  id                    String   @id @default(cuid())
+  title                 String?
+  subtitle              String?
+  description           String?
+  image                 String
+  order                 Int      @default(0)
+  isActive              Boolean  @default(true)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  buttonText            String?
+  buttonLink            String?
+  buttonBackgroundColor String?
+  buttonTextColor       String?
+  buttonBorderColor     String?
+  buttonBorderWidth     String?
+  buttonBorderRadius    String?
+  buttonBoxShadow       String?
 }
 
 model Product {

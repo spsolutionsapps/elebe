@@ -6,7 +6,7 @@ services:
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-lb_premium}
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres123}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-Gojira2019!}
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
     volumes:
@@ -24,7 +24,7 @@ services:
     container_name: lb-premium-backend
     environment:
       - NODE_ENV=${NODE_ENV:-production}
-      - DATABASE_URL=${DATABASE_URL:-postgresql://postgres:postgres123@postgres:5432/lb_premium}
+      - DATABASE_URL=${DATABASE_URL:-postgresql://postgres:Gojira2019!@postgres:5432/lb_premium}
       - JWT_SECRET=${JWT_SECRET:-your-super-secret-jwt-key-change-this-in-production}
       - PORT=${PORT:-3001}
       - FRONTEND_URL=${FRONTEND_URL:-http://146.190.116.222:3000}

@@ -39,6 +39,12 @@ export interface Slide {
   description?: string | null
   buttonText?: string | null
   buttonLink?: string | null
+  buttonBackgroundColor?: string | null
+  buttonTextColor?: string | null
+  buttonBorderColor?: string | null
+  buttonBorderWidth?: string | null
+  buttonBorderRadius?: string | null
+  buttonBoxShadow?: string | null
   image: string
   order: number
   isActive: boolean
