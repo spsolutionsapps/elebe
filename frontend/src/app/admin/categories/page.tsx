@@ -11,6 +11,7 @@ import ImageUpload from '@/components/ImageUpload'
 import { getApiUrl, getImageUrl } from '@/lib/config'
 import { AlertModal } from '@/components/AlertModal'
 import { ConfirmModal } from '@/components/ConfirmModal'
+import { SuccessModal } from '@/components/SuccessModal'
 import { useModal } from '@/hooks/useModal'
 
 interface Category {
@@ -40,6 +41,17 @@ export default function CategoriesPage() {
   })
   
   const { alertState, showAlert, hideAlert, confirmState, showConfirm, handleConfirm, handleCancel } = useModal()
+  
+  // Estado para el modal de éxito
+  const [successModal, setSuccessModal] = useState<{
+    isOpen: boolean
+    title: string
+    message: string
+  }>({
+    isOpen: false,
+    title: '',
+    message: ''
+  })
 
   useEffect(() => {
     fetchCategories()
@@ -90,10 +102,12 @@ export default function CategoriesPage() {
         await fetchCategories()
         resetForm()
         setShowModal(false)
-        showAlert({
-          title: 'Éxito',
-          message: editingCategory ? 'Categoría actualizada exitosamente' : 'Categoría creada exitosamente',
-          type: 'success'
+        setSuccessModal({
+          isOpen: true,
+          title: editingCategory ? 'Categoría Actualizada' : 'Categoría Creada',
+          message: editingCategory 
+            ? 'La categoría se ha actualizado exitosamente y ya está visible en el catálogo.'
+            : 'La categoría se ha creado exitosamente y ya está visible en el catálogo.'
         })
       } else {
         const error = await response.json()
@@ -144,10 +158,10 @@ export default function CategoriesPage() {
 
       if (response.ok) {
         await fetchCategories()
-        showAlert({
-          title: 'Éxito',
-          message: 'Categoría eliminada exitosamente',
-          type: 'success'
+        setSuccessModal({
+          isOpen: true,
+          title: 'Categoría Eliminada',
+          message: 'La categoría se ha eliminado exitosamente del catálogo.'
         })
       } else {
         showAlert({
@@ -296,6 +310,15 @@ export default function CategoriesPage() {
         confirmText={confirmState.confirmText}
         cancelText={confirmState.cancelText}
         variant={confirmState.variant}
+      />
+
+      {/* Success Modal */}
+      <SuccessModal
+        isOpen={successModal.isOpen}
+        onClose={() => setSuccessModal(prev => ({ ...prev, isOpen: false }))}
+        title={successModal.title}
+        message={successModal.message}
+        autoCloseDelay={4000}
       />
 
       {/* Modal de Crear/Editar */}

@@ -51,11 +51,20 @@ export class SlidesController {
 
   @Post()
   async create(@Body() data: any) {
+    console.log('📝 Creating slide with data:', data);
     const slide = await this.prisma.slide.create({
       data: {
         title: data.title,
+        subtitle: data.subtitle,
+        description: data.description,
         buttonText: data.buttonText,
         buttonLink: data.buttonLink,
+        buttonBackgroundColor: data.buttonBackgroundColor,
+        buttonTextColor: data.buttonTextColor,
+        buttonBorderColor: data.buttonBorderColor,
+        buttonBorderWidth: data.buttonBorderWidth,
+        buttonBorderRadius: data.buttonBorderRadius,
+        buttonBoxShadow: data.buttonBoxShadow,
         image: data.image,
         order: data.order || 0,
         isActive: data.isActive !== undefined ? data.isActive : true,
@@ -70,6 +79,7 @@ export class SlidesController {
 
   @Put(':id')
   async update(@Param('id') id: string, @Body() data: any) {
+    console.log('✏️ Updating slide with data:', data);
     const slide = await this.prisma.slide.findUnique({
       where: { id: id },
     });
@@ -82,8 +92,16 @@ export class SlidesController {
       where: { id: id },
       data: {
         title: data.title,
+        subtitle: data.subtitle,
+        description: data.description,
         buttonText: data.buttonText,
         buttonLink: data.buttonLink,
+        buttonBackgroundColor: data.buttonBackgroundColor,
+        buttonTextColor: data.buttonTextColor,
+        buttonBorderColor: data.buttonBorderColor,
+        buttonBorderWidth: data.buttonBorderWidth,
+        buttonBorderRadius: data.buttonBorderRadius,
+        buttonBoxShadow: data.buttonBoxShadow,
         image: data.image,
         order: data.order,
         isActive: data.isActive,

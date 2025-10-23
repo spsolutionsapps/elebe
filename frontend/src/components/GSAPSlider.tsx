@@ -43,6 +43,20 @@ const renderTitle = (title: string): { __html: string } => {
   }
 }
 
+// Función para renderizar texto del botón con HTML - memoizada
+const renderButtonText = (buttonText: string): { __html: string } => {
+  if (!buttonText) return { __html: '' }
+  
+  const processedText = processHtmlContent(buttonText)
+  const hasHtml = containsHtml(processedText)
+  
+  if (hasHtml) {
+    return { __html: processedText }
+  } else {
+    return { __html: buttonText }
+  }
+}
+
 interface GSAPSliderProps {
   slides: Slide[]
   onControls?: (controls: {
@@ -286,6 +300,11 @@ const GSAPSlider = memo(function GSAPSlider({ slides, onControls }: GSAPSliderPr
     return renderTitle(title)
   }, [])
 
+  // Memoizar la función renderButtonText para evitar recreaciones
+  const memoizedRenderButtonText = useCallback((buttonText: string) => {
+    return renderButtonText(buttonText)
+  }, [])
+
   // Memoizar el procesamiento de imágenes
   const getOptimizedImageUrl = useCallback((image: string) => {
     return getImageUrl(image)
@@ -377,18 +396,38 @@ const GSAPSlider = memo(function GSAPSlider({ slides, onControls }: GSAPSliderPr
                     )}
                     
                     {/* Botón */}
-                    {slide.buttonText && slide.buttonLink && (
+                    {slide.buttonText && (
                       <div className="slide-button">
-                        <a 
-                          href={slide.buttonLink}
-                          className="inline-block px-8 py-4 font-semibold text-lg transition-colors duration-300 shadow-lg"
-                          style={{ 
-                            backgroundColor: '#F7DA4D', 
-                            color: '#005DB9' 
-                          }}
-                        >
-                          {slide.buttonText}
-                        </a>
+                        {slide.buttonLink ? (
+                          <a 
+                            href={slide.buttonLink}
+                            className="inline-block px-8 py-4 font-semibold text-lg transition-colors duration-300"
+                            style={{ 
+                              backgroundColor: slide.buttonBackgroundColor || '#F7DA4D', 
+                              color: slide.buttonTextColor || '#005DB9',
+                              borderColor: slide.buttonBorderColor || 'transparent',
+                              borderWidth: slide.buttonBorderColor ? (slide.buttonBorderWidth || '2px') : '0px',
+                              borderStyle: 'solid',
+                              borderRadius: slide.buttonBorderRadius || '0px',
+                              boxShadow: slide.buttonBoxShadow || '0 4px 8px rgba(0,0,0,0.1)'
+                            }}
+                            dangerouslySetInnerHTML={memoizedRenderButtonText(slide.buttonText)}
+                          />
+                        ) : (
+                          <span 
+                            className="inline-block px-8 py-4 font-semibold text-lg transition-colors duration-300"
+                            style={{ 
+                              backgroundColor: slide.buttonBackgroundColor || '#F7DA4D', 
+                              color: slide.buttonTextColor || '#005DB9',
+                              borderColor: slide.buttonBorderColor || 'transparent',
+                              borderWidth: slide.buttonBorderColor ? (slide.buttonBorderWidth || '2px') : '0px',
+                              borderStyle: 'solid',
+                              borderRadius: slide.buttonBorderRadius || '0px',
+                              boxShadow: slide.buttonBoxShadow || '0 4px 8px rgba(0,0,0,0.1)'
+                            }}
+                            dangerouslySetInnerHTML={memoizedRenderButtonText(slide.buttonText)}
+                          />
+                        )}
                       </div>
                     )}
                     

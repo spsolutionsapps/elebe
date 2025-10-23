@@ -188,9 +188,10 @@ export default function EditProductPage() {
         const updatedProduct = await response.json()
         console.log('✅ Frontend: Product updated successfully:', updatedProduct)
         showAlert({
-          title: 'Éxito',
-          message: '¡Producto actualizado exitosamente!',
-          type: 'success'
+          title: 'Producto Actualizado',
+          message: 'El producto se ha actualizado exitosamente y ya está visible en el catálogo.',
+          type: 'success',
+          autoCloseDelay: 4000
         })
         // Redirigir a la lista de productos
         setTimeout(() => {
