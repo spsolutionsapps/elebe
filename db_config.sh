@@ -16,3 +16,6 @@ echo "🌱 Seeding database..."
 docker exec lb-premium-backend npm run db:seed
 
 echo "✅ Database configuration completed successfully!"
+
+# Restaurar datos desde backup
+#docker exec -i lb-premium-db psql -U postgres -d lb_premium < /tmp/backup-
