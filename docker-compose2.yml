@@ -1,0 +1,81 @@
+name: lbpremium
+
+services:
+  # Base de datos PostgreSQL
+  postgres:
+    image: postgres:15-alpine
+    container_name: lb-premium-db
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-lb_premium}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-Gojira2019!}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - elebe_postgres_data:/var/lib/postgresql/data
+    labels:
+      - "keep-data=true"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend NestJS
+  backend:
+    build: ./backend
+    container_name: lb-premium-backend
+    environment:
+      - NODE_ENV=${NODE_ENV:-production}
+      - DATABASE_URL=${DATABASE_URL:-postgresql://postgres:Gojira2019!@postgres:5432/lb_premium}
+      - JWT_SECRET=${JWT_SECRET:-your-super-secret-jwt-key-change-this-in-production}
+      - PORT=${PORT:-3001}
+      - FRONTEND_URL=${FRONTEND_URL:-http://localhost:3000}
+      - ADMIN_URL=${ADMIN_URL:-http://localhost:3002}
+    ports:
+      - "3002:3001"
+    volumes:
+      - ./backend/uploads:/app/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3002/api/inquiries/test"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+        reservations:
+          memory: 2G
+
+  # Frontend Next.js
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile.simple
+    container_name: lb-premium-frontend
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://localhost:3002/api
+      - NEXT_PUBLIC_BACKEND_URL=http://localhost:3002
+    ports:
+      - "${FRONTEND_PORT:-3000}:3000"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+        reservations:
+          memory: 4G
+
+volumes:
+  elebe_postgres_data:
+    labels:
+      - "keep-data=true"
