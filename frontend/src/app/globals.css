@@ -666,3 +666,12 @@ display: none;
 }
 
 .slide-subtitle {display: none !important;}
+.shapeGatoDerecha {      
+position: absolute;
+right: -36px;
+top: -68px;
+width: 284px;}
+
+.shapeGatoDerecha img {    
+  width: 428px;
+  height: 359px;}
