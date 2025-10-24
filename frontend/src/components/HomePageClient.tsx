@@ -277,17 +277,17 @@ export function HomePageClient({ slides: initialSlides, featuredProducts: initia
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center ">
           <img src="/01.svg" alt="Envíos" className='block md:hidden mx-auto mb-6' />
-            <p className='verde'>_escuchamos y analizamos <br />
+            <p className='verde -mt-8 mb-8 md:mt-0 md:mb-0'>_escuchamos y analizamos <br />
               <strong>qué inspira a cada cliente.</strong></p>
 
               <img src="/02.svg" alt="Envíos" className='block md:hidden mx-auto mb-6' />
 
-            <p className='verde'>_proyectamos diseños que cuentan <br />
+            <p className='verde -mt-8 mb-8 md:mt-0 md:mb-0'>_proyectamos diseños que cuentan <br />
               <strong>historias memorables.</strong></p>
 
           <img src="/03.svg" alt="Envíos" className='block md:hidden mx-auto mb-6' />
 
-            <p className='verde'>_los desarrollamos y los convertimos <br />
+            <p className='verde -mt-8 mb-8 md:mt-0 md:mb-0'>_los desarrollamos y los convertimos <br />
               <strong>en productos que arrancan sonrisas.</strong></p>
           </div>
         </div>
