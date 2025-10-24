@@ -70,7 +70,7 @@ export function CatalogMegaMenu({ isOpen, onClose }: CatalogMegaMenuProps) {
           <div 
             className="w-[600px] shadow-lg p-6 -mt-px relative overflow-hidden"
             style={{ 
-              backgroundColor: '#0ea5e9',
+              backgroundColor: '#176a7b',
               borderRadius: '0 0 8px 8px'
             }}
           >
@@ -88,7 +88,7 @@ export function CatalogMegaMenu({ isOpen, onClose }: CatalogMegaMenuProps) {
                     transition: 'background-color 0.2s'
                   }}
                   onMouseEnter={(e: React.MouseEvent<HTMLAnchorElement>) => {
-                    e.currentTarget.style.backgroundColor = '#1289bf'
+                    e.currentTarget.style.backgroundColor = '#1a5a69'
                   }}
                   onMouseLeave={(e: React.MouseEvent<HTMLAnchorElement>) => {
                     e.currentTarget.style.backgroundColor = 'transparent'
@@ -121,7 +121,7 @@ export function CatalogMegaMenu({ isOpen, onClose }: CatalogMegaMenuProps) {
                           transition: 'background-color 0.2s'
                         }}
                         onMouseEnter={(e: React.MouseEvent<HTMLAnchorElement>) => {
-                          e.currentTarget.style.backgroundColor = '#1289bf'
+                          e.currentTarget.style.backgroundColor = '#1a5a69'
                         }}
                         onMouseLeave={(e: React.MouseEvent<HTMLAnchorElement>) => {
                           e.currentTarget.style.backgroundColor = 'transparent'
@@ -146,13 +146,6 @@ export function CatalogMegaMenu({ isOpen, onClose }: CatalogMegaMenuProps) {
               </div>
             </div>
 
-            <div className='shapeRayo'>
-              <img src="/rayo.svg" alt="ShapeRayo" />
-            </div>
-
-            <div className='shapeMenuIzq'>
-              <img src="/menu-izquierda.svg" alt="ShapeMenuIzq" />
-            </div>
 
           </div>
         </motion.div>
