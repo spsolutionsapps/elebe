@@ -8,8 +8,8 @@ docker exec lb-premium-db pg_dump -U postgres lb_premium > /tmp/backup-$(date +%
 
 # Apply migrations
 echo "🚀 Applying database migrations..."
-docker exec lb-premium-backend npx prisma migrate deploy --schema=backend/prisma/schema.prisma
-docker exec lb-premium-backend npx prisma generate        --schema=backend/prisma/schema.prisma
+docker exec lb-premium-backend npx prisma migrate deploy --schema=prisma/schema.prisma
+docker exec lb-premium-backend npx prisma generate        --schema=prisma/schema.prisma
 
  
  
