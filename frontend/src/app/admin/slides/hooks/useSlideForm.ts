@@ -11,6 +11,9 @@ export interface SlideFormData {
   buttonBorderWidth: string
   buttonBorderRadius: string
   buttonBoxShadow: string
+  titleColor: string
+  titleSize: string
+  titleShadow: string
   image: string
   order: number
 }
@@ -25,6 +28,9 @@ const initialFormData: SlideFormData = {
   buttonBorderWidth: '2px',
   buttonBorderRadius: '0px',
   buttonBoxShadow: '',
+  titleColor: '#1E4BA6',
+  titleSize: '4rem',
+  titleShadow: 'none',
   image: '',
   order: 1
 }
@@ -67,6 +73,9 @@ export function useSlideForm() {
       buttonBorderWidth: slide.buttonBorderWidth || '2px',
       buttonBorderRadius: slide.buttonBorderRadius || '0px',
       buttonBoxShadow: slide.buttonBoxShadow || '',
+      titleColor: slide.titleColor || '#1E4BA6',
+      titleSize: slide.titleSize || '4rem',
+      titleShadow: slide.titleShadow || 'none',
       image: slide.image || '',
       order: slide.order || 1
     })

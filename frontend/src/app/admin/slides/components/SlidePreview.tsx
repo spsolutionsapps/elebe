@@ -18,7 +18,7 @@ export default function SlidePreview({ slide, onClose }: SlidePreviewProps) {
   if (!slide) return null
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" style={{ 'marginTop': '-24px' }}>
       <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden">
         <div className="flex justify-between items-center p-4 border-b">
           <h3 className="text-lg font-semibold">Vista Previa del Slide</h3>
@@ -44,7 +44,13 @@ export default function SlidePreview({ slide, onClose }: SlidePreviewProps) {
               <div className="flex items-center h-full p-6">
                 <div className="text-white max-w-2xl">
                   <h1 
-                    className="text-2xl md:text-4xl font-bold mb-2"
+                    className="font-bold mb-2"
+                    style={{
+                      color: slide.titleColor || '#ffffff',
+                      fontSize: slide.titleSize || '2.5rem',
+                      textShadow: slide.titleShadow || '2px 2px 4px rgba(0,0,0,0.5)',
+                      fontWeight: 'bold'
+                    }}
                     dangerouslySetInnerHTML={{ __html: slide.title }}
                   />
                   {slide.subtitle && (
@@ -101,6 +107,12 @@ export default function SlidePreview({ slide, onClose }: SlidePreviewProps) {
               <p><strong>Título:</strong> {slide.title}</p>
               <p><strong>Orden:</strong> {slide.order}</p>
               <p><strong>Estado:</strong> {slide.isActive ? 'Activo' : 'Inactivo'}</p>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-2">Estilos del Título:</h4>
+              <p><strong>Color:</strong> {slide.titleColor || '#ffffff'}</p>
+              <p><strong>Tamaño:</strong> {slide.titleSize || '2.5rem'}</p>
+              <p><strong>Sombra:</strong> {slide.titleShadow || '2px 2px 4px rgba(0,0,0,0.5)'}</p>
             </div>
             <div>
               <h4 className="font-semibold mb-2">Estilos del Botón:</h4>

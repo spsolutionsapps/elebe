@@ -45,6 +45,9 @@ export interface Slide {
   buttonBorderWidth?: string | null
   buttonBorderRadius?: string | null
   buttonBoxShadow?: string | null
+  titleColor?: string | null
+  titleSize?: string | null
+  titleShadow?: string | null
   image: string
   order: number
   isActive: boolean
