@@ -383,11 +383,12 @@ const GSAPSlider = memo(function GSAPSlider({ slides, onControls }: GSAPSliderPr
                   <div className="space-y-6">
                    {/* Título */}
                     <h1 
-                      className="slide-title text-4xl md:text-6xl lg:text-7xl font-bold leading-tight"
+                      className="slide-title font-bold leading-tight"
                       style={{
                         color: slide.titleColor || '#1E4BA6',
-                        fontSize: slide.titleSize || undefined,
-                        textShadow: slide.titleShadow || undefined
+                        fontSize: slide.titleSize || '4rem',
+                        textShadow: slide.titleShadow || undefined,
+                        fontWeight: 'bold'
                       }}
                       dangerouslySetInnerHTML={memoizedRenderTitle(slide.title || '')}
                     />

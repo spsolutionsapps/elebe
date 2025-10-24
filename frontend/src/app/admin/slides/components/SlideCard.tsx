@@ -36,7 +36,7 @@ export default function SlideCard({ slide, onEdit, onDelete, onPreview }: SlideC
         
         <div className="space-y-2">
           <h3 className="font-semibold">{slide.title || 'Sin título'}</h3>
-          <p className="text-sm text-gray-600 line-clamp-2">
+          <p className="hidden">
             {slide.description || 'Sin descripción'}
           </p>
           <p className="text-xs text-gray-500">Orden: {slide.order}</p>
