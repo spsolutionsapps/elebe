@@ -32,7 +32,7 @@ jobs:
 
             cd ${{ secrets.APP_PATH }}
 
-            sh db_config.sh
+            sh migrations.sh
 
-            echo "✅ Migrations applied!"
+            echo "✅ Migrations applied successfully!"
           EOF
