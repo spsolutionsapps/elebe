@@ -6,7 +6,38 @@ import { GSAPSlider } from '@/components/GSAPSlider'
 import { BrandsSlider } from '@/components/BrandsSlider'
 import { FeaturedProductsSlider } from '@/components/FeaturedProductsSlider'
 import { ClientOnly } from '@/components/ClientOnly'
+import { getApiUrl, API_CONFIG } from '@/lib/config'
 import Link from 'next/link'
+
+// Función de fetch con reintentos
+const fetchWithRetry = async (url: string, options: RequestInit = {}, retries = API_CONFIG.MAX_RETRIES): Promise<Response> => {
+  for (let i = 0; i < retries; i++) {
+    try {
+      const response = await fetch(url, {
+        ...options,
+        signal: AbortSignal.timeout(API_CONFIG.TIMEOUT),
+      });
+      
+      if (response.ok) {
+        return response;
+      }
+      
+      // Si no es el último intento, esperar antes de reintentar
+      if (i < retries - 1) {
+        console.warn(`⚠️ Intento ${i + 1} falló, reintentando en ${API_CONFIG.RETRY_DELAY}ms...`);
+        await new Promise(resolve => setTimeout(resolve, API_CONFIG.RETRY_DELAY));
+      }
+    } catch (error) {
+      if (i === retries - 1) {
+        throw error;
+      }
+      console.warn(`⚠️ Error en intento ${i + 1}, reintentando...`, error);
+      await new Promise(resolve => setTimeout(resolve, API_CONFIG.RETRY_DELAY));
+    }
+  }
+  
+  throw new Error(`Failed to fetch after ${retries} attempts`);
+};
 
 interface HomePageClientProps {
   slides: Slide[]
@@ -23,29 +54,46 @@ export function HomePageClient({ slides: initialSlides, featuredProducts: initia
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3001'
-        const apiUrl = `${baseUrl}/api`
+        const slidesUrl = getApiUrl('/slides')
+        const productsUrl = getApiUrl('/products/featured')
         
-        console.log('🔗 Fetching data from:', apiUrl)
+        console.log('🔗 Fetching slides from:', slidesUrl)
+        console.log('🔗 Fetching products from:', productsUrl)
 
         const [slidesResponse, productsResponse] = await Promise.all([
-          fetch(`${apiUrl}/slides`),
-          fetch(`${apiUrl}/products/featured`)
+          fetchWithRetry(slidesUrl, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }),
+          fetchWithRetry(productsUrl, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          })
         ])
 
         if (slidesResponse.ok) {
           const slidesData = await slidesResponse.json()
           setSlides(slidesData.filter((slide: Slide) => slide.isActive))
           console.log('📈 Loaded slides:', slidesData.length)
+        } else {
+          console.warn('⚠️ Failed to load slides:', slidesResponse.status, slidesResponse.statusText)
         }
 
         if (productsResponse.ok) {
           const productsData = await productsResponse.json()
           setFeaturedProducts(productsData.filter((product: Product) => product.isActive))
           console.log('📈 Loaded products:', productsData.length)
+        } else {
+          console.warn('⚠️ Failed to load products:', productsResponse.status, productsResponse.statusText)
         }
       } catch (error) {
         console.error('❌ Error fetching data:', error)
+        // Keep the initial data if fetch fails
+        console.log('🔄 Using initial data as fallback')
       } finally {
         setLoading(false)
       }

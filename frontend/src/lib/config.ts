@@ -26,6 +26,28 @@ export const API_CONFIG = {
   RETRY_DELAY: 1000,
 } as const;
 
+// Función para detectar si estamos en un entorno de producción con Docker
+const isProductionDocker = (): boolean => {
+  if (typeof window === 'undefined') return false;
+  
+  // Detectar si estamos en producción con Docker
+  const isProduction = process.env.NEXT_PUBLIC_ENV === 'production' || process.env.NODE_ENV === 'production';
+  const hasDockerBackendUrl = process.env.NEXT_PUBLIC_BACKEND_URL?.includes('146.190.116.222');
+  
+  return isProduction && hasDockerBackendUrl;
+};
+
+// Función para obtener la URL correcta según el entorno
+export const getCorrectApiUrl = (): string => {
+  // Si estamos en producción con Docker, usar la URL externa
+  if (isProductionDocker()) {
+    return process.env.NEXT_PUBLIC_BACKEND_URL + '/api' || 'http://146.190.116.222:3002/api';
+  }
+  
+  // Para otros casos, usar la configuración normal
+  return API_CONFIG.BASE_URL;
+};
+
 // Configuración de imágenes
 export const IMAGE_CONFIG = {
   // URL base para imágenes
@@ -79,14 +101,16 @@ export const getImageUrl = (imagePath: string): string => {
 };
 
 export const getApiUrl = (endpoint: string = ''): string => {
-  if (!endpoint) return API_CONFIG.BASE_URL;
+  const baseUrl = getCorrectApiUrl();
+  
+  if (!endpoint) return baseUrl;
   
   // Si el endpoint ya empieza con /, no agregar otro /
   if (endpoint.startsWith('/')) {
-    return `${API_CONFIG.BASE_URL}${endpoint}`;
+    return `${baseUrl}${endpoint}`;
   }
   
-  return `${API_CONFIG.BASE_URL}/${endpoint}`;
+  return `${baseUrl}/${endpoint}`;
 };
 
 // Validación de configuración
