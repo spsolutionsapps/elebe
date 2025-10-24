@@ -83,7 +83,7 @@ const TitleStyleEditor = memo(function TitleStyleEditor({
           </Button>
         </div>
         <div 
-          className="text-center p-4 bg-white rounded border"
+          className="text-center p-4 bg-white rounded border overflow-hidden"
           style={{
             color: formData.titleColor || '#1E4BA6',
             fontSize: formData.titleSize || '4rem',

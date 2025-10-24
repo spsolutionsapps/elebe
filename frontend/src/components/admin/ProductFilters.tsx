@@ -107,21 +107,21 @@ export default function ProductFilters({
       <CardContent className="p-4">
         <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
           {/* Filtros */}
-          <div className="flex flex-col sm:flex-row gap-3 flex-1">
+          <div className="flex flex-col sm:flex-row gap-3 flex-1 w-full">
             {/* Búsqueda */}
-            <div className="relative">
+            <div className="relative w-full sm:w-64">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
               <input
                 type="text"
                 placeholder="Buscar productos..."
                 value={searchTerm}
                 onChange={(e) => onSearchChange(e.target.value)}
-                className="pl-10 pr-4 h-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-64"
+                className="pl-10 pr-4 h-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
               />
             </div>
 
             {/* Filtro por categoría */}
-            <div className="w-48">
+            <div className="w-full sm:w-48">
               <Select
                 value={filterCategoryOptions.find(option => option.value === selectedCategory)}
                 onChange={(selectedOption: SingleValue<SelectOption>) => {
@@ -135,7 +135,7 @@ export default function ProductFilters({
             </div>
 
             {/* Filtro por estado */}
-            <div className="w-40">
+            <div className="w-full sm:w-40">
               <Select
                 value={statusOptions.find(option => option.value === statusFilter)}
                 onChange={(selectedOption: SingleValue<SelectOption>) => {
@@ -153,7 +153,7 @@ export default function ProductFilters({
               <Button
                 variant="outline"
                 onClick={onClearFilters}
-                className="text-gray-600 hover:text-gray-800 rounded-full"
+                className="text-gray-600 hover:text-gray-800 rounded-full w-full sm:w-auto"
               >
                 <Filter className="h-4 w-4 mr-2" />
                 Limpiar
@@ -162,9 +162,9 @@ export default function ProductFilters({
           </div>
 
           {/* Controles de vista */}
-          <div className="flex items-center gap-2">
+          <div className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto">
             {/* Ordenamiento */}
-            <div className="w-48">
+            <div className="w-full sm:w-48">
               <Select
                 value={sortOptions.find(option => option.value === `${sortBy}-${sortOrder}`)}
                 onChange={handleSortChange}

@@ -223,9 +223,9 @@ export default function CategoriesPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-gray-900">Categorías del Catálogo</h1>
-        <Button onClick={handleNewCategory} className="flex items-center gap-2">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <h1 className="text-3xl font-bold text-gray-900" style={{ fontSize: '16px' }}>Categorías del Catálogo</h1>
+        <Button onClick={handleNewCategory} className="flex items-center gap-2 w-full md:w-auto">
           <Plus className="h-4 w-4" />
           Nueva Categoría
         </Button>

@@ -21,7 +21,7 @@ interface SlideCardProps {
 export default function SlideCard({ slide, onEdit, onDelete, onPreview }: SlideCardProps) {
   return (
     <Card className="bg-white">
-      <CardContent className="p-4">
+      <CardContent className="p-0 md:p-4 w-full">
         <div className="aspect-video bg-gray-100 rounded-md mb-4 flex items-center justify-center">
           {slide.image ? (
             <img
@@ -47,28 +47,28 @@ export default function SlideCard({ slide, onEdit, onDelete, onPreview }: SlideC
             size="sm"
             variant="outline"
             onClick={() => onPreview(slide)}
-            className="rounded-full"
+            className="rounded-full md:px-4 px-2"
           >
-            <Eye className="h-4 w-4 mr-1" />
-            Vista Previa
+            <Eye className="h-4 w-4 md:mr-1" />
+            <span className="hidden md:inline">Vista Previa</span>
           </Button>
           <Button
             size="sm"
             variant="outline"
             onClick={() => onEdit(slide)}
-            className="rounded-full"
+            className="rounded-full md:px-4 px-2"
           >
-            <Edit className="h-4 w-4 mr-1" />
-            Editar
+            <Edit className="h-4 w-4 md:mr-1" />
+            <span className="hidden md:inline">Editar</span>
           </Button>
           <Button
             size="sm"
             variant="outline"
             onClick={() => onDelete(slide.id)}
-            className="bg-red-600 hover:bg-red-700 text-white border-red-600 hover:border-red-700 rounded-full"
+            className="bg-red-600 hover:bg-red-700 text-white border-red-600 hover:border-red-700 rounded-full md:px-4 px-2"
           >
-            <Trash2 className="h-4 w-4 mr-1 text-white" />
-            Eliminar
+            <Trash2 className="h-4 w-4 md:mr-1 text-white" />
+            <span className="hidden md:inline">Eliminar</span>
           </Button>
         </div>
       </CardContent>
