@@ -1,3 +1,5 @@
+name: lbpremium
+
 services:
   # Base de datos PostgreSQL
   postgres:
@@ -11,6 +13,8 @@ services:
       - "${POSTGRES_PORT:-5432}:5432"
     volumes:
       - elebe_postgres_data:/var/lib/postgresql/data
+    labels:
+      - "keep-data=true"
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
@@ -73,3 +77,5 @@ services:
 
 volumes:
   elebe_postgres_data:
+    labels:
+      - "keep-data=true"

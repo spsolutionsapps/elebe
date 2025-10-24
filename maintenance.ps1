@@ -66,9 +66,9 @@ function Cleanup-System {
     Show-Progress "Limpiando imágenes no utilizadas..."
     docker image prune -f
     
-    # Limpiar volúmenes no utilizados
-    Show-Progress "Limpiando volúmenes no utilizados..."
-    docker volume prune -f
+    # Limpiar volúmenes no utilizados (EXCLUYENDO volúmenes de datos importantes)
+    Show-Progress "Limpiando volúmenes no utilizados (preservando datos de BD)..."
+    docker volume prune -f --filter "label!=keep-data"
     
     # Limpiar redes no utilizadas
     Show-Progress "Limpiando redes no utilizadas..."

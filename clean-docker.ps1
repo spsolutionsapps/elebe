@@ -3,9 +3,9 @@
 
 Write-Host "🧹 Limpiando completamente el entorno Docker..." -ForegroundColor Red
 
-# Parar todos los contenedores
+# Parar todos los contenedores (SIN eliminar volúmenes para preservar datos)
 Write-Host "⏹️ Parando contenedores..." -ForegroundColor Yellow
-docker-compose -f docker-compose.dev.yml down -v --remove-orphans
+docker-compose -f docker-compose.dev.yml down --remove-orphans
 
 # Eliminar imágenes del proyecto
 Write-Host "🗑️ Eliminando imágenes del proyecto..." -ForegroundColor Yellow
@@ -16,9 +16,9 @@ docker images | Select-String "lb-premium" | ForEach-Object {
     }
 }
 
-# Limpiar volúmenes huérfanos
-Write-Host "🗂️ Limpiando volúmenes..." -ForegroundColor Yellow
-docker volume prune -f
+# Limpiar volúmenes huérfanos (EXCLUYENDO volúmenes de datos importantes)
+Write-Host "🗂️ Limpiando volúmenes huérfanos (preservando datos de BD)..." -ForegroundColor Yellow
+docker volume prune -f --filter "label!=keep-data"
 
 # Limpiar redes huérfanas
 Write-Host "🌐 Limpiando redes..." -ForegroundColor Yellow
