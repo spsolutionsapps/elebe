@@ -98,7 +98,7 @@ export default function ImageUpload({ onImageUpload, currentImage, className = '
   return (
     <div className={`space-y-4 ${className}`}>
       {displayImage ? (
-        <div className="flex gap-4">
+        <div className="flex flex-col md:flex-row gap-4">
           {/* Área de carga - más compacta */}
           <div className="flex-1">
             <div

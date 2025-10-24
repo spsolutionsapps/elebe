@@ -63,9 +63,11 @@ export default function SlideForm({
       </CardHeader>
       <CardContent>
         <form onSubmit={onSubmit} className="space-y-6">
-          {/* Campos principales en una fila */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
+          {/* Layout responsivo: mobile (columna) / desktop (grid) */}
+          <div className="flex flex-col md:grid md:grid-cols-2 gap-6">
+            
+            {/* Sección 1: Título */}
+            <div className="order-1 md:order-1">
               <label className="block text-sm font-medium mb-1">
                 Título
               </label>
@@ -81,8 +83,9 @@ export default function SlideForm({
                 Puedes usar HTML para cambiar colores y estilos.
               </p>
             </div>
-            
-            <div>
+
+            {/* Sección 2: Texto del Botón */}
+            <div className="order-2 md:order-2">
               <label className="block text-sm font-medium mb-1">
                 Texto del Botón
               </label>
@@ -94,8 +97,9 @@ export default function SlideForm({
                 placeholder="Texto del botón"
               />
             </div>
-            
-            <div>
+
+            {/* Sección 3: Enlace del Botón */}
+            <div className="order-3 md:order-3">
               <label className="block text-sm font-medium mb-1">
                 Enlace del Botón
               </label>
@@ -110,43 +114,56 @@ export default function SlideForm({
                 Opcional. Si no se especifica, el botón será solo decorativo.
               </p>
             </div>
-          </div>
 
-          {/* Estilos del Título */}
-          <TitleStyleEditor
-            key={`title-editor-${formData.titleColor}-${formData.titleSize}-${formData.titleShadow}`}
-            formData={formData}
-            onStyleChange={handleStyleChange}
-            onReset={() => {
-              onFormDataChange('titleColor', '#1E4BA6')
-              onFormDataChange('titleSize', '4rem')
-              onFormDataChange('titleShadow', 'none')
-            }}
-            onExample={() => {}}
-          />
+            {/* Sección 4: Estilos del Título */}
+            <div className="order-4 md:order-4">
+              <TitleStyleEditor
+                key={`title-editor-${formData.titleColor}-${formData.titleSize}-${formData.titleShadow}`}
+                formData={formData}
+                onStyleChange={handleStyleChange}
+                onReset={() => {
+                  onFormDataChange('titleColor', '#1E4BA6')
+                  onFormDataChange('titleSize', '4rem')
+                  onFormDataChange('titleShadow', 'none')
+                }}
+                onExample={() => {}}
+              />
+            </div>
 
-          {/* Estilos del Botón */}
-          <ButtonStyleEditor
-            formData={formData}
-            onStyleChange={handleStyleChange}
-            onReset={handleReset}
-            onExample={() => {}}
-          />
+            {/* Sección 5: Estilos del Botón */}
+            <div className="order-5 md:order-5">
+              <ButtonStyleEditor
+                formData={formData}
+                onStyleChange={handleStyleChange}
+                onReset={handleReset}
+                onExample={() => {}}
+              />
+            </div>
 
-          {/* Imagen después de la vista previa */}
-          <div className="mt-6">
-            <label className="block text-sm font-medium mb-1">
-              Imagen
-            </label>
-            <ImageUpload
-              key={`image-upload-${editingSlide?.id || 'new'}`}
-              onImageUpload={(imageUrl) => onFormDataChange('image', imageUrl)}
-              currentImage={formData.image}
-            />
-          </div>
-          
-          <div className="flex items-end gap-4">
-            <div className="flex-1">
+            {/* Sección 6: Imagen */}
+            <div className="order-6 md:order-6">
+              <label className="block text-sm font-medium mb-1">
+                Imagen
+              </label>
+              <ImageUpload
+                key={`image-upload-${editingSlide?.id || 'new'}`}
+                onImageUpload={(imageUrl) => onFormDataChange('image', imageUrl)}
+                currentImage={formData.image}
+              />
+            </div>
+
+            {/* Sección 7: Preview */}
+            <div className="order-7 md:order-7">
+              <label className="block text-sm font-medium mb-1">
+                Preview
+              </label>
+              <div className="border border-gray-300 rounded-lg p-4 min-h-[200px] flex items-center justify-center bg-gray-100">
+                <p className="text-gray-500">Vista previa del slide</p>
+              </div>
+            </div>
+
+            {/* Sección 8: Orden del Slide */}
+            <div className="order-8 md:order-8">
               <label className="block text-sm font-medium mb-1">
                 Orden del Slide en la Home
               </label>
@@ -154,16 +171,17 @@ export default function SlideForm({
                 type="number"
                 value={formData.order}
                 onChange={(e) => onFormDataChange('order', parseInt(e.target.value))}
-                className="w-12 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-24 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 min="1"
                 required
               />
             </div>
-            
-            <div className="flex gap-2">
+
+            {/* Sección 9: Botones de acción */}
+            <div className="order-9 md:order-9 flex flex-col md:flex-row gap-2">
               <Button 
                 type="submit"
-                className="bg-blue-600 hover:bg-blue-700 text-white rounded-full"
+                className="bg-blue-600 hover:bg-blue-700 text-white rounded-full w-full md:w-auto"
                 style={{
                   backgroundColor: '#2563eb',
                   borderColor: '#2563eb'
@@ -175,16 +193,17 @@ export default function SlideForm({
                 type="button" 
                 variant="outline" 
                 onClick={onPreview}
-                className="rounded-full"
+                className="rounded-full w-full md:w-auto"
               >
                 <Eye className="h-4 w-4 mr-1" />
                 Vista Previa
               </Button>
-              <Button type="button" variant="outline" onClick={onCancel} className="rounded-full">
+              <Button type="button" variant="outline" onClick={onCancel} className="rounded-full w-full md:w-auto">
                 Cancelar
               </Button>
             </div>
           </div>
+
         </form>
       </CardContent>
     </Card>

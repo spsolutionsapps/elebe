@@ -28,7 +28,7 @@ export default function ButtonStyleEditor({
       <label className="block text-sm font-medium mb-3">
         Estilos del Botón
       </label>
-      <div className="grid grid-cols-6 gap-4">
+      <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
         <div>
           <label className="block text-xs text-gray-600 mb-1">Fondo</label>
           <div className="flex gap-1">
@@ -123,7 +123,7 @@ export default function ButtonStyleEditor({
           <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
           Vista Previa del Botón
         </h4>
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div
             className="px-8 py-4 font-bold text-base transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 cursor-pointer transform hover:-translate-y-1"
             style={{
@@ -138,13 +138,13 @@ export default function ButtonStyleEditor({
           >
             {formData.buttonText || 'Texto del Botón'}
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 md:justify-end">
             <Button
               type="button"
               variant="outline"
               size="sm"
               onClick={onReset}
-              className="text-xs bg-white hover:bg-gray-50 border-gray-300"
+              className="text-xs bg-white hover:bg-gray-50 border-gray-300 w-full md:w-auto"
             >
               🔄 Reset
             </Button>
