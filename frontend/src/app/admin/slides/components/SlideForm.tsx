@@ -6,6 +6,7 @@ import { Eye } from 'lucide-react'
 import { Slide } from '@/types'
 import ImageUpload from '@/components/ImageUpload'
 import ButtonStyleEditor from './ButtonStyleEditor'
+import TitleStyleEditor from './TitleStyleEditor'
 
 interface SlideFormProps {
   formData: {
@@ -18,6 +19,9 @@ interface SlideFormProps {
     buttonBorderWidth: string
     buttonBorderRadius: string
     buttonBoxShadow: string
+    titleColor: string
+    titleSize: string
+    titleShadow: string
     image: string
     order: number
   }
@@ -107,6 +111,19 @@ export default function SlideForm({
               </p>
             </div>
           </div>
+
+          {/* Estilos del Título */}
+          <TitleStyleEditor
+            key={`title-editor-${formData.titleColor}-${formData.titleSize}-${formData.titleShadow}`}
+            formData={formData}
+            onStyleChange={handleStyleChange}
+            onReset={() => {
+              onFormDataChange('titleColor', '#1E4BA6')
+              onFormDataChange('titleSize', '4rem')
+              onFormDataChange('titleShadow', 'none')
+            }}
+            onExample={() => {}}
+          />
 
           {/* Estilos del Botón */}
           <ButtonStyleEditor

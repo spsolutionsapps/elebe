@@ -73,6 +73,9 @@ model Slide {
   buttonBorderWidth     String?
   buttonBorderRadius    String?
   buttonBoxShadow       String?
+  titleColor            String?
+  titleSize             String?
+  titleShadow           String?
 }
 
 model Product {
