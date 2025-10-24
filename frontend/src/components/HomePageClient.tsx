@@ -180,7 +180,7 @@ export function HomePageClient({ slides: initialSlides, featuredProducts: initia
       {/* Sección Quiénes Somos */}
       <section className="quienes-somos-section py-16 relative z-[110]">
         <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-[36px] text-center text18Mobile font-blue leading-tight mx-auto mb-12">
+          <p className="text-[36px] text-center text18Mobile text-black leading-tight mx-auto mb-12">
           Creamos <em>EXPERIENCIAS</em> para ser <br /> vividas, filmadas y viralizadas.
           </p>
 
@@ -188,19 +188,16 @@ export function HomePageClient({ slides: initialSlides, featuredProducts: initia
           <div className="flex flex-col lg:flex-row items-center justify-center gap-12 max-w-6xl mx-auto">
             {/* Lado izquierdo - Textos descriptivos */}
             <div className="space-y-4 lg:max-w-lg">
-              <p className="text-[18px] font-blue leading-relaxed text-center lg:text-left">
+              <p className="text-[18px] text-black leading-relaxed text-center lg:text-left">
                 Somos una agencia dedicada al diseño y producción de artículos personalizados.
                 Ofrecemos soluciones creativas para las empresas que necesitan darle exposición a su marca.
-              </p>
-              <p className="text-[18px] font-blue leading-relaxed text-center lg:text-left">
-                Nuestra fábrica está homologada por Disney "International Labor Standards The Walt Disney Company Argentina S.A." Trabajamos con las fábricas más avanzadas del mercado.
               </p>
 
               {/* Botón para ir a Nosotros */}
               <div className="flex justify-center lg:justify-start mt-6">
                 <Link 
                   href="/nosotros"
-                  className="underline transition-all duration-300 text-[#004CAC] mt-6 text-lg"
+                  className="bg-[rgb(0,76,172)] text-white px-6 py-3 transition-all duration-300 text-lg font-medium hover:bg-[#003a8a] inline-block rounded-none md:mt-10"
                 >
                     Conocé más de la <em>agencia</em>
                 </Link>
