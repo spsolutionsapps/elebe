@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react'
 import { getImageUrl } from '@/lib/imageUtils'
 import { API_CONFIG } from '@/lib/config'
 import { ScrollAnimated } from '@/components/ScrollAnimated'
+import { BrandsGrid } from '@/components/BrandsGrid'
+import { ClientOnly } from '@/components/ClientOnly'
 
 interface About {
   id: string
@@ -275,6 +277,15 @@ export default function NosotrosPage() {
               </div>
             </div>
           </ScrollAnimated>
+        </div>
+      </section>
+
+      {/* Sección de Marcas */}
+      <section className="py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ClientOnly>
+            <BrandsGrid />
+          </ClientOnly>
         </div>
       </section>
 

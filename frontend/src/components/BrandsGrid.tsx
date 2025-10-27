@@ -1,8 +1,7 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { getImageUrl, API_CONFIG } from '@/lib/config'
-import { OptimizedImage } from '@/components/OptimizedImage'
 
 interface Brand {
   id: string
@@ -68,11 +67,9 @@ function getFallbackBrands(): Brand[] {
   ]
 }
 
-export function BrandsSlider() {
+export function BrandsGrid() {
   const [brands, setBrands] = useState<Brand[]>([])
   const [loading, setLoading] = useState(true)
-  const containerRef = useRef<HTMLDivElement>(null)
-  const sliderRef = useRef<HTMLDivElement>(null)
 
   // Cargar marcas del backend - solo en el cliente
   useEffect(() => {
@@ -126,40 +123,13 @@ export function BrandsSlider() {
     }
   }, [])
 
-  useEffect(() => {
-    if (!sliderRef.current || brands.length === 0) return
-
-    // Crear animación infinita
-    const animateSlider = () => {
-      if (sliderRef.current) {
-        sliderRef.current.style.animation = 'none'
-        sliderRef.current.offsetHeight // Trigger reflow
-        sliderRef.current.style.animation = 'scroll 20s linear infinite'
-      }
-    }
-
-    // Iniciar animación con un pequeño delay para asegurar que el DOM esté listo
-    const timeoutId = setTimeout(animateSlider, 100)
-
-    // Limpiar animación al desmontar
-    return () => {
-      clearTimeout(timeoutId)
-      if (sliderRef.current) {
-        sliderRef.current.style.animation = 'none'
-      }
-    }
-  }, [brands])
-
-  // Duplicar las marcas para crear un loop infinito
-  const duplicatedBrands = [...brands, ...brands]
-
   if (loading) {
     return (
       <div className="py-12">
         <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-center h-32">
-          <div style={{borderRadius: '150px'}} className="animate-spin h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-300 font-body">Cargando...</p>
+            <div style={{borderRadius: '150px'}} className="animate-spin h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <p className="text-gray-300 font-body">Cargando...</p>
           </div>
         </div>
       </div>
@@ -184,42 +154,28 @@ export function BrandsSlider() {
           </div>
         </div>
 
-        {/* Slider de marcas - Contenido dentro del contenedor */}
-        <div 
-          ref={containerRef}
-          className="relative overflow-hidden w-full"
-        >
-          <div 
-            ref={sliderRef}
-            className="flex md:animate-scroll"
-            style={{
-              animation: 'scroll 20s linear infinite'
-            }}
-          >
-            {duplicatedBrands.map((brand, index) => (
-              <div
-                key={`${brand.id}-${index}`}
-                className="flex-shrink-0 mx-2 flex items-center justify-center w-[120px] md:w-[260px]"
-                style={{ height: '96px' }}
-              >
-                <div className="flex items-center justify-center w-full h-full p-2 transition-colors duration-300">
-                    <img
-                      src={getImageUrl(brand.logo)}
-                      alt={brand.name}
-                      className="max-h-16 max-w-full object-contain transition-all duration-300"
-                      onError={(e) => {
-                        // Reemplazar con un placeholder elegante sin logs de error
-                        e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0yMCAxMkMxNi42ODYzIDEyIDE0IDE0LjY4NjMgMTQgMThDMTQgMjEuMzEzNyAxNi42ODYzIDI0IDIwIDI0QzIzLjMxMzcgMjQgMjYgMjEuMzEzNyAyNiAxOEMyNiAxNC42ODYzIDIzLjMxMzcgMTIgMjAgMTJaIiBmaWxsPSIjOUI5QjlCIi8+Cjwvc3ZnPgo='
-                        e.currentTarget.alt = `${brand.name} logo`
-                      }}
-                    />
-                </div>
-              </div>
-            ))}
-          </div>
+        {/* Grid de marcas - Diseño simple sin slider */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
+          {brands.map((brand) => (
+            <div
+              key={brand.id}
+              className="flex items-center justify-center p-4 bg-white rounded-lg hover:shadow-md transition-shadow duration-300"
+              style={{ height: '120px' }}
+            >
+              <img
+                src={getImageUrl(brand.logo)}
+                alt={brand.name}
+                className="max-h-16 max-w-full object-contain transition-all duration-300 hover:scale-105"
+                onError={(e) => {
+                  // Reemplazar con un placeholder elegante sin logs de error
+                  e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0yMCAxMkMxNi42ODYzIDEyIDE0IDE0LjY4NjMgMTQgMThDMTQgMjEuMzEzNyAxNi42ODYzIDI0IDIwIDI0QzIzLjMxMzcgMjQgMjYgMjEuMzEzNyAyNiAxOEMyNiAxNC42ODYzIDIzLjMxMzcgMTIgMjAgMTJaIiBmaWxsPSIjOUI5QjlCIi8+Cjwvc3ZnPgo='
+                  e.currentTarget.alt = `${brand.name} logo`
+                }}
+              />
+            </div>
+          ))}
         </div>
       </div>
-
     </div>
   )
 }
