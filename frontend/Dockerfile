@@ -7,17 +7,18 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 # Instalar dependencias basadas en el gestor de paquetes preferido
-COPY package.json package-lock.json* ./
-RUN npm install --legacy-peer-deps
+COPY package.json ./
+RUN npm install --legacy-peer-deps --only=production
 
 # Reconstruir el código fuente solo cuando sea necesario
 FROM base AS builder
 WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
+COPY package.json ./
+RUN npm install --legacy-peer-deps
 COPY . .
 
-# Construir la aplicación (saltando el build problemático)
-RUN npm run build || echo "Build failed, continuing with development mode"
+# Construir la aplicación
+RUN npm run build
 
 # Imagen de producción, copiar todos los archivos y ejecutar next
 FROM base AS runner
@@ -28,21 +29,16 @@ ENV NODE_ENV production
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-## Copy only root-level files from public (exclude subdirectories)
-# 1) Copy entire public to a temp location from the builder
-COPY --from=builder /app/public /tmp/public
-
-# Configurar los permisos correctos para el directorio de caché de Next.js
-RUN mkdir .next
-RUN chown nextjs:nodejs .next
+# Copiar solo las dependencias de producción
+COPY --from=deps /app/node_modules ./node_modules
 
 # Copiar archivos de construcción
 COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
-# 2) Create final public dir and move only files at depth 1
-RUN mkdir -p ./public \
-    && find /tmp/public -maxdepth 1 -type f -exec cp -p {} ./public/ \; \
-    && rm -rf /tmp/public \
-    && chown -R nextjs:nodejs ./public
+
+# Copiar archivos públicos
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+
+# Copiar package.json para scripts
 COPY --from=builder --chown=nextjs:nodejs /app/package.json ./package.json
 
 USER nextjs

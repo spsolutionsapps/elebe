@@ -57,7 +57,7 @@ services:
   frontend:
     build: 
       context: ./frontend
-      dockerfile: Dockerfile.simple
+      dockerfile: Dockerfile
     container_name: lb-premium-frontend
     environment:
       - NODE_ENV=development
