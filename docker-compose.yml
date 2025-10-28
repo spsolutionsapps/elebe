@@ -31,8 +31,8 @@ services:
       - DATABASE_URL=${DATABASE_URL:-postgresql://postgres:Gojira2019!@postgres:5432/lb_premium}
       - JWT_SECRET=${JWT_SECRET:-your-super-secret-jwt-key-change-this-in-production}
       - PORT=${PORT:-3001}
-      - FRONTEND_URL=${FRONTEND_URL:-http://146.190.116.222:3000}
-      - ADMIN_URL=${ADMIN_URL:-http://146.190.116.222:3002}
+      - FRONTEND_URL=${FRONTEND_URL:-https://elebe.agency}
+      - ADMIN_URL=${ADMIN_URL:-https://elebe.agency/backend}
     ports:
       - "3002:3001"
     volumes:
@@ -42,7 +42,7 @@ services:
         condition: service_healthy
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://146.190.116.222:3002/api/inquiries/test"]
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "https://elebe.agency/backend/api/inquiries/test"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -61,8 +61,8 @@ services:
     container_name: lb-premium-frontend
     environment:
       - NODE_ENV=development
-      - NEXT_PUBLIC_API_URL=http://146.190.116.222:3002/api
-      - NEXT_PUBLIC_BACKEND_URL=http://146.190.116.222:3002
+      - NEXT_PUBLIC_API_URL=https://elebe.agency/backend/api
+      - NEXT_PUBLIC_BACKEND_URL=https://elebe.agency/backend
     ports:
       - "${FRONTEND_PORT:-3000}:3000"
     depends_on:
