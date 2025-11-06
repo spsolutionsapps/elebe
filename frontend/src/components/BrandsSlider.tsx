@@ -190,7 +190,7 @@ export function BrandsSlider() {
           {rowBrands.map((brand, index) => (
             <div
               key={`${brand.id}-${rowIndex}-${index}`}
-              className="flex-shrink-0 flex items-center justify-center w-[120px] md:w-[260px]"
+              className="flex-shrink-0 flex items-center justify-center w-[120px] md:w-[120px]"
               style={{ height: '96px' }}
             >
               <div className="flex items-center justify-center w-full h-full p-2 transition-colors duration-300">
