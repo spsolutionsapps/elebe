@@ -58,7 +58,7 @@ export function Footer() {
             {/* Social Media Icons */}
             <div className="flex gap-4">
               <a 
-                href="https://www.instagram.com/lbpremium" 
+                href="https://www.instagram.com/elebe.agencia" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-8 h-8 flex items-center justify-center text-[#004CAC] hover:text-[#004CAC]/80 transition-colors"
@@ -66,7 +66,7 @@ export function Footer() {
                 <Instagram className="h-5 w-5" />
               </a>
               <a 
-                href="https://www.linkedin.com/company/lbpremium" 
+                href="https://ar.linkedin.com/company/elebeagencia" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-8 h-8 flex items-center justify-center text-[#004CAC] hover:text-[#004CAC]/80 transition-colors"

@@ -180,7 +180,7 @@ export function HomePageClient({ slides: initialSlides, featuredProducts: initia
       {/* Sección Quiénes Somos */}
       <section className="quienes-somos-section py-16 relative z-[110]">
         <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-[36px] text-center text18Mobile text-black leading-tight mx-auto mb-12">
+          <p className="text-[36px] text-center text18Mobile font-blue leading-tight mx-auto mb-12">
           Creamos <em>EXPERIENCIAS</em> para ser <br /> vividas, filmadas y viralizadas.
           </p>
 

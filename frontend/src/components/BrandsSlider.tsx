@@ -72,7 +72,6 @@ export function BrandsSlider() {
   const [brands, setBrands] = useState<Brand[]>([])
   const [loading, setLoading] = useState(true)
   const containerRef = useRef<HTMLDivElement>(null)
-  const sliderRef = useRef<HTMLDivElement>(null)
 
   // Cargar marcas del backend - solo en el cliente
   useEffect(() => {
@@ -126,32 +125,91 @@ export function BrandsSlider() {
     }
   }, [])
 
-  useEffect(() => {
-    if (!sliderRef.current || brands.length === 0) return
+  // Dividir las marcas en 3 filas
+  const brandsPerRow = Math.ceil(brands.length / 3)
+  const row1 = brands.slice(0, brandsPerRow)
+  const row2 = brands.slice(brandsPerRow, brandsPerRow * 2)
+  const row3 = brands.slice(brandsPerRow * 2)
+  
+  // Duplicar cada fila para crear un loop infinito
+  const duplicatedRow1 = [...row1, ...row1]
+  const duplicatedRow2 = [...row2, ...row2]
+  const duplicatedRow3 = [...row3, ...row3]
 
-    // Crear animación infinita
-    const animateSlider = () => {
-      if (sliderRef.current) {
-        sliderRef.current.style.animation = 'none'
-        sliderRef.current.offsetHeight // Trigger reflow
-        sliderRef.current.style.animation = 'scroll 20s linear infinite'
+  // Crear refs para cada fila
+  const sliderRef1 = useRef<HTMLDivElement>(null)
+  const sliderRef2 = useRef<HTMLDivElement>(null)
+  const sliderRef3 = useRef<HTMLDivElement>(null)
+
+  // Animación para cada fila
+  useEffect(() => {
+    const animateRow = (ref: React.RefObject<HTMLDivElement>, delay: number) => {
+      if (!ref.current) return
+      
+      const animate = () => {
+        if (ref.current) {
+          ref.current.style.animation = 'none'
+          ref.current.offsetHeight // Trigger reflow
+          ref.current.style.animation = 'scroll 20s linear infinite'
+        }
       }
+      
+      return setTimeout(animate, delay)
     }
 
-    // Iniciar animación con un pequeño delay para asegurar que el DOM esté listo
-    const timeoutId = setTimeout(animateSlider, 100)
+    const timeout1 = animateRow(sliderRef1, 0)
+    const timeout2 = animateRow(sliderRef2, 100)
+    const timeout3 = animateRow(sliderRef3, 200)
 
-    // Limpiar animación al desmontar
     return () => {
-      clearTimeout(timeoutId)
-      if (sliderRef.current) {
-        sliderRef.current.style.animation = 'none'
-      }
+      clearTimeout(timeout1)
+      clearTimeout(timeout2)
+      clearTimeout(timeout3)
+      if (sliderRef1.current) sliderRef1.current.style.animation = 'none'
+      if (sliderRef2.current) sliderRef2.current.style.animation = 'none'
+      if (sliderRef3.current) sliderRef3.current.style.animation = 'none'
     }
   }, [brands])
 
-  // Duplicar las marcas para crear un loop infinito
-  const duplicatedBrands = [...brands, ...brands]
+  const renderRow = (rowBrands: Brand[], rowRef: React.RefObject<HTMLDivElement>, rowIndex: number) => {
+    if (rowBrands.length === 0) return null
+    
+    return (
+      <div 
+        key={rowIndex}
+        className="relative overflow-hidden w-full mb-4"
+      >
+        <div 
+          ref={rowRef}
+          className="flex md:animate-scroll"
+          style={{
+            animation: 'scroll 20s linear infinite',
+            gap: '6px'
+          }}
+        >
+          {rowBrands.map((brand, index) => (
+            <div
+              key={`${brand.id}-${rowIndex}-${index}`}
+              className="flex-shrink-0 flex items-center justify-center w-[120px] md:w-[260px]"
+              style={{ height: '96px' }}
+            >
+              <div className="flex items-center justify-center w-full h-full p-2 transition-colors duration-300">
+                <img
+                  src={getImageUrl(brand.logo)}
+                  alt={brand.name}
+                  className="max-h-16 max-w-full object-contain transition-all duration-300"
+                  onError={(e) => {
+                    e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0yMCAxMkMxNi42ODYzIDEyIDE0IDE0LjY4NjMgMTQgMThDMTQgMjEuMzEzNyAxNi42ODYzIDI0IDIwIDI0QzIzLjMxMzcgMjQgMjYgMjEuMzEzNyAyNiAxOEMyNiAxNC42ODYzIDIzLjMxMzcgMTIgMjAgMTJaIiBmaWxsPSIjOUI5QjlCIi8+Cjwvc3ZnPgo='
+                    e.currentTarget.alt = `${brand.name} logo`
+                  }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  }
 
   if (loading) {
     return (
@@ -184,39 +242,14 @@ export function BrandsSlider() {
           </div>
         </div>
 
-        {/* Slider de marcas - Contenido dentro del contenedor */}
+        {/* Slider de marcas con 3 filas */}
         <div 
           ref={containerRef}
           className="relative overflow-hidden w-full"
         >
-          <div 
-            ref={sliderRef}
-            className="flex md:animate-scroll"
-            style={{
-              animation: 'scroll 20s linear infinite'
-            }}
-          >
-            {duplicatedBrands.map((brand, index) => (
-              <div
-                key={`${brand.id}-${index}`}
-                className="flex-shrink-0 mx-2 flex items-center justify-center w-[120px] md:w-[260px]"
-                style={{ height: '96px' }}
-              >
-                <div className="flex items-center justify-center w-full h-full p-2 transition-colors duration-300">
-                    <img
-                      src={getImageUrl(brand.logo)}
-                      alt={brand.name}
-                      className="max-h-16 max-w-full object-contain transition-all duration-300"
-                      onError={(e) => {
-                        // Reemplazar con un placeholder elegante sin logs de error
-                        e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0yMCAxMkMxNi42ODYzIDEyIDE0IDE0LjY4NjMgMTQgMThDMTQgMjEuMzEzNyAxNi42ODYzIDI0IDIwIDI0QzIzLjMxMzcgMjQgMjYgMjEuMzEzNyAyNiAxOEMyNiAxNC42ODYzIDIzLjMxMzcgMTIgMjAgMTJaIiBmaWxsPSIjOUI5QjlCIi8+Cjwvc3ZnPgo='
-                        e.currentTarget.alt = `${brand.name} logo`
-                      }}
-                    />
-                </div>
-              </div>
-            ))}
-          </div>
+          {renderRow(duplicatedRow1, sliderRef1, 1)}
+          {renderRow(duplicatedRow2, sliderRef2, 2)}
+          {renderRow(duplicatedRow3, sliderRef3, 3)}
         </div>
       </div>
 
