@@ -30,6 +30,7 @@ export default function BrandsPage() {
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
   const [editingBrand, setEditingBrand] = useState<Brand | null>(null)
+  const [bulkUploading, setBulkUploading] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
     website: '',
@@ -177,6 +178,40 @@ export default function BrandsPage() {
     setShowForm(true)
   }
 
+  const handleBulkUpload = async (files: FileList) => {
+    if (files.length === 0) return
+
+    setBulkUploading(true)
+
+    try {
+      const formDataToSend = new FormData()
+      Array.from(files).forEach((file) => {
+        formDataToSend.append('logos', file)
+      })
+      formDataToSend.append('isActive', 'true')
+
+      const apiUrl = API_CONFIG.BASE_URL
+      const response = await fetch(`${apiUrl}/brands/bulk-upload`, {
+        method: 'POST',
+        body: formDataToSend,
+      })
+
+      if (response.ok) {
+        const result = await response.json()
+        toast.success(result.message)
+        fetchBrands()
+      } else {
+        const errorData = await response.json()
+        toast.error(`Error: ${errorData.message || 'Error al cargar marcas'}`)
+      }
+    } catch (error) {
+      console.error('Error:', error)
+      toast.error('Error al cargar las marcas')
+    } finally {
+      setBulkUploading(false)
+    }
+  }
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-96">
@@ -207,10 +242,32 @@ export default function BrandsPage() {
           <h1 className="text-3xl font-bold text-gray-900">Marcas</h1>
           <p className="text-gray-600">Gestiona las marcas que aparecen en el slider</p>
         </div>
-        <Button onClick={() => setShowForm(true)}>
-          <Plus className="h-4 w-4 mr-2" />
-          Nueva Marca
-        </Button>
+        <div className="flex gap-2">
+          <Button 
+            onClick={() => document.getElementById('bulk-upload')?.click()}
+            variant="outline"
+            disabled={bulkUploading}
+          >
+            <Upload className="h-4 w-4 mr-2" />
+            {bulkUploading ? 'Cargando...' : 'Cargar Múltiples'}
+          </Button>
+          <input
+            id="bulk-upload"
+            type="file"
+            multiple
+            accept="image/*"
+            style={{ display: 'none' }}
+            onChange={(e) => {
+              if (e.target.files && e.target.files.length > 0) {
+                handleBulkUpload(e.target.files)
+              }
+            }}
+          />
+          <Button onClick={() => setShowForm(true)}>
+            <Plus className="h-4 w-4 mr-2" />
+            Nueva Marca
+          </Button>
+        </div>
       </div>
 
       {/* Formulario */}
