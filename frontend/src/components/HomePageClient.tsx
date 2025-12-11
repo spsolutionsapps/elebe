@@ -178,14 +178,14 @@ export function HomePageClient({ slides: initialSlides, featuredProducts: initia
       )}
 
       {/* Sección Quiénes Somos */}
-      <section className="quienes-somos-section py-16 relative z-[110]">
-        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-[36px] text-center text18Mobile font-blue leading-tight mx-auto mb-12">
+      <section className="quienes-somos-section py-16 relative z-[110] paddingBottom0">
+        <div className="mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-[36px] text-center text22Mobile font-blue leading-tight mx-auto ">
           Creamos <em>EXPERIENCIAS</em> para ser <br /> vividas, filmadas y viralizadas.
           </p>
 
           {/* Texto e imagen en la misma fila */}
-          <div className="flex flex-col lg:flex-row items-center justify-center gap-12 max-w-6xl mx-auto">
+          <div className="flex max-w-8xl flex-col lg:flex-row justify-space-around mx-auto mt-10 lg:mt-24">
             {/* Lado izquierdo - Textos descriptivos */}
             <div className="space-y-4 lg:max-w-lg">
               <p className="text-[18px] text-black leading-relaxed text-center lg:text-left">
@@ -205,24 +205,24 @@ export function HomePageClient({ slides: initialSlides, featuredProducts: initia
             </div>
 
             {/* Lado derecho - Imagen */}
-            <div className="relative max-w-[300px] lg:max-w-[300px] flex items-center justify-center">
-              <div className="aspect-square rounded-lg overflow-hidden">
+            <div className="relative max-w-[400px] lg:max-w-[700px] flex items-center justify-center mx-auto lg:mx-0">
+              <div className="overflow-hidden mt-[4.25rem] lg:mt-0">
                 <img
                   src="/quienesSomosLb.png"
                   alt="Quiénes Somos"
-                  className="w-full h-full object-contain"
+                  className="w-full object-contain"
                 />
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Brands Slider */}
-          <div className="relative brands-slider-section">
+         {/* Brands Slider */}
+         <div className="relative brands-slider-section bg-white paddingBottom0">
             <ClientOnly>
               <BrandsSlider />
             </ClientOnly>
           </div>
-        </div>
 
         <div className="shapeAmarilloIzq">
           <img

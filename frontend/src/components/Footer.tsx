@@ -90,12 +90,12 @@ export function Footer() {
 
             {/* Contact Information */}
             <div className="flex flex-wrap justify-center md:justify-end gap-6 text-[#004CAC]">
-              <span>Av. Principal 1234 Ciudad, Buenos Aires 1000</span>
+              <span>Colectora Panamericana 1807, San Isidro, Buenos Aires.</span>
               <a 
-                href="tel:+541112345678" 
+                href="tel:+5491166247880" 
                 className="underline hover:text-[#004CAC]/80 transition-colors text-[#004CAC]"
               >
-                +54 11 1234-5678
+                +54 9 11 6624-7880
               </a>
               <a 
                 href="mailto:info@lbpremium.com" 

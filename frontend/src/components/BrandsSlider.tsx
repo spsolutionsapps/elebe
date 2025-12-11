@@ -229,7 +229,7 @@ export function BrandsSlider() {
   }
 
   return (
-    <div className="py-12" style={{ marginTop: '20px' }}>
+    <div className="py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Título minimalista */}
         <div className="mb-8">
@@ -245,7 +245,7 @@ export function BrandsSlider() {
         {/* Slider de marcas con 3 filas */}
         <div 
           ref={containerRef}
-          className="relative overflow-hidden w-full"
+          className="relative overflow-hidden w-full bg-white padding20"
         >
           {renderRow(duplicatedRow1, sliderRef1, 1)}
           {renderRow(duplicatedRow2, sliderRef2, 2)}
