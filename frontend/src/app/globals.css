@@ -571,8 +571,8 @@ display: none;
   display: none;
 }
 
-  .text18Mobile {
-    font-size: 18px;
+  .text22Mobile {
+    font-size: 22px;
   }
 
   p {
@@ -675,3 +675,9 @@ width: 284px;}
 .shapeGatoDerecha img {    
   width: 428px;
   height: 359px;}
+
+ .marginTop20 {margin-top: 20px;}
+ .padding20 {padding: 20px;}
+ .justify-space-around {justify-content: space-around;}
+ .marginBottom20 {margin-bottom: 20px;}
+ .paddingBottom0 {padding-bottom: 0;}
