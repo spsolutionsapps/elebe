@@ -46,52 +46,31 @@ export function DesktopNavigation({
             <div 
               key={item.href} 
               className={`relative ${item.hidden ? 'hidden' : ''}`}
-              onMouseEnter={item.label === 'Catálogo' ? onCatalogMouseEnter : undefined}
-              onMouseLeave={item.label === 'Catálogo' ? onCatalogMouseLeave : undefined}
             >
-              {item.label === 'Catálogo' ? (
-                <Link
-                  href={item.href}
-                  className={`px-3 py-2 rounded-md font-medium transition-colors font-body relative group ${
-                    isActiveItem(item.href) ? 'font-bold' : ''
+              <Link
+                href={item.href}
+                className={`px-3 py-2 rounded-md font-medium transition-colors font-body relative group ${
+                  isActiveItem(item.href) ? 'font-bold' : ''
+                }`}
+                style={{ 
+                  fontSize: '18px', 
+                  color: '#004CAC'
+                }}
+              >
+                {item.label}
+                <span 
+                  className={`absolute bottom-0 left-0 h-0.5 bg-[#004CAC] transition-all duration-300 ease-in-out ${
+                    isActiveItem(item.href) ? 'w-full' : 'w-0 group-hover:w-full'
                   }`}
-                  style={{ 
-                    fontSize: '18px', 
-                    color: '#004CAC'
-                  }}
-                >
-                  {item.label}
-                  <span 
-                    className={`absolute bottom-0 left-0 h-0.5 bg-[#004CAC] transition-all duration-300 ease-in-out ${
-                      isActiveItem(item.href) ? 'w-full' : 'w-0 group-hover:w-full'
-                    }`}
-                  ></span>
-                </Link>
-              ) : (
-                <Link
-                  href={item.href}
-                  className={`px-3 py-2 rounded-md font-medium transition-colors font-body relative group ${
-                    isActiveItem(item.href) ? 'font-bold' : ''
-                  }`}
-                  style={{ 
-                    fontSize: '18px', 
-                    color: '#004CAC'
-                  }}
-                >
-                  {item.label}
-                  <span 
-                    className={`absolute bottom-0 left-0 h-0.5 bg-[#004CAC] transition-all duration-300 ease-in-out ${
-                      isActiveItem(item.href) ? 'w-full' : 'w-0 group-hover:w-full'
-                    }`}
-                  ></span>
-                </Link>
-              )}
-              {item.label === 'Catálogo' && (
+                ></span>
+              </Link>
+              {/* Submenú de Catálogo oculto temporalmente */}
+              {/* {item.label === 'Catálogo' && (
                 <CatalogMegaMenu 
                   isOpen={isCatalogMenuOpen} 
                   onClose={onCloseCatalogMenu} 
                 />
-              )}
+              )} */}
             </div>
           ))}
         </div>
