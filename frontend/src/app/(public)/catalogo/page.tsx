@@ -94,8 +94,12 @@ function CatalogoContent() {
                          product.description.toLowerCase().includes(searchTerm.toLowerCase())
 
     if (categoryParam) {
+      console.log('🔍 Filtrando por categoría:', categoryParam)
+      console.log('📋 Categorías disponibles:', categories.map(c => ({ name: c.name, slug: c.slug })))
+
       // Encontrar la categoría correspondiente por slug
       const selectedCategory = categories.find(cat => cat.slug === categoryParam)
+      console.log('🎯 Categoría encontrada:', selectedCategory)
 
       if (selectedCategory) {
         // Manejar category como array o string (para compatibilidad)
@@ -103,14 +107,19 @@ function CatalogoContent() {
           ? product.category
           : (product.category ? [product.category] : [])
 
+        console.log('🏷️ Categorías del producto:', productCategories, 'Producto:', product.name)
+
         const matchesCategory = productCategories.some(cat =>
           cat.toLowerCase() === selectedCategory.name.toLowerCase()
         )
+
+        console.log('✅ Coincide categoría?', matchesCategory)
 
         return matchesSearch && matchesCategory
       }
 
       // Si no encuentra la categoría, no mostrar ningún producto
+      console.log('❌ No se encontró la categoría con slug:', categoryParam)
       return false
     }
 
