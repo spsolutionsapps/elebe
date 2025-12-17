@@ -57,7 +57,7 @@ export default function ProductForm({
   showButtons = true
 }: ProductFormProps) {
   
-  // Opciones para React Select - Deben coincidir exactamente con los nombres de la tabla Category
+  // Opciones para React Select - Categorías exactas del cliente
   const categoryOptions = [
     { value: 'Oficina', label: 'Oficina' },
     { value: 'Deportes', label: 'Deportes' },
@@ -65,9 +65,9 @@ export default function ProductForm({
     { value: 'Moda', label: 'Moda' },
     { value: 'Uniformes y Ropa de Trabajo', label: 'Uniformes y Ropa de Trabajo' },
     { value: 'Bebidas', label: 'Bebidas' },
-    { value: 'Imprenta y Packs ', label: 'Imprenta y Packs' },
+    { value: 'Imprenta y Packs', label: 'Imprenta y Packs' },
     { value: 'Merchandising', label: 'Merchandising' },
-    { value: 'Tecnologia ', label: 'Tecnología' },
+    { value: 'Tecnologia', label: 'Tecnología' },
     { value: 'Bonus', label: 'Bonus' }
   ]
 
