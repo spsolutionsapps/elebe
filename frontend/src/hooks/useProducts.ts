@@ -125,8 +125,11 @@ export function useProducts(): UseProductsReturn {
           bValue = b.name.toLowerCase()
           break
         case 'category':
-          aValue = a.category.toLowerCase()
-          bValue = b.category.toLowerCase()
+          // Manejar category como array o string para ordenamiento
+          const aCategory = Array.isArray(a.category) ? a.category.join(', ') : (a.category || '')
+          const bCategory = Array.isArray(b.category) ? b.category.join(', ') : (b.category || '')
+          aValue = aCategory.toLowerCase()
+          bValue = bCategory.toLowerCase()
           break
         case 'createdAt':
           aValue = new Date(a.createdAt).getTime()
@@ -174,7 +177,14 @@ export function useProducts(): UseProductsReturn {
 
   // Categorías únicas
   const categories = useMemo(() => {
-    const uniqueCategories = [...new Set(products.map(p => p.category))].sort()
+    const allCategories: string[] = []
+    products.forEach(p => {
+      const productCategories = Array.isArray(p.category)
+        ? p.category
+        : (p.category ? [p.category] : [])
+      allCategories.push(...productCategories)
+    })
+    const uniqueCategories = [...new Set(allCategories)].sort()
     return uniqueCategories
   }, [products])
 
