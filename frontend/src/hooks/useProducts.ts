@@ -187,6 +187,7 @@ export function useProducts(): UseProductsReturn {
       allCategories.push(...productCategories)
     })
     const uniqueCategories = [...new Set(allCategories)].sort()
+    console.log('📋 Categorías únicas encontradas:', uniqueCategories)
     return uniqueCategories
   }, [products])
 
@@ -203,10 +204,17 @@ export function useProducts(): UseProductsReturn {
           'Content-Type': 'application/json',
         },
       })
-      
+
       if (response.ok) {
         const data = await response.json()
-        setProducts(Array.isArray(data) ? data : [])
+        const productsData = Array.isArray(data) ? data : []
+        console.log('📦 Productos cargados del backend:', productsData.length)
+        console.log('🔍 Sample categorías de productos:', productsData.slice(0, 3).map(p => ({
+          name: p.name,
+          category: p.category,
+          categoryType: Array.isArray(p.category) ? 'array' : typeof p.category
+        })))
+        setProducts(productsData)
       } else {
         console.error('Error fetching products:', response.status)
         setProducts([])
