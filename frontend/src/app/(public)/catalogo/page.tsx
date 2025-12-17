@@ -92,36 +92,28 @@ function CatalogoContent() {
   const filteredProducts = products.filter(product => {
     const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          product.description.toLowerCase().includes(searchTerm.toLowerCase())
-    
+
     if (categoryParam) {
-      // Mapear parámetros de URL a categorías reales
-      const categoryMap: { [key: string]: string } = {
-        'oficina': 'Oficina',
-        'deporte': 'Deporte',
-        'viajes': 'Viajes',
-        'moda': 'Moda',
-        'uniformes': 'Uniformes',
-        'bebidas': 'Bebidas',
-        'imprenta': 'Imprenta',
-        'merch': 'Merch',
-        'tecnologia': 'Tecnología',
-        'bonus': 'Bonus'
+      // Encontrar la categoría correspondiente por slug
+      const selectedCategory = categories.find(cat => cat.slug === categoryParam)
+
+      if (selectedCategory) {
+        // Manejar category como array o string (para compatibilidad)
+        const productCategories = Array.isArray(product.category)
+          ? product.category
+          : (product.category ? [product.category] : [])
+
+        const matchesCategory = productCategories.some(cat =>
+          cat.toLowerCase() === selectedCategory.name.toLowerCase()
+        )
+
+        return matchesSearch && matchesCategory
       }
-      
-      const mappedCategory = categoryMap[categoryParam] || categoryParam
-      
-      // Manejar category como array o string (para compatibilidad)
-      const productCategories = Array.isArray(product.category) 
-        ? product.category 
-        : (product.category ? [product.category] : [])
-      
-      const matchesCategory = productCategories.some(cat => 
-        cat.toLowerCase() === mappedCategory.toLowerCase()
-      )
-      
-      return matchesSearch && matchesCategory
+
+      // Si no encuentra la categoría, no mostrar ningún producto
+      return false
     }
-    
+
     return matchesSearch
   })
 
