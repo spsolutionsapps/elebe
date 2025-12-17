@@ -60,14 +60,10 @@ function CatalogoContent() {
 
   const fetchProducts = async () => {
     try {
-      console.log('Fetching products from:', getApiUrl('/products'))
       const response = await fetch(getApiUrl('/products'))
       if (response.ok) {
         const data = await response.json()
-        console.log('Products fetched:', data.length, 'products')
         setProducts(data)
-      } else {
-        console.error('Error response:', response.status, response.statusText)
       }
     } catch (error) {
       console.error('Error fetching products:', error)
@@ -78,18 +74,13 @@ function CatalogoContent() {
 
   const fetchCategories = async () => {
     try {
-      console.log('📂 Fetching categories from:', getApiUrl('/categories'))
       const response = await fetch(getApiUrl('/categories'))
       if (response.ok) {
         const data = await response.json()
-        console.log('📂 Categories fetched:', data)
         setCategories(Array.isArray(data) ? data : [])
-      } else {
-        console.error('❌ Error fetching categories:', response.status)
-        setCategories([])
       }
     } catch (error) {
-      console.error('❌ Error fetching categories:', error)
+      console.error('Error fetching categories:', error)
       setCategories([])
     }
   }
@@ -99,15 +90,8 @@ function CatalogoContent() {
                          product.description.toLowerCase().includes(searchTerm.toLowerCase())
 
     if (categoryParam) {
-      console.log('🏪 CATÁLOGO: Filtrando productos por categoría en catálogo público')
-      console.log('🏪 CATÁLOGO: categoryParam:', categoryParam)
-      console.log('🏪 CATÁLOGO: categories disponibles:', categories)
-      console.log('🔍 Filtrando por categoría:', categoryParam)
-      console.log('📋 Categorías disponibles:', categories.map(c => ({ name: c.name, slug: c.slug })))
-
       // Encontrar la categoría correspondiente por slug
       const selectedCategory = categories.find(cat => cat.slug === categoryParam)
-      console.log('🎯 Categoría encontrada:', selectedCategory)
 
       if (selectedCategory) {
         // Manejar category como array o string (para compatibilidad)
@@ -115,19 +99,38 @@ function CatalogoContent() {
           ? product.category
           : (product.category ? [product.category] : [])
 
-        console.log('🏷️ Categorías del producto:', productCategories, 'Producto:', product.name)
+        // Buscar coincidencias aproximadas entre nombres de categoría
+        const categoryName = selectedCategory.name.trim().toLowerCase()
+        const matchesCategory = productCategories.some(cat => {
+          const productCat = cat.toLowerCase().trim()
 
-        const matchesCategory = productCategories.some(cat =>
-          cat.toLowerCase() === selectedCategory.name.toLowerCase()
-        )
+          // Coincidencia exacta
+          if (productCat === categoryName) return true
 
-        console.log('✅ Coincide categoría?', matchesCategory)
+          // Remover espacios al final (ej: "Imprenta y Packs " -> "Imprenta y Packs")
+          if (productCat === categoryName.replace(/\s+$/, '')) return true
+          if (categoryName === productCat.replace(/\s+$/, '')) return true
+
+          // Singular/plural básico (ej: "Deportes" -> "Deporte")
+          if (productCat === categoryName.replace(/es$/, '')) return true
+          if (categoryName === productCat.replace(/es$/, '')) return true
+
+          // "Tecnologia" -> "Tecnología"
+          if (productCat.replace('ologia', 'ología') === categoryName) return true
+          if (categoryName.replace('ologia', 'ología') === productCat) return true
+
+          // Contiene palabras clave (ej: "Uniformes" en ambos)
+          if (productCat.includes('uniformes') && categoryName.includes('uniformes')) return true
+          if (productCat.includes('imprenta') && categoryName.includes('imprenta')) return true
+          if (productCat.includes('packs') && categoryName.includes('packs')) return true
+
+          return false
+        })
 
         return matchesSearch && matchesCategory
       }
 
       // Si no encuentra la categoría, no mostrar ningún producto
-      console.log('❌ No se encontró la categoría con slug:', categoryParam)
       return false
     }
 
