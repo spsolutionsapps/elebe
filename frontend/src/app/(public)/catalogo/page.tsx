@@ -78,13 +78,18 @@ function CatalogoContent() {
 
   const fetchCategories = async () => {
     try {
+      console.log('📂 Fetching categories from:', getApiUrl('/categories'))
       const response = await fetch(getApiUrl('/categories'))
       if (response.ok) {
         const data = await response.json()
+        console.log('📂 Categories fetched:', data)
         setCategories(Array.isArray(data) ? data : [])
+      } else {
+        console.error('❌ Error fetching categories:', response.status)
+        setCategories([])
       }
     } catch (error) {
-      console.error('Error fetching categories:', error)
+      console.error('❌ Error fetching categories:', error)
       setCategories([])
     }
   }
@@ -94,6 +99,9 @@ function CatalogoContent() {
                          product.description.toLowerCase().includes(searchTerm.toLowerCase())
 
     if (categoryParam) {
+      console.log('🏪 CATÁLOGO: Filtrando productos por categoría en catálogo público')
+      console.log('🏪 CATÁLOGO: categoryParam:', categoryParam)
+      console.log('🏪 CATÁLOGO: categories disponibles:', categories)
       console.log('🔍 Filtrando por categoría:', categoryParam)
       console.log('📋 Categorías disponibles:', categories.map(c => ({ name: c.name, slug: c.slug })))
 
