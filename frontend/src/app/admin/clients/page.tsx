@@ -15,8 +15,8 @@ import { getApiUrl } from '@/lib/config'
 interface Client {
   id: string;
   name: string;
-  email: string;
-  phone?: string;
+  email?: string;
+  phone: string;
   address?: string;
   city?: string;
   country?: string;
@@ -172,8 +172,8 @@ export default function ClientsPage() {
 
   const filteredClients = clients.filter(client =>
     client.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    client.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (client.phone && client.phone.includes(searchTerm))
+    (client.email && client.email.toLowerCase().includes(searchTerm.toLowerCase())) ||
+    client.phone.includes(searchTerm)
   )
 
   // Pagination logic
@@ -266,10 +266,9 @@ export default function ClientsPage() {
                   
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Email *
+                      Email
                     </label>
                     <Input
-                      required
                       type="email"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -280,9 +279,10 @@ export default function ClientsPage() {
                   
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Teléfono
+                      Teléfono *
                     </label>
                     <Input
+                      required
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       placeholder="+34 600 123 456"
@@ -297,7 +297,7 @@ export default function ClientsPage() {
                     <Input
                       value={formData.city}
                       onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                      placeholder="Madrid"
+                      placeholder="Agregar ciudad..."
                       className="border-gray-300 pl-3"
                     />
                   </div>
@@ -402,9 +402,9 @@ export default function ClientsPage() {
                     </div>
                   </TableCell>
                   <TableCell>
-                    <div className="text-sm text-gray-900">{client.email}</div>
-                    {client.phone && (
-                      <div className="text-sm text-gray-500">{client.phone}</div>
+                    <div className="text-sm text-gray-900">{client.phone}</div>
+                    {client.email && (
+                      <div className="text-sm text-gray-500">{client.email}</div>
                     )}
                   </TableCell>
                   <TableCell>

@@ -96,7 +96,9 @@ export default function ProductTable({
                   </td>
                   <td className="px-4 py-4">
                     <span className="inline-flex px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">
-                      {product.category || 'Sin categoría'}
+                      {Array.isArray(product.category) 
+                        ? (product.category.length > 0 ? product.category.join(', ') : 'Sin categoría')
+                        : (product.category || 'Sin categoría')}
                     </span>
                   </td>
                   <td className="px-4 py-4 text-sm text-gray-500">

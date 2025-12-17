@@ -1,79 +1,13 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { getImageUrl } from '@/lib/imageUtils'
-import { API_CONFIG } from '@/lib/config'
-import { ScrollAnimated } from '@/components/ScrollAnimated'
 import { BrandsGrid } from '@/components/BrandsGrid'
 import { ClientOnly } from '@/components/ClientOnly'
 
-interface About {
-  id: string
-  title: string
-  content: string
-  images: string[]
-  createdAt: Date
-  updatedAt: Date
-}
-
 export default function NosotrosPage() {
-  const [about, setAbout] = useState<About | null>(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    fetchAbout()
-  }, [])
-
-  const fetchAbout = async () => {
-    try {
-      const apiUrl = API_CONFIG.BASE_URL
-      console.log('🔍 Fetching about from:', apiUrl)
-      const response = await fetch(`${apiUrl}/about`)
-      if (response.ok) {
-        const data = await response.json()
-        console.log('📊 About data:', data)
-        setAbout(data)
-      } else {
-        console.error('❌ Error response:', response.status, response.statusText)
-        setAbout({
-          id: 'default',
-          title: 'Sobre LB Premium',
-          content: 'LB Premium nació de la visión de crear soluciones integrales de impresión y merchandising que conecten marcas con sus audiencias de manera impactante.',
-          images: [],
-          createdAt: new Date(),
-          updatedAt: new Date()
-        })
-      }
-    } catch (error) {
-      console.error('Error fetching about:', error)
-      setAbout({
-        id: 'default',
-        title: 'Sobre LB Premium',
-        content: 'LB Premium nació de la visión de crear soluciones integrales de impresión y merchandising que conecten marcas con sus audiencias de manera impactante.',
-        images: [],
-        createdAt: new Date(),
-        updatedAt: new Date()
-      })
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div style={{borderRadius: '150px'}}  className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600 text-lg">Cargando...</p>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <div className="min-h-screen paddingDesktop62 marginTop62 ">
 
-      {/* Header con buscador - 100% width */}
+  
       <div className="w-full p-8 mb-12 relative overflow-hidden" style={{ backgroundColor: '#4FBED5',height: '335px' }}>
          
           <div className="text-center mb-6">
@@ -109,174 +43,254 @@ export default function NosotrosPage() {
       {/* Sección de Texto Principal */}
       <section className="py-12 relative z-[110]">
         <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-[36px] text-center text18Mobile font-blue leading-tight mx-auto mb-12">
+          <p className="text-[27px] md:text-[36px] text-center text18Mobile font-blue leading-tight mx-auto mb-12">
             Creamos <em>EXPERIENCIAS</em> para ser vividas, <br /> filmadas y viralizadas.
           </p>
 
-          {/* Texto descriptivo */}
-          <div className="max-w-4xl mx-auto">
-            <div className="space-y-6 text-center">
-              <p className="text-[18px] font-blue leading-relaxed">
-                Somos una agencia dedicada al diseño y producción de artículos personalizados. 
-                Ofrecemos soluciones creativas para las empresas que necesitan darle exposición a su marca.
-              </p>
-              
-              <p className="text-[18px] font-blue leading-relaxed">
+          {/* Galería de 3 imágenes */}
+          <div className="grid grid-cols-3 gap-0 max-w-6xl mx-auto mb-12">
+            <div className="w-full">
+              <img 
+                src="/experiencia1.webp" 
+                alt="Experiencia 1" 
+                className="w-full h-auto object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <div className="w-full">
+              <img 
+                src="/experiencia2.webp" 
+                alt="Experiencia 2" 
+                className="w-full h-auto object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <div className="w-full">
+              <img 
+                src="/experiencia3.webp" 
+                alt="Experiencia 3" 
+                className="w-full h-auto object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </div>
+
+          {/* Sección Imagen y SOMOS UNA AGENCIA */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-12 max-w-6xl mx-auto mb-12 items-center">
+            <div className="order-2 lg:order-1 lg:col-span-1">
+              <img 
+                src="/experiencia4.webp" 
+                alt="Nosotros" 
+                className="w-[200px] md:w-full h-auto object-cover mx-auto md:mx-0 md:-mt-[110px]"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <div className="order-1 lg:order-2 lg:col-span-2">
+              <p className="text-[20px] md:text-[22px] font-blue leading-relaxed text-center md:text-left" style={{ marginTop: '20px' }}>
+                Somos una agencia dedicada al diseño y producción de artículos personalizados. Ofrecemos soluciones creativas para las empresas que necesitan darle exposición a su marca.
+                <br /><br />
                 Nuestra fábrica está homologada por Disney "International Labor Standards The Walt Disney Company Argentina S.A." Trabajamos con las fábricas más avanzadas del mercado.
               </p>
+            </div>
+          </div>
+        
+        </div>
+      </section>
+
+      {/* Sección Kits de Productos */}
+      <section className="bg-white">
+        <div className="w-full">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-0 items-stretch">
+            {/* Columna 1: Todas las Imágenes */}
+            <div className="w-full grid grid-cols-2 gap-0">
+              <div className="w-full flex">
+                <img 
+                  src="/kits-01.webp" 
+                  alt="Kits de Productos" 
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div className="w-full space-y-0">
+                <img 
+                  src="/kits-02.webp" 
+                  alt="Kits de Productos 1" 
+                  className="w-full"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            </div>
+
+            {/* Columna 2: Título y Texto */}
+            <div className="w-full px-4 sm:px-6 lg:px-8 flex items-center justify-center md:justify-start">
+              <div className="text-center md:text-left md:ml-[50px] py-[26px] md:py-0">
+                <h3 className="text-[27px] md:text-[36px] font-bold font-blue mb-8 md:mb-16">
+                  _Kits de <em className="font-bold italic">Productos</em>
+                </h3>
+                <p className="text-lg font-blue leading-relaxed md:w-[370px]">
+                  Diseñamos <strong>KITS DE PRODUCTOS</strong> pensados para ocasiones especiales como eventos, lanzamientos, inducción de personal, o fechas clave para el calendario de marketing de tu empresa.
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Secciones de Servicios */}
-      <section className="py-16">
+
+
+
+
+      {/* Sección Textiles */}
+      <section className="py-16 bg-yellow-400">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Kits de Producción */}
-          <ScrollAnimated direction="left">
-            <div className="mb-20 p-8">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div className="order-1">
-                  <h3 className="text-3xl font-bold font-blue mb-6">Kits de Producción</h3>
-                  <p className="text-lg font-blue leading-relaxed">
-                    Diseñamos KITS DE PRODUCTOS pensados para ocasiones especiales como eventos, lanzamientos, 
-                    inducción de personal, o fechas clave para el calendario de marketing de tu empresa.
-                  </p>
-                </div>
-                <div className="order-2">
-                  <img 
-                    src="/productos.jpg" 
-                    alt="Kits de Producción" 
-                    className="w-full h-80 object-cover"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </div>
-              </div>
+          {/* Primera fila: Título y Texto */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+            {/* Columna 1: Título */}
+            <div className="w-full">
+              <h3 className="text-[27px] md:text-[36px] font-bold verde text-center md:text-left">
+                _Text<em className="font-bold italic">tiles</em>
+              </h3>
             </div>
-          </ScrollAnimated>
+            
+            {/* Columna 2: Texto */}
+            <div className="w-full">
+              <p className="text-lg verde leading-relaxed text-center md:text-left">
+                Hace más de 20 años que <strong>FABRICAMOS TEXTILES</strong>, desarrollamos líneas de producto, molderias a medida. Producimos en pequeña escala para personal o publicidad. También <strong>FASÓN</strong> para reconocidas marcas.
+              </p>
+            </div>
+          </div>
 
-          {/* Textiles */}
-          <ScrollAnimated direction="right">
-            <div className="mb-20 p-8">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div className="order-2 lg:order-1">
-                  <img 
-                    src="/textiles.jpg" 
-                    alt="Textiles" 
-                    className="w-full h-80 object-cover"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </div>
-                <div className="order-1 lg:order-2">
-                  <h3 className="text-3xl font-bold font-blue mb-6">Textiles</h3>
-                  <p className="text-lg font-blue leading-relaxed">
-                    Hace más de 20 años que FABRICAMOS TEXTILES, desarrollamos líneas de producto, molderias a medida. 
-                    Producimos en pequeña escala para personal o publicidad. También FASÓN para reconocidas marcas.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </ScrollAnimated>
+          {/* Segunda fila: Imagen */}
+          <div className="w-full">
+            <img 
+              src="/textiles.webp" 
+              alt="Textiles" 
+              className="w-full h-auto object-cover"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        </div>
+      </section>
 
-          {/* Marroquinería */}
-          <ScrollAnimated direction="left">
-            <div className="mb-20 p-8">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div className="order-1">
-                  <h3 className="text-3xl font-bold font-blue mb-6">Marroquinería</h3>
-                  <p className="text-lg font-blue leading-relaxed">
-                    Desarrollos productos de MARROQUINERÍA con el concepto de tu emprendimiento. Mochilas, materas, 
-                    riñoneras, fundas para dispositivos, bolsos, nécessaires, billeteras, porta documentos, bolsas, etc.
-                  </p>
-                </div>
-                <div className="order-2">
-                  <img 
-                    src="/marroquineria.jpg" 
-                    alt="Marroquinería" 
-                    className="w-full h-80 object-cover"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </div>
-              </div>
+      {/* Sección Marroquinería */}
+      <section style={{ backgroundColor: '#f1e9d0' }}>
+        <div className="w-full">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-0 items-stretch">
+            {/* Columna 1: Imagen */}
+            <div className="w-full">
+              <img 
+                src="/marroquineria02.webp" 
+                alt="Marroquinería" 
+                className="w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
+              />
             </div>
-          </ScrollAnimated>
 
-          {/* Packaging */}
-          <ScrollAnimated direction="right">
-            <div className="mb-20 p-8">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div className="order-2 lg:order-1">
-                  <img 
-                    src="/packaging.jpg" 
-                    alt="Packaging" 
-                    className="w-full h-80 object-cover"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </div>
-                <div className="order-1 lg:order-2">
-                  <h3 className="text-3xl font-bold font-blue mb-6">Packaging</h3>
-                  <p className="text-lg font-blue leading-relaxed">
-                    Nuestros PACKAGINGS llevan tu concepto hasta los límites! Packs primarios y secundarios. 
-                    Cajas, tubos, cofres, blisters y mucho más.
-                  </p>
-                </div>
+            {/* Columna 2: Título y Texto */}
+            <div className="w-full px-4 sm:px-6 lg:px-8 flex items-center justify-center md:justify-start">
+              <div className="text-center md:text-left md:ml-[50px] py-[26px] md:py-0">
+                <h3 className="text-[27px] md:text-[36px] font-bold font-blue mb-8 md:mb-16">
+                  _Marro<em className="font-bold italic">quineria</em>
+                </h3>
+                <p className="text-lg font-blue leading-relaxed md:w-[370px]">
+                  Desarrollos productos de <strong>MARROQUINERÍA</strong> con el concepto de tu emprendimiento. Mochilas, materas, riñoneras, fundas para dispositivos, bolsos, nécessaires, billeteras, porta documentos, bolsas, etc.
+                </p>
               </div>
             </div>
-          </ScrollAnimated>
+          </div>
+        </div>
+      </section>
 
-          {/* Imprenta */}
-          <ScrollAnimated direction="left">
-            <div className="mb-20 p-8">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div className="order-1">
-                  <h3 className="text-3xl font-bold font-blue mb-6">Imprenta</h3>
-                  <p className="text-lg font-blue leading-relaxed">
-                    Ofrecemos soluciones de IMPRENTA en todos los soportes, cartulinas, cartones, vinilos, etc. 
-                    Bolsas, cuadernos, trípticos, brochures, tarjetones, tent cards, credenciales, blisters, 
-                    stickers, banners, posters, banderas, etc.
-                  </p>
-                </div>
-                <div className="order-2">
-                  <img 
-                    src="/imprenta.jpg" 
-                    alt="Imprenta" 
-                    className="w-full h-80 object-cover"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </div>
-              </div>
-            </div>
-          </ScrollAnimated>
 
-          {/* Merchandising */}
-          <ScrollAnimated direction="right">
-            <div className="mb-20 p-8">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div className="order-2 lg:order-1">
-                  <img 
-                    src="/merchandising.jpg" 
-                    alt="Merchandising" 
-                    className="w-full h-80 object-cover"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </div>
-                <div className="order-1 lg:order-2">
-                  <h3 className="text-3xl font-bold font-blue mb-6">Merchandising</h3>
-                  <p className="text-lg font-blue leading-relaxed">
-                    MERCHANDISING tradicional. Ponemos tu marca en todo tipo de objetos promocionales. 
-                    Termos, botellas, lápices, biromes, lanyards, pins, llaveros, gorros, sombreros, medias, 
-                    tazas, cuadernos, auriculares, mates, vasos térmicos.
-                  </p>
-                </div>
+
+
+
+      {/* Sección Merchandising */}
+      <section className="py-16" style={{ backgroundColor: '#e6b6b4' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Primera fila: Título y Texto */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+            {/* Columna 1: Título */}
+            <div className="w-full">
+              <h3 className="text-[27px] md:text-[36px] font-bold verde text-center md:text-left">
+                _Merch<em className="font-bold italic">andising</em>
+              </h3>
+            </div>
+            
+            {/* Columna 2: Texto */}
+            <div className="w-full">
+              <p className="text-lg verde leading-relaxed text-center md:text-left">
+                <strong>MERCH</strong> tradicional. Ponemos tu marca en todo tipo de objetos promocionales. Termos, botellas, lápices, biromes, lanyards, pins, llaveros, gorros, sombreros, medias, tazas, cuadernos, auriculares, mates, vasos térmicos.
+              </p>
+            </div>
+          </div>
+
+          {/* Segunda fila: Imagen */}
+          <div className="w-full">
+            <img 
+              src="/merchandising1.webp" 
+              alt="Merchandising" 
+              className="w-full h-auto object-cover"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Sección Imprenta y Pack */}
+      <section className="bg-white">
+        <div className="w-full">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-0 items-stretch">
+            {/* Columna 1: 2 Imágenes */}
+            <div className="w-full flex flex-col">
+              <img 
+                src="/imprentaypack-01.webp" 
+                alt="Imprenta y Pack 1" 
+                className="w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+              <img 
+                src="/imprentaypack-02.webp" 
+                alt="Imprenta y Pack 2" 
+                className="w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+
+            {/* Columna 2: Título, Texto e Imagen */}
+            <div className="w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center py-[26px] md:py-0">
+              <div className="text-center md:text-left md:ml-[50px]">
+                <h3 className="text-[27px] md:text-[36px] font-bold verde mb-8 md:mb-16">
+                  _Imprenta y <em className="font-bold italic">Pack</em>
+                </h3>
+                <p className="text-lg verde leading-relaxed md:w-[450px] mb-6">
+                  Ofrecemos soluciones de <strong>IMPRENTA</strong> en todos los soportes, cartulinas, cartones, vinilos, etc. Bolsas, cuadernos, trípticos, brochures, tarjetones, tent cards, credenciales, blisters, stickers, banners, posters, banderas, etc.
+                  <br /><br />
+                  Nuestros <strong>PACKAGINGS</strong> llevan tu concepto hasta los límites! Packs primarios y secundarios. Cajas, tubos, cofres, blisters y mucho más.
+                </p>
+              </div>
+              <div className="flex justify-center md:justify-start md:ml-[50px]">
+                <img 
+                  src="/imprentaypack-03.webp" 
+                  alt="Imprenta y Pack 3" 
+                  className="w-[200px] md:w-[200px] h-auto object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
             </div>
-          </ScrollAnimated>
+          </div>
         </div>
       </section>
 

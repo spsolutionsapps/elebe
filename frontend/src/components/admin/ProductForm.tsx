@@ -15,7 +15,7 @@ type SelectOption = {
 interface ProductFormData {
   name: string
   description: string
-  category: string
+  category: string[] // Cambiado a array para múltiples categorías
   image: string
   images: string[]
   printingTypes: string[]
@@ -116,6 +116,15 @@ export default function ProductForm({
     }
   }
 
+  const handleCategoryChange = (category: string, checked: boolean) => {
+    const currentCategories = Array.isArray(formData.category) ? formData.category : [formData.category].filter(Boolean)
+    if (checked) {
+      handleFieldChange('category', [...currentCategories, category])
+    } else {
+      handleFieldChange('category', currentCategories.filter(c => c !== category))
+    }
+  }
+
   return (
     <Card>
       <CardHeader className="text-black rounded-t-lg">
@@ -141,19 +150,28 @@ export default function ProductForm({
             
             <div>
               <label className="block text-sm font-medium mb-1">
-                Categoría
+                Categoría(s) <span className="text-xs text-gray-500 font-normal">(opcional - puedes seleccionar múltiples)</span>
               </label>
-              <Select
-                value={categoryOptions.find(option => option.value === formData.category)}
-                onChange={(selectedOption: SingleValue<SelectOption>) => 
-                  handleFieldChange('category', selectedOption?.value || 'Oficina')
-                }
-                options={categoryOptions}
-                styles={customSelectStyles}
-                placeholder="Seleccionar categoría..."
-                isSearchable={false}
-                required
-              />
+              <div className="space-y-2 border border-gray-300 rounded-md p-3 max-h-48 overflow-y-auto">
+                {categoryOptions.map((option) => {
+                  const currentCategories = Array.isArray(formData.category) ? formData.category : [formData.category].filter(Boolean)
+                  const isChecked = currentCategories.includes(option.value)
+                  return (
+                    <label key={option.value} className="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+                      <input
+                        type="checkbox"
+                        checked={isChecked}
+                        onChange={(e) => handleCategoryChange(option.value, e.target.checked)}
+                        className="mr-2"
+                      />
+                      <span className="text-sm">{option.label}</span>
+                    </label>
+                  )
+                })}
+              </div>
+              {Array.isArray(formData.category) && formData.category.length === 0 && (
+                <p className="text-xs text-gray-500 mt-1">Selecciona al menos una categoría o se asignará "General" por defecto</p>
+              )}
             </div>
           </div>
           
@@ -200,7 +218,7 @@ export default function ProductForm({
                 Tipos de Impresión
               </label>
               <div className="space-y-2">
-                {['Serigrafía', 'Tampografía', 'Sublimación', 'Vinilo', 'Bordado'].map((type) => (
+                {['Serigrafía', 'Tampografía', 'Sublimación', 'Vinilo', 'Bordado', 'DTF', 'Grabado láser'].map((type) => (
                   <label key={type} className="flex items-center">
                     <input
                       type="checkbox"

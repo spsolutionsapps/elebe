@@ -443,12 +443,18 @@ export class InquiriesController {
         throw new Error('Este contacto ya fue convertido a cliente');
       }
 
+      // Validar que el teléfono esté presente (es obligatorio)
+      const phone = clientData.phone || inquiry.phone;
+      if (!phone) {
+        throw new Error('El teléfono es obligatorio para crear un cliente');
+      }
+
       // Crear el cliente
       const client = await this.prisma.client.create({
         data: {
           name: clientData.name || inquiry.name,
-          email: clientData.email || inquiry.email,
-          phone: clientData.phone || inquiry.phone,
+          email: clientData.email || inquiry.email || null,
+          phone: phone,
           address: clientData.address || null,
           city: clientData.city || null,
           country: clientData.country || null,

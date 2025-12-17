@@ -349,18 +349,71 @@ const GSAPSlider = memo(function GSAPSlider({ slides, onControls }: GSAPSliderPr
             className="relative flex-shrink-0 w-full h-full"
             style={{ width: `${100 / slides.length}%` }}
           >
-            {/* Imagen del slide */}
+            {/* Imagen o Video del slide */}
             <div className="relative h-full bg-gradient-to-br from-gray-900 to-gray-700 overflow-hidden">
-              <img
-                src={getOptimizedImageUrl(slide.image)}
-                alt={slide.title}
-                loading="lazy"
-                className="w-full h-full object-cover transition-transform duration-1000 hover:scale-110"
-                onError={(e) => {
-                  e.currentTarget.style.display = 'none'
-                  e.currentTarget.nextElementSibling?.classList.remove('hidden')
-                }}
-              />
+              {/* Video Desktop - oculta en mobile */}
+              {slide.videoUrl ? (
+                <video
+                  src={getOptimizedImageUrl(slide.videoUrl)}
+                  className="hidden md:block w-full h-full object-cover"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                />
+              ) : (
+                <img
+                  src={getOptimizedImageUrl(slide.image)}
+                  alt={slide.title}
+                  loading="lazy"
+                  className="hidden md:block w-full h-full object-cover transition-transform duration-1000 hover:scale-110"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none'
+                  }}
+                />
+              )}
+              
+              {/* Video Mobile - visible solo en mobile */}
+              {slide.mobileVideoUrl ? (
+                <video
+                  src={getOptimizedImageUrl(slide.mobileVideoUrl)}
+                  className="block md:hidden w-full h-full object-cover"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                />
+              ) : slide.mobileImage ? (
+                <img
+                  src={getOptimizedImageUrl(slide.mobileImage)}
+                  alt={slide.title}
+                  loading="lazy"
+                  className="block md:hidden w-full h-full object-cover transition-transform duration-1000"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none'
+                  }}
+                />
+              ) : slide.videoUrl ? (
+                <video
+                  src={getOptimizedImageUrl(slide.videoUrl)}
+                  className="block md:hidden w-full h-full object-cover"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                />
+              ) : (
+                <img
+                  src={getOptimizedImageUrl(slide.image)}
+                  alt={slide.title}
+                  loading="lazy"
+                  className="block md:hidden w-full h-full object-cover transition-transform duration-1000"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none'
+                  }}
+                />
+              )}
+              
               <div className="hidden w-full h-full bg-gradient-to-br from-gray-800 to-gray-600 flex items-center justify-center">
                 <div className="text-center text-white">
                   <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -371,8 +424,8 @@ const GSAPSlider = memo(function GSAPSlider({ slides, onControls }: GSAPSliderPr
               </div>
 
               
-              {/* Contenido del slide */}
-              <div className="absolute inset-0 flex items-center">
+              {/* Contenido del slide - oculto en mobile si hay mobileImage */}
+              <div className={`absolute inset-0 flex items-center ${slide.mobileImage ? 'hidden md:flex' : 'flex'}`}>
                 <div 
                   ref={(el) => {
                     if (el) textRefs.current[index] = el

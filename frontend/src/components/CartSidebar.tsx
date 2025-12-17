@@ -97,7 +97,7 @@ export function CartSidebar() {
                       {item.product.name}
                     </h3>
                     <p className="text-xs text-gray-500">
-                      {item.product.category}
+                      {Array.isArray(item.product.category) ? item.product.category.join(', ') : item.product.category}
                     </p>
                   </div>
 

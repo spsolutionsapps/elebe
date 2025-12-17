@@ -1,39 +1,33 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-// import { InjectRepository } from '@nestjs/typeorm';
-// import { Repository } from 'typeorm';
-// import * as bcrypt from 'bcryptjs';
-// import { User } from '../users/entities/user.entity';
+import * as bcrypt from 'bcryptjs';
+import { PrismaService } from '../prisma/prisma.service';
 import { LoginDto } from './dto/login.dto';
 
 @Injectable()
 export class AuthService {
   constructor(
-    // @InjectRepository(User)
-    // private usersRepository: Repository<User>,
+    private prisma: PrismaService,
     private jwtService: JwtService,
   ) {}
 
   async validateUser(email: string, password: string): Promise<any> {
-    // TODO: Implementar cuando tengamos base de datos
-    // const user = await this.usersRepository.findOne({ where: { email } });
+    const user = await this.prisma.user.findUnique({
+      where: { email },
+    });
     
-    // if (user && await bcrypt.compare(password, user.password)) {
-    //   const { password, ...result } = user;
-    //   return result;
-    // }
-    
-    // Temporal: Usuario hardcodeado para pruebas
-    if (email === 'elebe.merch@gmail.com' && password === 'u1u2u3u4u5') {
-      return {
-        id: 'temp-user-id',
-        email: 'elebe.merch@gmail.com',
-        name: 'Administrador',
-        role: 'admin'
-      };
+    if (!user || !user.password) {
+      return null;
     }
     
-    return null;
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    
+    if (!isPasswordValid) {
+      return null;
+    }
+    
+    const { password: _, ...result } = user;
+    return result;
   }
 
   async login(loginDto: LoginDto) {
@@ -57,22 +51,16 @@ export class AuthService {
   }
 
   async getProfile(userId: string) {
-    // TODO: Implementar cuando tengamos base de datos
-    // const user = await this.usersRepository.findOne({ where: { id: userId } });
-    // if (!user) {
-    //   throw new UnauthorizedException('Usuario no encontrado');
-    // }
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+    });
     
-    // const { password, ...result } = user;
-    // return result;
+    if (!user) {
+      throw new UnauthorizedException('Usuario no encontrado');
+    }
     
-    // Temporal: Retornar usuario hardcodeado
-    return {
-      id: 'temp-user-id',
-      email: 'elebe.merch@gmail.com',
-      name: 'Administrador',
-      role: 'admin'
-    };
+    const { password, ...result } = user;
+    return result;
   }
 
   async devLogin() {

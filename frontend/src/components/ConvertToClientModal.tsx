@@ -120,22 +120,22 @@ export function ConvertToClientModal({
           </div>
 
           <div>
-            <Label htmlFor="email">Email *</Label>
+            <Label htmlFor="email">Email</Label>
             <Input
               id="email"
               type="email"
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              required
             />
           </div>
 
           <div>
-            <Label htmlFor="phone">Teléfono</Label>
+            <Label htmlFor="phone">Teléfono *</Label>
             <Input
               id="phone"
               value={formData.phone}
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              required
             />
           </div>
 

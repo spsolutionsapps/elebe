@@ -67,7 +67,11 @@ describe('AuthController', () => {
         id: 'temp-user-id',
         email: 'admin@fashionstyle.com',
         name: 'Administrador',
-        role: 'admin'
+        emailVerified: null,
+        image: null,
+        role: 'admin',
+        createdAt: new Date(),
+        updatedAt: new Date(),
       };
 
       jest.spyOn(authService, 'getProfile').mockResolvedValue(expectedResult);

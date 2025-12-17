@@ -61,6 +61,9 @@ model Slide {
   subtitle              String?
   description           String?
   image                 String
+  mobileImage           String?
+  videoUrl              String?
+  mobileVideoUrl        String?
   order                 Int      @default(0)
   isActive              Boolean  @default(true)
   createdAt             DateTime @default(now())
@@ -88,7 +91,7 @@ model Product {
   isActive            Boolean          @default(true)
   createdAt           DateTime         @default(now())
   updatedAt           DateTime         @updatedAt
-  category            String           @default("General")
+  category            String[]         @default(["General"])
   individualPackaging String?
   packagingHeight     Float?
   packagingLength     Float?
@@ -170,7 +173,7 @@ model FollowUpHistory {
 model Client {
   id        String   @id @default(cuid())
   name      String
-  email     String
+  email     String?
   phone     String?
   address   String?
   city      String?

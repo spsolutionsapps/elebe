@@ -6,13 +6,13 @@
 // Configuración de la API
 export const API_CONFIG = {
   // URL base de la API
-  BASE_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002/api',
+  BASE_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api',
   
   // URL base del backend (para imágenes y archivos)
   // En Docker, usar el nombre del servicio; en desarrollo local, usar localhost
   BACKEND_URL: process.env.NEXT_PUBLIC_BACKEND_URL || 
     (typeof window !== 'undefined' && window.location.hostname === 'localhost' 
-      ? 'http://localhost:3002' 
+      ? 'http://localhost:3001' 
       : 'http://lb-premium-backend:3001'),
   
   // Entorno actual

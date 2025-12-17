@@ -36,33 +36,52 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   
   const { count: inquiriesCount, error: inquiriesError } = useInquiriesCount()
 
-  // Definir el array de navegación con acceso a inquiriesCount
-  const navigation: NavigationItem[] = [
-    { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
-    {
-      name: 'Página Web',
-      icon: Globe,
-      children: [
-        { name: 'Slides', href: '/admin/slides', icon: Image },
-        { name: 'Categorías', href: '/admin/categories', icon: Grid3X3 },
-        { name: 'Productos', href: '/admin/products', icon: Package },
-        { name: 'Productos Destacados', href: '/admin/featured-products', icon: Package },
-        // { name: 'Servicios', href: '/admin/services', icon: Settings },
-        // { name: 'Nosotros', href: '/admin/about', icon: FileText },
-        { name: 'Marcas', href: '/admin/brands', icon: Building2 },
-      ]
-    },
-    { 
-      name: 'Consultas', 
-      href: '/admin/inquiries', 
-      icon: Users, 
-      count: inquiriesCount && inquiriesCount > 0 ? inquiriesCount : undefined 
-    },
-    { name: 'Clientes', href: '/admin/clients', icon: Users },
-    { name: 'Newsletter', href: '/admin/newsletter', icon: Mail },
-    { name: 'Recordatorios', href: '/admin/reminders', icon: Calendar },
-    { name: 'Tareas', href: '/admin/tasks', icon: CheckSquare },
-  ]
+  // Función para filtrar navegación basado en el rol del usuario
+  const getFilteredNavigation = (userRole: string): NavigationItem[] => {
+    const allNavigation: NavigationItem[] = [
+      { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
+      {
+        name: 'Página Web',
+        icon: Globe,
+        children: [
+          { name: 'Slides', href: '/admin/slides', icon: Image },
+          { name: 'Categorías', href: '/admin/categories', icon: Grid3X3 },
+          { name: 'Productos', href: '/admin/products', icon: Package },
+          { name: 'Productos Destacados', href: '/admin/featured-products', icon: Package },
+          // { name: 'Servicios', href: '/admin/services', icon: Settings },
+          // { name: 'Nosotros', href: '/admin/about', icon: FileText },
+          { name: 'Marcas', href: '/admin/brands', icon: Building2 },
+        ]
+      },
+      { 
+        name: 'Consultas', 
+        href: '/admin/inquiries', 
+        icon: Users, 
+        count: inquiriesCount && inquiriesCount > 0 ? inquiriesCount : undefined 
+      },
+      { name: 'Clientes', href: '/admin/clients', icon: Users },
+      { name: 'Newsletter', href: '/admin/newsletter', icon: Mail },
+      { name: 'Recordatorios', href: '/admin/reminders', icon: Calendar },
+      { name: 'Tareas', href: '/admin/tasks', icon: CheckSquare },
+    ]
+
+    // Si el usuario tiene rol "clientes", solo mostrar secciones permitidas
+    if (userRole === 'clientes') {
+      return allNavigation.filter(item => 
+        item.name === 'Consultas' ||
+        item.name === 'Clientes' ||
+        item.name === 'Newsletter' ||
+        item.name === 'Recordatorios' ||
+        item.name === 'Tareas'
+      )
+    }
+
+    // Para admin y otros roles, mostrar todo
+    return allNavigation
+  }
+
+  // Definir el array de navegación filtrado según el rol del usuario
+  const navigation: NavigationItem[] = user ? getFilteredNavigation(user.role) : []
 
 
   useEffect(() => {
@@ -105,6 +124,32 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       router.push('/admin/login')
     }
   }, [pathname, router])
+
+  // Proteger rutas restringidas para usuarios con rol "clientes"
+  useEffect(() => {
+    if (!user) return
+
+    const restrictedRoutes = [
+      '/admin',
+      '/admin/slides',
+      '/admin/categories',
+      '/admin/products',
+      '/admin/featured-products',
+      '/admin/services',
+      '/admin/about',
+      '/admin/brands',
+    ]
+
+    // Si el usuario tiene rol "clientes" e intenta acceder a rutas restringidas
+    if (user.role === 'clientes' && restrictedRoutes.some(route => pathname === route || pathname.startsWith(route + '/'))) {
+      showAlert({
+        title: 'Acceso restringido',
+        message: 'No tienes permisos para acceder a esta sección',
+        type: 'error'
+      })
+      router.push('/admin/inquiries')
+    }
+  }, [user, pathname, router, showAlert])
 
   // Auto-expand "Página Web" menu when on subpages
   useEffect(() => {

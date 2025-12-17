@@ -95,8 +95,11 @@ export function useProducts(): UseProductsReturn {
         product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         product.description.toLowerCase().includes(searchTerm.toLowerCase())
       
-      // Filtro por categoría
-      const matchesCategory = !selectedCategory || product.category === selectedCategory
+      // Filtro por categoría (manejar array o string)
+      const productCategories = Array.isArray(product.category) 
+        ? product.category 
+        : (product.category ? [product.category] : [])
+      const matchesCategory = !selectedCategory || productCategories.includes(selectedCategory)
       
       // Filtro por estado
       const matchesStatus = statusFilter === 'all' || 
@@ -157,7 +160,12 @@ export function useProducts(): UseProductsReturn {
     const inactive = total - active
     
     const categoryStats = products.reduce((acc, product) => {
-      acc[product.category] = (acc[product.category] || 0) + 1
+      const productCategories = Array.isArray(product.category) 
+        ? product.category 
+        : (product.category ? [product.category] : [])
+      productCategories.forEach(cat => {
+        acc[cat] = (acc[cat] || 0) + 1
+      })
       return acc
     }, {} as Record<string, number>)
 

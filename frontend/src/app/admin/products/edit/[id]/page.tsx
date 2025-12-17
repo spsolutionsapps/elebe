@@ -66,7 +66,7 @@ export default function EditProductPage() {
   const [formData, setFormData] = useState({
     name: '',
     description: '',
-    category: 'Oficina',
+    category: [] as string[], // Cambiado a array
     image: '',
     images: [] as string[],
     printingTypes: [] as string[],
@@ -107,7 +107,7 @@ export default function EditProductPage() {
         setFormData({
           name: productData.name || '',
           description: productData.description || '',
-          category: productData.category || 'Oficina',
+          category: Array.isArray(productData.category) ? productData.category : (productData.category ? [productData.category] : ['General']),
           image: productData.image || '',
           images: allImages,
           printingTypes: productData.printingTypes || [],

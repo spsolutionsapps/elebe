@@ -154,7 +154,7 @@ export function FeaturedProductsSlider({ products }: FeaturedProductsSliderProps
                       {product.name}
                     </h3>
                     <p className="text-xs text-white font-medium">
-                      {product.category}
+                      {Array.isArray(product.category) ? product.category.join(', ') : product.category}
                     </p>
                     <AddToCartButtonCompact
                       productId={product.id}
@@ -308,7 +308,7 @@ export function FeaturedProductsSlider({ products }: FeaturedProductsSliderProps
                               {product.name}
                             </h3>
                             <p className="text-xs sliderCategory verde font-medium">
-                              {product.category}
+                              {Array.isArray(product.category) ? product.category.join(', ') : product.category}
                             </p>
                           </div>
                         </div>
