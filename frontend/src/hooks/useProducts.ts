@@ -82,12 +82,6 @@ export function useProducts(): UseProductsReturn {
 
   // Lógica de filtrado y ordenamiento
   const filteredAndSortedProducts = useMemo(() => {
-    console.log('🔍 Filtering products:', {
-      totalProducts: products.length,
-      statusFilter,
-      activeProducts: products.filter(p => p.isActive).length,
-      inactiveProducts: products.filter(p => !p.isActive).length
-    })
     
     let filtered = products.filter(product => {
       // Filtro por búsqueda
@@ -114,8 +108,6 @@ export function useProducts(): UseProductsReturn {
       
       return matchesSearch && matchesCategory && matchesStatus
     })
-    
-    console.log('📊 Filtered result:', filtered.length, 'products')
 
     // Ordenamiento
     filtered.sort((a, b) => {
@@ -187,7 +179,6 @@ export function useProducts(): UseProductsReturn {
       allCategories.push(...productCategories)
     })
     const uniqueCategories = [...new Set(allCategories)].sort()
-    console.log('📋 Categorías únicas encontradas:', uniqueCategories)
     return uniqueCategories
   }, [products])
 
@@ -207,14 +198,7 @@ export function useProducts(): UseProductsReturn {
 
       if (response.ok) {
         const data = await response.json()
-        const productsData = Array.isArray(data) ? data : []
-        console.log('📦 Productos cargados del backend:', productsData.length)
-        console.log('🔍 Sample categorías de productos:', productsData.slice(0, 3).map(p => ({
-          name: p.name,
-          category: p.category,
-          categoryType: Array.isArray(p.category) ? 'array' : typeof p.category
-        })))
-        setProducts(productsData)
+        setProducts(Array.isArray(data) ? data : [])
       } else {
         console.error('Error fetching products:', response.status)
         setProducts([])
@@ -272,10 +256,7 @@ export function useProducts(): UseProductsReturn {
 
   const toggleProductStatus = async (id: string, currentStatus: boolean) => {
     try {
-      console.log('🔄 Toggle status:', { id, currentStatus, newStatus: !currentStatus })
-      
       const token = localStorage.getItem('access_token')
-      console.log('🔑 Token:', token ? 'Presente' : 'Ausente')
       
       const headers: any = {
         'Content-Type': 'application/json',
@@ -295,8 +276,6 @@ export function useProducts(): UseProductsReturn {
       
       if (response.ok) {
         const updatedProduct = await response.json()
-        console.log('✅ Product updated:', updatedProduct)
-        console.log('🔄 Refreshing products list...')
         fetchProducts()
       } else {
         const errorText = await response.text()
