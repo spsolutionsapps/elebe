@@ -95,11 +95,13 @@ export function useProducts(): UseProductsReturn {
         product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         product.description.toLowerCase().includes(searchTerm.toLowerCase())
       
-      // Filtro por categoría (manejar array o string)
-      const productCategories = Array.isArray(product.category) 
-        ? product.category 
-        : (product.category ? [product.category] : [])
-      const matchesCategory = !selectedCategory || productCategories.includes(selectedCategory)
+      // Filtro por categoría (manejar array o string - compatibilidad con migraciones)
+      const productCategories = Array.isArray(product.category)
+        ? product.category
+        : (typeof product.category === 'string' ? [product.category] : [])
+      const matchesCategory = !selectedCategory || productCategories.some(cat =>
+        cat.toLowerCase() === selectedCategory.toLowerCase()
+      )
       
       // Filtro por estado
       const matchesStatus = statusFilter === 'all' || 
@@ -126,8 +128,8 @@ export function useProducts(): UseProductsReturn {
           break
         case 'category':
           // Manejar category como array o string para ordenamiento
-          const aCategory = Array.isArray(a.category) ? a.category.join(', ') : (a.category || '')
-          const bCategory = Array.isArray(b.category) ? b.category.join(', ') : (b.category || '')
+          const aCategory = Array.isArray(a.category) ? a.category.join(', ') : (typeof a.category === 'string' ? a.category : '')
+          const bCategory = Array.isArray(b.category) ? b.category.join(', ') : (typeof b.category === 'string' ? b.category : '')
           aValue = aCategory.toLowerCase()
           bValue = bCategory.toLowerCase()
           break
@@ -163,9 +165,9 @@ export function useProducts(): UseProductsReturn {
     const inactive = total - active
     
     const categoryStats = products.reduce((acc, product) => {
-      const productCategories = Array.isArray(product.category) 
-        ? product.category 
-        : (product.category ? [product.category] : [])
+      const productCategories = Array.isArray(product.category)
+        ? product.category
+        : (typeof product.category === 'string' ? [product.category] : [])
       productCategories.forEach(cat => {
         acc[cat] = (acc[cat] || 0) + 1
       })
@@ -181,7 +183,7 @@ export function useProducts(): UseProductsReturn {
     products.forEach(p => {
       const productCategories = Array.isArray(p.category)
         ? p.category
-        : (p.category ? [p.category] : [])
+        : (typeof p.category === 'string' ? [p.category] : [])
       allCategories.push(...productCategories)
     })
     const uniqueCategories = [...new Set(allCategories)].sort()
