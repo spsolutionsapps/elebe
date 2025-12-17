@@ -138,16 +138,6 @@ export function FollowUpModal({ isOpen, onClose, onSave, inquiryName }: FollowUp
                   </select>
                 </div>
 
-                <div>
-                  <Label htmlFor="nextAction">Próxima acción (opcional)</Label>
-                  <Input
-                    id="nextAction"
-                    value={formData.nextAction}
-                    onChange={(e) => setFormData({ ...formData, nextAction: e.target.value })}
-                    placeholder="¿Qué hacer después?"
-                  />
-                </div>
-
                 <div className="flex justify-end space-x-3 pt-4 border-t">
                   <Button type="button" variant="outline" onClick={onClose}>
                     Cancelar

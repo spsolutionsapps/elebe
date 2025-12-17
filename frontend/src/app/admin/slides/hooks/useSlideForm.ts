@@ -15,6 +15,9 @@ export interface SlideFormData {
   titleSize: string
   titleShadow: string
   image: string
+  mobileImage: string
+  videoUrl: string
+  mobileVideoUrl: string
   order: number
 }
 
@@ -32,6 +35,9 @@ const initialFormData: SlideFormData = {
   titleSize: '4rem',
   titleShadow: 'none',
   image: '',
+  mobileImage: '',
+  videoUrl: '',
+  mobileVideoUrl: '',
   order: 1
 }
 
@@ -77,6 +83,9 @@ export function useSlideForm() {
       titleSize: slide.titleSize || '4rem',
       titleShadow: slide.titleShadow || 'none',
       image: slide.image || '',
+      mobileImage: slide.mobileImage || '',
+      videoUrl: slide.videoUrl || '',
+      mobileVideoUrl: slide.mobileVideoUrl || '',
       order: slide.order || 1
     })
     setEditingSlide(slide)

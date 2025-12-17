@@ -31,8 +31,8 @@ export class ClientsController {
       const client = await this.prisma.client.create({
         data: {
           name: createClientDto.name,
-          email: createClientDto.email,
-          phone: createClientDto.phone || null,
+          email: createClientDto.email || null,
+          phone: createClientDto.phone,
           address: createClientDto.address || null,
           city: createClientDto.city || null,
           country: createClientDto.country || null,

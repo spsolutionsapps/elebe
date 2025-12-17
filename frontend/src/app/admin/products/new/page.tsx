@@ -61,7 +61,7 @@ export default function NewProductPage() {
   const [formData, setFormData] = useState({
     name: '',
     description: '',
-    category: 'Oficina',
+    category: [] as string[], // Cambiado a array
     image: '',
     images: [] as string[],
     printingTypes: [] as string[],

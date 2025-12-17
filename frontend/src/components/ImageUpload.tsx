@@ -50,13 +50,17 @@ export default function ImageUpload({ onImageUpload, currentImage, className = '
   }
 
   const handleFileUpload = async (file: File) => {
-    if (!file.type.startsWith('image/')) {
-      alert('Por favor selecciona solo archivos de imagen')
+    const isImage = file.type.startsWith('image/')
+    const isVideo = file.type.startsWith('video/')
+    
+    if (!isImage && !isVideo) {
+      alert('Por favor selecciona solo archivos de imagen o video')
       return
     }
 
-    if (file.size > 5 * 1024 * 1024) { // 5MB limit
-      alert('El archivo es demasiado grande. Máximo 5MB')
+    const maxSize = isVideo ? 50 * 1024 * 1024 : 5 * 1024 * 1024 // 50MB para videos, 5MB para imágenes
+    if (file.size > maxSize) {
+      alert(`El archivo es demasiado grande. Máximo ${isVideo ? '50MB' : '5MB'}`)
       return
     }
 
@@ -114,7 +118,7 @@ export default function ImageUpload({ onImageUpload, currentImage, className = '
               <input
                 ref={fileInputRef}
                 type="file"
-                accept="image/*"
+                accept="image/*,video/*"
                 onChange={handleFileSelect}
                 className="hidden"
               />
@@ -139,22 +143,31 @@ export default function ImageUpload({ onImageUpload, currentImage, className = '
                     )}
                   </p>
                   <p className="text-xs text-gray-500 mt-1">
-                    PNG, JPG, GIF hasta 5MB
+                    Imágenes: PNG, JPG, GIF hasta 5MB | Videos: MP4, WEBM, MOV hasta 50MB
                   </p>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Vista previa de la imagen */}
+          {/* Vista previa de la imagen o video */}
           <div className="flex-1">
             <div className="relative group">
               <div className="aspect-video bg-gray-100 rounded-md overflow-hidden">
-                <img
-                  src={getImageUrl(displayImage)}
-                  alt="Preview"
-                  className="w-full h-full object-cover"
-                />
+                {displayImage.match(/\.(mp4|webm|mov)$/i) ? (
+                  <video
+                    src={getImageUrl(displayImage)}
+                    className="w-full h-full object-cover"
+                    controls
+                    muted
+                  />
+                ) : (
+                  <img
+                    src={getImageUrl(displayImage)}
+                    alt="Preview"
+                    className="w-full h-full object-cover"
+                  />
+                )}
                 {/* Overlay con icono de eliminar */}
                 <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-200 flex items-center justify-center">
                   <Button

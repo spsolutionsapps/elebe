@@ -217,11 +217,21 @@ export class ProductsController {
       
       console.log('✅ Backend: Validación básica pasada');
       
+      // Manejar category como array o string (para compatibilidad)
+      let categoryArray: string[] = []
+      if (Array.isArray(createProductDto.category)) {
+        categoryArray = createProductDto.category.length > 0 ? createProductDto.category : ['General']
+      } else if (typeof createProductDto.category === 'string') {
+        categoryArray = [createProductDto.category]
+      } else {
+        categoryArray = ['General']
+      }
+
       const product = await this.prisma.product.create({
         data: {
           name: createProductDto.name,
           description: createProductDto.description,
-          category: createProductDto.category || 'General',
+          category: categoryArray,
           image: createProductDto.image || null,
           images: createProductDto.images || [],
           price: createProductDto.price ? parseFloat(createProductDto.price) : null,
@@ -285,12 +295,22 @@ export class ProductsController {
 
       console.log('✅ Backend: Validación de producto existente pasada');
 
+      // Manejar category como array o string (para compatibilidad)
+      let categoryArray: string[] = []
+      if (Array.isArray(updateProductDto.category)) {
+        categoryArray = updateProductDto.category.length > 0 ? updateProductDto.category : ['General']
+      } else if (typeof updateProductDto.category === 'string') {
+        categoryArray = [updateProductDto.category]
+      } else {
+        categoryArray = ['General']
+      }
+
       const product = await this.prisma.product.update({
         where: { id: id },
         data: {
           name: updateProductDto.name,
           description: updateProductDto.description,
-          category: updateProductDto.category || 'General',
+          category: categoryArray,
           image: updateProductDto.image || null,
           images: updateProductDto.images || [],
           price: updateProductDto.price ? parseFloat(updateProductDto.price) : null,

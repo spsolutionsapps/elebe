@@ -52,7 +52,7 @@ export default function ImageGallery({ images, productName }: ImageGalleryProps)
             <button
               key={index}
               onClick={() => handleThumbnailClick(index)}
-              className={`flex-shrink-0 w-20 h-20 lg:w-full lg:h-20 overflow-hidden transition-all ${
+              className={`flex-shrink-0 w-20 h-20 lg:w-20 lg:h-20 overflow-hidden transition-all border-2 rounded ${
                 index === selectedImageIndex
                   ? 'border-blue-500 ring-2 ring-blue-200'
                   : 'border-gray-200 hover:border-gray-300'

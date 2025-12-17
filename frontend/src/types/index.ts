@@ -2,7 +2,7 @@ export interface Product {
   id: string
   name: string
   description: string
-  category: string
+  category: string[] // Cambiado a array para múltiples categorías
   image?: string | null
   images?: string[]
   price?: number | null
@@ -49,6 +49,9 @@ export interface Slide {
   titleSize?: string | null
   titleShadow?: string | null
   image: string
+  mobileImage?: string | null
+  videoUrl?: string | null
+  mobileVideoUrl?: string | null
   order: number
   isActive: boolean
   createdAt: Date

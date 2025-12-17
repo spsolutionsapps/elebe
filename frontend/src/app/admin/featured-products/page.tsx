@@ -4,7 +4,9 @@ import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import { Plus, Edit, Trash2, Package, Eye, EyeOff } from 'lucide-react'
+import { Input } from '@/components/ui/input'
+import { Pagination } from '@/components/ui/pagination'
+import { Plus, Edit, Trash2, Package, Eye, EyeOff, Search } from 'lucide-react'
 import { Product } from '@/types'
 import { getImageUrl as getImageUrlFromConfig, getApiUrl } from '@/lib/config'
 import { useToast } from '@/hooks/useToast'
@@ -19,6 +21,9 @@ export default function FeaturedProductsPage() {
   const [allProducts, setAllProducts] = useState<Product[]>([])
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
+  const [searchTerm, setSearchTerm] = useState('')
+  const [currentPage, setCurrentPage] = useState(1)
+  const [itemsPerPage, setItemsPerPage] = useState(12)
 
   useEffect(() => {
     fetchProducts()
@@ -118,6 +123,44 @@ export default function FeaturedProductsPage() {
     !featuredProducts.some(featured => featured.id === product.id)
   )
 
+  // Filtrar productos por término de búsqueda
+  const filteredProducts = availableProducts.filter(product => {
+    const productCategories = Array.isArray(product.category) 
+      ? product.category 
+      : (product.category ? [product.category] : [])
+    const matchesCategory = productCategories.some(cat => 
+      cat.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    return product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      matchesCategory ||
+      (product.description && product.description.toLowerCase().includes(searchTerm.toLowerCase()))
+  })
+
+  // Paginación
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage)
+  const startIndex = (currentPage - 1) * itemsPerPage
+  const endIndex = startIndex + itemsPerPage
+  const paginatedProducts = filteredProducts.slice(startIndex, endIndex)
+
+  // Resetear a la primera página cuando cambia el término de búsqueda
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [searchTerm])
+
+  // Debug: verificar valores
+  useEffect(() => {
+    console.log('🔍 Debug Featured Products:', {
+      allProducts: allProducts.length,
+      featuredProducts: featuredProducts.length,
+      availableProducts: availableProducts.length,
+      filteredProducts: filteredProducts.length,
+      searchTerm,
+      currentPage,
+      itemsPerPage,
+      totalPages
+    })
+  }, [allProducts.length, featuredProducts.length, availableProducts.length, filteredProducts.length, searchTerm, currentPage, itemsPerPage, totalPages])
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -216,7 +259,7 @@ export default function FeaturedProductsPage() {
                       </TableCell>
                       <TableCell>
                         <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
-                          {product.category}
+                          {Array.isArray(product.category) ? product.category.join(', ') : product.category}
                         </span>
                       </TableCell>
                       <TableCell>
@@ -239,18 +282,57 @@ export default function FeaturedProductsPage() {
         </CardContent>
       </Card>
 
-      {/* Productos disponibles para agregar */}
-      {availableProducts.length > 0 && featuredProducts.length <= 8 && (
-        <Card>
-          <CardHeader>
-            <CardTitle>Agregar Productos Destacados</CardTitle>
-            <p className="text-sm text-gray-600">
-              Selecciona productos para agregar al slider (máximo 8 productos)
-            </p>
-          </CardHeader>
-          <CardContent>
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {availableProducts.slice(0, 12).map((product) => (
+      {/* Productos disponibles para agregar - SIEMPRE MOSTRAR */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Agregar Productos Destacados</CardTitle>
+          <p className="text-sm text-gray-600">
+            Selecciona productos para agregar al slider (máximo 8 productos)
+            {featuredProducts.length >= 8 && (
+              <span className="text-red-600 font-semibold ml-2">- Límite alcanzado</span>
+            )}
+          </p>
+        </CardHeader>
+        <CardContent>
+          {/* Buscador - SIEMPRE VISIBLE */}
+          <div className="mb-6">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Input
+                placeholder="Buscar productos por nombre, categoría o descripción..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10"
+              />
+            </div>
+            <div className="flex items-center justify-between mt-2">
+              {searchTerm ? (
+                <p className="text-sm text-gray-600">
+                  {filteredProducts.length} producto{filteredProducts.length !== 1 ? 's' : ''} encontrado{filteredProducts.length !== 1 ? 's' : ''}
+                </p>
+              ) : (
+                <p className="text-sm text-gray-600">
+                  {filteredProducts.length} producto{filteredProducts.length !== 1 ? 's' : ''} disponible{filteredProducts.length !== 1 ? 's' : ''}
+                </p>
+              )}
+            </div>
+          </div>
+
+            {/* Grid de productos */}
+            {filteredProducts.length === 0 ? (
+              <div className="text-center py-8">
+                <Package className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-lg font-medium text-gray-900 mb-2">
+                  No se encontraron productos
+                </h3>
+                <p className="text-gray-600">
+                  {searchTerm ? 'Intenta con otros términos de búsqueda.' : 'No hay productos disponibles para agregar.'}
+                </p>
+              </div>
+            ) : (
+              <>
+                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                  {paginatedProducts.map((product) => (
                 <Card key={product.id} className="bg-white">
                   <CardContent className="p-4">
                     <div className="aspect-video bg-gray-100 rounded-md mb-4 flex items-center justify-center">
@@ -267,7 +349,9 @@ export default function FeaturedProductsPage() {
                     
                     <div className="space-y-2">
                       <h3 className="font-semibold text-sm">{product.name}</h3>
-                      <p className="text-xs text-blue-600 font-medium">{product.category}</p>
+                      <p className="text-xs text-blue-600 font-medium">
+                        {Array.isArray(product.category) ? product.category.join(', ') : product.category}
+                      </p>
                     </div>
                     
                     <Button
@@ -285,25 +369,57 @@ export default function FeaturedProductsPage() {
                     </Button>
                   </CardContent>
                 </Card>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      )}
+                  ))}
+                </div>
 
-      {featuredProducts.length >= 8 && (
-        <Card>
-          <CardContent className="p-6 text-center">
-            <Eye className="h-12 w-12 text-blue-600 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
-              Máximo de productos alcanzado
-            </h3>
-            <p className="text-gray-600">
-              Ya tienes 8 productos destacados. Remueve uno para agregar otro.
-            </p>
+                {/* Paginación - Mostrar siempre si hay productos */}
+                {filteredProducts.length > 0 && (
+                  <div className="mt-6">
+                    {filteredProducts.length > itemsPerPage ? (
+                      <Pagination
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onPageChange={setCurrentPage}
+                        itemsPerPage={itemsPerPage}
+                        totalItems={filteredProducts.length}
+                        showInfo={true}
+                        showItemsPerPage={true}
+                        itemsPerPageOptions={[6, 12, 24, 48]}
+                        onItemsPerPageChange={(value) => {
+                          setItemsPerPage(value)
+                          setCurrentPage(1)
+                        }}
+                      />
+                    ) : (
+                      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div className="text-sm text-gray-600">
+                          Mostrando todos los {filteredProducts.length} producto{filteredProducts.length !== 1 ? 's' : ''}
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <span className="text-sm text-gray-600">Mostrar:</span>
+                          <select
+                            value={itemsPerPage}
+                            onChange={(e) => {
+                              setItemsPerPage(Number(e.target.value))
+                              setCurrentPage(1)
+                            }}
+                            className="text-sm border border-gray-300 rounded-md px-2 py-1 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            <option value={6}>6</option>
+                            <option value={12}>12</option>
+                            <option value={24}>24</option>
+                            <option value={48}>48</option>
+                          </select>
+                          <span className="text-sm text-gray-600">por página</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </>
+            )}
           </CardContent>
         </Card>
-      )}
     </div>
   )
 }

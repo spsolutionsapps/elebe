@@ -81,6 +81,9 @@ export default function SlidesPage() {
         titleSize: formData.titleSize,
         titleShadow: formData.titleShadow,
         image: formData.image,
+        mobileImage: formData.mobileImage || null,
+        videoUrl: formData.videoUrl || null,
+        mobileVideoUrl: formData.mobileVideoUrl || null,
         order: formData.order,
         isActive: true
       }
@@ -136,6 +139,9 @@ export default function SlidesPage() {
       titleSize: formData.titleSize,
       titleShadow: formData.titleShadow,
       image: formData.image,
+      mobileImage: formData.mobileImage || null,
+      videoUrl: formData.videoUrl || null,
+      mobileVideoUrl: formData.mobileVideoUrl || null,
       order: formData.order,
       isActive: true,
       createdAt: new Date(),

@@ -21,6 +21,10 @@
     "db:reset": "prisma migrate reset --force",
     "db:studio": "prisma studio",
     "db:seed": "tsx scripts/seed.ts",
+    "create-client-user": "tsx scripts/create-client-user.ts",
+    "convert-images": "tsx scripts/convert-images-to-webp.ts",
+    "update-image-refs": "tsx scripts/update-db-image-references.ts",
+    "check-image-refs": "tsx scripts/check-image-references.ts",
     "docker:build": "docker build -t lb-premium-backend .",
     "docker:run": "docker run -p 3001:3001 lb-premium-backend",
     "docker:compose": "docker-compose up -d",
@@ -53,6 +57,7 @@
     "passport-local": "^1.0.0",
     "pg": "^8.16.3",
     "reflect-metadata": "^0.2.2",
+    "sharp": "^0.33.5",
     "tsx": "^4.20.5",
     "typeorm": "^0.3.26"
   },

@@ -109,7 +109,15 @@ function CatalogoContent() {
       }
       
       const mappedCategory = categoryMap[categoryParam] || categoryParam
-      const matchesCategory = product.category.toLowerCase() === mappedCategory.toLowerCase()
+      
+      // Manejar category como array o string (para compatibilidad)
+      const productCategories = Array.isArray(product.category) 
+        ? product.category 
+        : (product.category ? [product.category] : [])
+      
+      const matchesCategory = productCategories.some(cat => 
+        cat.toLowerCase() === mappedCategory.toLowerCase()
+      )
       
       return matchesSearch && matchesCategory
     }
@@ -178,26 +186,27 @@ function CatalogoContent() {
         </div>
 
       <div className="md:w-[1440px] mx-auto">
-        {/* Categories Links - Solo mostrar si no hay búsqueda o categoría seleccionada */}
-        {!categoryParam && !searchParam && (
-          <div className="mb-8">
-            {/* <h2 className="text-2xl font-bold mb-6 text-center">Categorías</h2> */}
-            
-            {/* Links de categorías */}
-            <div className="flex flex-wrap justify-center gap-4 mb-8">
-              {categories.map((category) => (
+        {/* Categories Links - Siempre visible */}
+        <div className="mb-8">
+          {/* Links de categorías */}
+          <div className="flex flex-wrap justify-center gap-4 mb-8">
+            {categories.map((category) => {
+              const isActive = categoryParam === category.slug
+              return (
                 <Link
                   key={category.id}
                   href={`/catalogo?category=${category.slug}`}
-                  className="px-4 py-2 rounded-full transition-colors hover:opacity-90"
+                  className={`px-4 py-2 rounded-full transition-colors hover:opacity-90 ${
+                    isActive ? 'ring-2 ring-blue-600 ring-offset-2' : ''
+                  }`}
                   style={{ backgroundColor: 'rgb(242, 219, 103)' }}
                 >
                   {category.name}
                 </Link>
-              ))}
-            </div>
+              )
+            })}
           </div>
-        )}
+        </div>
 
         {/* Categories Grid - Solo mostrar si no hay búsqueda o categoría seleccionada */}
         {!categoryParam && !searchParam && (
@@ -251,7 +260,7 @@ function CatalogoContent() {
                 </Link>
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-4 sm:px-0">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 px-4 sm:px-0">
                 {filteredProducts.map((product) => {
                   const productSlug = generateSlug(product.name)
                   return (
@@ -262,7 +271,7 @@ function CatalogoContent() {
                     >
                       <div className="overflow-hidden">
                         {/* Imagen del producto */}
-                        <div className="w-full h-64 bg-transparent">
+                        <div className="w-full aspect-square bg-transparent">
                           {product.image ? (
                             <img
                               src={getImageUrl(product.image)}
@@ -282,7 +291,7 @@ function CatalogoContent() {
                               {product.name}
                             </h3>
                             <p className="text-xs sliderCategory verde font-medium">
-                              {product.category}
+                              {Array.isArray(product.category) ? product.category.join(', ') : product.category}
                             </p>
                           </div>
                       </div>

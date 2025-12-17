@@ -50,7 +50,11 @@ export default function ProductCard({
         
         <div className="space-y-2">
           <h3 className="font-semibold text-sm">{product.name || 'Sin nombre'}</h3>
-          <p className="text-xs text-blue-600 font-medium">{product.category || 'Sin categoría'}</p>
+          <p className="text-xs text-blue-600 font-medium">
+            {Array.isArray(product.category) 
+              ? (product.category.length > 0 ? product.category.join(', ') : 'Sin categoría')
+              : (product.category || 'Sin categoría')}
+          </p>
           <p className="text-xs text-gray-600 line-clamp-2">
             {product.description || 'Sin descripción'}
           </p>

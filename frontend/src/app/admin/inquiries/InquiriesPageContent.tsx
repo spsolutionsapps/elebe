@@ -873,7 +873,9 @@ export default function InquiriesPageContent() {
                               </span>
                               {inquiryProduct.product?.category && (
                                 <p className="text-xs text-gray-500">
-                                  {inquiryProduct.product.category}
+                                  {Array.isArray(inquiryProduct.product.category) 
+                                    ? inquiryProduct.product.category.join(', ') 
+                                    : inquiryProduct.product.category}
                                 </p>
                               )}
                             </div>
@@ -1109,18 +1111,6 @@ export default function InquiriesPageContent() {
                       placeholder="Describe qué se habló, acordó o resolvió en este seguimiento..."
                       className="min-h-[100px]"
                       required
-                    />
-                  </div>
-
-                  {/* Próxima acción */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Próxima acción (opcional)
-                    </label>
-                    <Input
-                      value={followUpForm.nextAction}
-                      onChange={(e) => setFollowUpForm({ ...followUpForm, nextAction: e.target.value })}
-                      placeholder="Ej: Llamar en 3 días, enviar cotización, etc."
                     />
                   </div>
 

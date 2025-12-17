@@ -152,7 +152,7 @@ export default function ProductPage({ params }: ProductPageProps) {
               <div>
                
               <p className="text-lg text-gray-900 mb-62">
-                  {product.category}
+                  {Array.isArray(product.category) ? product.category.join(', ') : product.category}
                 </p>
                
                 <h1 className="text-4xl font-bold text-gray-900 mb-2">

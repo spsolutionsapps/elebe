@@ -72,7 +72,7 @@ export function HomePageClient({ slides: initialSlides, featuredProducts: initia
     <>
       {/* Hero Section with GSAP Slider - Full Width */}
       {slides && slides.length > 0 ? (
-        <section className="hero-slider-section relative py-8 w-screen flex flex-col items-center" style={{ marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%),z-index: 1' }}>
+        <section className="hero-slider-section relative py-8 w-screen flex flex-col items-center" style={{ marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', zIndex: 1 }}>
           <div className="w-full max-w-8xl mx-auto">
             <ClientOnly>
               <GSAPSlider
@@ -149,7 +149,7 @@ export function HomePageClient({ slides: initialSlides, featuredProducts: initia
         </section>
       ) : (
         // Fallback cuando no hay slides
-        <section className="hero-section relative py-8 w-screen flex flex-col items-center" style={{ marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%),z-index: 1' }}>
+        <section className="hero-section relative py-8 w-screen flex flex-col items-center" style={{ marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', zIndex: 1 }}>
           <div className="w-full max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center py-20">
               <h1 className="text-4xl md:text-6xl font-bold text-blue-600 mb-6">
@@ -272,6 +272,11 @@ export function HomePageClient({ slides: initialSlides, featuredProducts: initia
 
       {/* envios */}
       <section className="envios relative z-[100] py-16 mt-0 md:mt-20" >
+      
+      <p className="text-[27px] md:text-[36px] text-center text18Mobile verde leading-tight mx-auto mb-12">
+            _como es nuestro <strong><em>PROCESO?</em></strong>
+          </p>
+
         <div className="container mx-auto px-4">
           <img src="/envios.svg" alt="Envíos" className='hidden md:block mx-auto mb-6' />
 

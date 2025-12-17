@@ -2,7 +2,14 @@
 FROM node:20-alpine
 
 # Instalar dependencias del sistema
-RUN apk add --no-cache openssl
+# Incluye dependencias para sharp (conversión de imágenes a WebP)
+RUN apk add --no-cache \
+    openssl \
+    vips-dev \
+    vips-tools \
+    python3 \
+    make \
+    g++
 
 # Crear directorio de trabajo
 WORKDIR /app
