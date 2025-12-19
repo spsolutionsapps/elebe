@@ -26,7 +26,6 @@ async function main() {
 
   console.log('✅ Usuario administrador creado exitosamente:')
   console.log('📧 Email:', adminUser.email)
-  console.log('🔑 Contraseña: u1u2u3u4u5')
   console.log('👤 Rol:', adminUser.role)
   console.log('🆔 ID:', adminUser.id)
 }
