@@ -6,19 +6,26 @@ const prisma = new PrismaClient()
 async function main() {
   console.log('👤 Creando usuario administrador...')
 
+  // Obtener credenciales desde variables de entorno
+  const adminEmail = process.env.ADMIN_EMAIL || 'admin@elebe.com'
+  const adminPassword = process.env.ADMIN_PASSWORD || 'changeme123'
+  const adminName = process.env.ADMIN_NAME || 'Administrador'
+
+  console.log(`📧 Usando email: ${adminEmail}`)
+
   // Crear usuario administrador
-  const hashedPassword = await bcrypt.hash('u1u2u3u4u5', 12)
+  const hashedPassword = await bcrypt.hash(adminPassword, 12)
 
   const adminUser = await prisma.user.upsert({
-    where: { email: 'elebe.merch@gmail.com' },
+    where: { email: adminEmail },
     update: {
       password: hashedPassword,
-      name: 'Administrador Elebe',
+      name: adminName,
       role: 'admin',
     },
     create: {
-      email: 'elebe.merch@gmail.com',
-      name: 'Administrador Elebe',
+      email: adminEmail,
+      name: adminName,
       password: hashedPassword,
       role: 'admin',
     },

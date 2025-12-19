@@ -54,8 +54,8 @@ async function main() {
     console.log('🎉 Inicialización de producción completada exitosamente!');
     console.log('');
     console.log('Credenciales de administrador:');
-    console.log('📧 Email: elebe.merch@gmail.com');
-    console.log('🔑 Contraseña: u1u2u3u4u5');
+    console.log('📧 Email:', process.env.ADMIN_EMAIL || 'admin@elebe.com');
+    console.log('🔑 Contraseña: [configurada en variables de entorno]');
     console.log('👤 Rol: admin');
 
   } catch (error) {

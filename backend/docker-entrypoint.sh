@@ -9,7 +9,9 @@ if npx prisma db pull --schema-only > /dev/null 2>&1; then
 
     # Verificar si ya existe el usuario admin
     echo "👤 Verificando usuario administrador..."
-    if npx prisma db execute --file <(echo "SELECT id FROM \"User\" WHERE email = 'elebe.merch@gmail.com' LIMIT 1;") > /dev/null 2>&1; then
+    # Usar variable de entorno para el email del admin
+    ADMIN_EMAIL=${ADMIN_EMAIL:-admin@elebe.com}
+    if npx prisma db execute --file <(echo "SELECT id FROM \"User\" WHERE email = '$ADMIN_EMAIL' LIMIT 1;") > /dev/null 2>&1; then
         echo "✅ Usuario administrador ya existe, omitiendo inicialización"
     else
         echo "📦 Usuario administrador no encontrado, ejecutando inicialización..."
