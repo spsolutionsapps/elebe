@@ -7,9 +7,9 @@ async function main() {
   console.log('👤 Creando usuario administrador...')
 
   // Obtener credenciales desde variables de entorno
-  const adminEmail = process.env.ADMIN_EMAIL || 'admin@elebe.com'
-  const adminPassword = process.env.ADMIN_PASSWORD || 'changeme123'
-  const adminName = process.env.ADMIN_NAME || 'Administrador'
+  const adminEmail = process.env.ADMIN_EMAIL || 'elebe.merch@gmail.com'
+  const adminPassword = process.env.ADMIN_PASSWORD || 'u1u2u3u4u5'
+  const adminName = process.env.ADMIN_NAME || 'Administrador Elebe'
 
   console.log(`📧 Usando email: ${adminEmail}`)
 
