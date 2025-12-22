@@ -46,10 +46,16 @@ export default function LoginPage() {
 
       // Mostrar mensaje de éxito y redirigir
       showSuccess('¡Inicio de sesión exitoso!')
-      
+
       // Pequeño delay para asegurar que el estado se actualice
       setTimeout(() => {
-        router.push('/admin')
+        // Redirigir según el rol del usuario
+        const userRole = response.data.user.role
+        if (userRole === 'clientes') {
+          router.push('/admin/inquiries')
+        } else {
+          router.push('/admin')
+        }
       }, 100)
     } catch (err: any) {
       console.error('❌ Error en login:', err)
