@@ -140,15 +140,23 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       '/admin/brands',
     ]
 
-    // Si el usuario tiene rol "clientes" e intenta acceder a rutas restringidas
-    if (user.role === 'clientes' && restrictedRoutes.some(route => pathname === route || pathname.startsWith(route + '/'))) {
-      showAlert({
-        title: 'Acceso restringido',
-        message: 'No tienes permisos para acceder a esta sección',
-        type: 'error'
-      })
-      router.push('/admin/inquiries')
+    // PARA USUARIOS CLIENTES: NUNCA mostrar modal de acceso restringido
+    // Si intentan acceder a rutas restringidas, redirigir silenciosamente
+    if (user && user.role === 'clientes') {
+      console.log('👤 Usuario cliente detectado:', user.email, 'en ruta:', pathname)
+
+      if (restrictedRoutes.some(route => pathname === route || pathname.startsWith(route + '/'))) {
+        console.log('🚫 Usuario cliente en ruta restringida, redirigiendo silenciosamente a /admin/inquiries')
+        router.push('/admin/inquiries')
+        return
+      }
+      // Si están en rutas permitidas, no hacer nada (no mostrar modal)
+      console.log('✅ Usuario cliente en ruta permitida')
+      return
     }
+
+    // Para usuarios admin u otros roles, mostrar modal si intentan acceder a rutas no permitidas
+    // (este código no debería ejecutarse para usuarios clientes)
   }, [user, pathname, router, showAlert])
 
   // Auto-expand "Página Web" menu when on subpages

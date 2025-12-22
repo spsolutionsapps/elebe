@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { CheckCircle, XCircle, AlertCircle, Info, X } from 'lucide-react'
 
@@ -23,16 +23,40 @@ export function AlertModal({
   buttonText = 'Aceptar',
   autoCloseDelay = 0
 }: AlertModalProps) {
+  const [user, setUser] = useState<any>(null)
+
+  // Obtener usuario del localStorage
+  useEffect(() => {
+    const userData = localStorage.getItem('user')
+    if (userData) {
+      try {
+        setUser(JSON.parse(userData))
+      } catch (error) {
+        console.error('Error parsing user data:', error)
+      }
+    }
+  }, [])
+
   // Auto-close después del delay especificado (solo para success)
   useEffect(() => {
     if (isOpen && autoCloseDelay > 0 && type === 'success') {
       const timer = setTimeout(() => {
         onClose()
       }, autoCloseDelay)
-      
+
       return () => clearTimeout(timer)
     }
   }, [isOpen, autoCloseDelay, onClose, type])
+
+  // PARA USUARIOS CLIENTES: No mostrar modales de permisos
+  if (user && user.role === 'clientes' && message.includes('permisos')) {
+    console.log('🚫 Modal de permisos bloqueado para usuario cliente:', user.email)
+    // Cerrar automáticamente el modal sin mostrarlo
+    if (isOpen) {
+      setTimeout(() => onClose(), 100)
+    }
+    return null
+  }
 
   if (!isOpen) return null
 
