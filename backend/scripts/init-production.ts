@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { execSync } from 'child_process';
+import bcrypt from 'bcryptjs';
 
 const prisma = new PrismaClient();
 
@@ -51,11 +52,53 @@ async function main() {
       throw error;
     }
 
+    // Crear usuario administrador
+    console.log('👤 Creando usuario administrador...');
+    try {
+      const adminEmail = process.env.ADMIN_EMAIL || 'elebe.merch@gmail.com';
+      const adminPassword = process.env.ADMIN_PASSWORD || 'u1u2u3u4u5';
+      const adminName = process.env.ADMIN_NAME || 'Administrador Elebe';
+
+      // Verificar si el usuario ya existe
+      const existingUser = await prisma.user.findUnique({
+        where: { email: adminEmail }
+      });
+
+      if (existingUser) {
+        console.log('✅ Usuario administrador ya existe, actualizando contraseña...');
+        const hashedPassword = await bcrypt.hash(adminPassword, 12);
+        await prisma.user.update({
+          where: { email: adminEmail },
+          data: {
+            password: hashedPassword,
+            name: adminName,
+            role: 'admin',
+          }
+        });
+        console.log('✅ Usuario administrador actualizado');
+      } else {
+        console.log('📦 Creando nuevo usuario administrador...');
+        const hashedPassword = await bcrypt.hash(adminPassword, 12);
+        await prisma.user.create({
+          data: {
+            email: adminEmail,
+            name: adminName,
+            password: hashedPassword,
+            role: 'admin',
+          }
+        });
+        console.log('✅ Usuario administrador creado');
+      }
+    } catch (error) {
+      console.error('❌ Error al crear usuario administrador:', error);
+      throw error;
+    }
+
     console.log('🎉 Inicialización de producción completada exitosamente!');
     console.log('');
     console.log('Credenciales de administrador:');
-    console.log('📧 Email:', process.env.ADMIN_EMAIL || 'admin@elebe.com');
-    console.log('🔑 Contraseña: [configurada en variables de entorno]');
+    console.log('📧 Email:', process.env.ADMIN_EMAIL || 'elebe.merch@gmail.com');
+    console.log('🔑 Contraseña:', process.env.ADMIN_PASSWORD || 'u1u2u3u4u5');
     console.log('👤 Rol: admin');
 
   } catch (error) {
