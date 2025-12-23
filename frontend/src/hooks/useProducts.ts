@@ -82,13 +82,14 @@ export function useProducts(): UseProductsReturn {
 
   // Lógica de filtrado y ordenamiento
   const filteredAndSortedProducts = useMemo(() => {
-    
+    console.log('🔍 Filtering products - Search term:', searchTerm, 'Category:', selectedCategory, 'Status:', statusFilter, 'Total products:', products.length)
+
     let filtered = products.filter(product => {
       // Filtro por búsqueda
-      const matchesSearch = !searchTerm || 
+      const matchesSearch = !searchTerm ||
         product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         product.description.toLowerCase().includes(searchTerm.toLowerCase())
-      
+
       // Filtro por categoría (manejar array o string - compatibilidad con migraciones)
       const productCategories = Array.isArray(product.category)
         ? product.category
@@ -96,18 +97,16 @@ export function useProducts(): UseProductsReturn {
       const matchesCategory = !selectedCategory || productCategories.some(cat =>
         cat.toLowerCase() === selectedCategory.toLowerCase()
       )
-      
+
       // Filtro por estado
-      const matchesStatus = statusFilter === 'all' || 
+      const matchesStatus = statusFilter === 'all' ||
         (statusFilter === 'active' && product.isActive) ||
         (statusFilter === 'inactive' && !product.isActive)
-      
-      if (statusFilter === 'inactive' && !product.isActive) {
-        console.log('✅ Product matches inactive filter:', product.name, product.isActive)
-      }
-      
+
       return matchesSearch && matchesCategory && matchesStatus
     })
+
+    console.log('📋 Filtered products:', filtered.length)
 
     // Ordenamiento
     filtered.sort((a, b) => {
@@ -190,6 +189,10 @@ export function useProducts(): UseProductsReturn {
       setLoading(true)
 
       const token = localStorage.getItem('access_token')
+      const apiUrl = getApiUrl('/products')
+
+      console.log('🌐 API URL:', apiUrl)
+      console.log('🔑 Token available:', !!token)
 
       const headers: any = {
         'Content-Type': 'application/json',
@@ -199,20 +202,31 @@ export function useProducts(): UseProductsReturn {
         headers['Authorization'] = `Bearer ${token}`
       }
 
-      const response = await fetch(`${getApiUrl('/products')}?t=${Date.now()}`, {
+      const response = await fetch(`${apiUrl}?t=${Date.now()}`, {
         method: 'GET',
         headers,
       })
 
+      console.log('📡 Response status:', response.status, response.ok)
+
       if (response.ok) {
         const data = await response.json()
-        setProducts(Array.isArray(data) ? data : [])
+        console.log('📦 Products received:', Array.isArray(data) ? data.length : typeof data, 'items')
+
+        if (Array.isArray(data)) {
+          setProducts(data)
+          console.log('✅ Products set successfully')
+        } else {
+          console.warn('⚠️ API response is not an array:', data)
+          setProducts([])
+        }
       } else {
-        console.error('Error fetching products:', response.status)
+        const errorText = await response.text().catch(() => 'Unable to read error response')
+        console.error('❌ API Error:', response.status, response.statusText, errorText)
         setProducts([])
       }
     } catch (error) {
-      console.error('Error fetching products:', error)
+      console.error('❌ Network Error:', error)
       setProducts([])
     } finally {
       setLoading(false)
