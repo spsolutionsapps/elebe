@@ -375,43 +375,110 @@ const GSAPSlider = memo(function GSAPSlider({ slides, onControls }: GSAPSliderPr
               
               {/* Video Mobile - visible solo en mobile */}
               {slide.mobileVideoUrl ? (
-                <video
-                  src={getOptimizedImageUrl(slide.mobileVideoUrl)}
-                  className="block md:hidden w-full h-full object-cover"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                />
+                slide.buttonLink ? (
+                  <a
+                    href={slide.buttonLink}
+                    className="block md:hidden w-full h-full"
+                  >
+                    <video
+                      src={getOptimizedImageUrl(slide.mobileVideoUrl)}
+                      className="w-full h-full object-cover"
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                    />
+                  </a>
+                ) : (
+                  <video
+                    src={getOptimizedImageUrl(slide.mobileVideoUrl)}
+                    className="block md:hidden w-full h-full object-cover"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                  />
+                )
               ) : slide.mobileImage ? (
-                <img
-                  src={getOptimizedImageUrl(slide.mobileImage)}
-                  alt={slide.title}
-                  loading="lazy"
-                  className="block md:hidden w-full h-full object-cover transition-transform duration-1000"
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none'
-                  }}
-                />
+                slide.buttonLink ? (
+                  <a
+                    href={slide.buttonLink}
+                    className="block md:hidden w-full h-full"
+                  >
+                    <img
+                      src={getOptimizedImageUrl(slide.mobileImage)}
+                      alt={slide.title}
+                      loading="lazy"
+                      className="w-full h-full object-cover transition-transform duration-1000"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none'
+                      }}
+                    />
+                  </a>
+                ) : (
+                  <img
+                    src={getOptimizedImageUrl(slide.mobileImage)}
+                    alt={slide.title}
+                    loading="lazy"
+                    className="block md:hidden w-full h-full object-cover transition-transform duration-1000"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none'
+                    }}
+                  />
+                )
               ) : slide.videoUrl ? (
-                <video
-                  src={getOptimizedImageUrl(slide.videoUrl)}
-                  className="block md:hidden w-full h-full object-cover"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                />
+                slide.buttonLink ? (
+                  <a
+                    href={slide.buttonLink}
+                    className="block md:hidden w-full h-full"
+                  >
+                    <video
+                      src={getOptimizedImageUrl(slide.videoUrl)}
+                      className="w-full h-full object-cover"
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                    />
+                  </a>
+                ) : (
+                  <video
+                    src={getOptimizedImageUrl(slide.videoUrl)}
+                    className="block md:hidden w-full h-full object-cover"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                  />
+                )
               ) : (
-                <img
-                  src={getOptimizedImageUrl(slide.image)}
-                  alt={slide.title}
-                  loading="lazy"
-                  className="block md:hidden w-full h-full object-cover transition-transform duration-1000"
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none'
-                  }}
-                />
+                // Imagen mobile clickeable si hay buttonLink
+                slide.buttonLink ? (
+                  <a
+                    href={slide.buttonLink}
+                    className="block md:hidden w-full h-full"
+                  >
+                    <img
+                      src={getOptimizedImageUrl(slide.image)}
+                      alt={slide.title}
+                      loading="lazy"
+                      className="w-full h-full object-cover transition-transform duration-1000"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none'
+                      }}
+                    />
+                  </a>
+                ) : (
+                  <img
+                    src={getOptimizedImageUrl(slide.image)}
+                    alt={slide.title}
+                    loading="lazy"
+                    className="block md:hidden w-full h-full object-cover transition-transform duration-1000"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none'
+                    }}
+                  />
+                )
               )}
               
               <div className="hidden w-full h-full bg-gradient-to-br from-gray-800 to-gray-600 flex items-center justify-center">

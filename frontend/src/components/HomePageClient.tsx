@@ -181,7 +181,7 @@ export function HomePageClient({ slides: initialSlides, featuredProducts: initia
       <section className="quienes-somos-section py-16 relative z-[110] paddingBottom0">
         <div className="mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-[36px] text-center text22Mobile font-blue leading-tight mx-auto ">
-          Creamos <em>EXPERIENCIAS</em> para ser <br /> vividas, filmadas y viralizadas.
+          Creamos productos que despiertan <em>_sonrisas.</em>
           </p>
 
           {/* Texto e imagen en la misma fila */}

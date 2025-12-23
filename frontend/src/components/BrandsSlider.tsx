@@ -130,61 +130,73 @@ export function BrandsSlider() {
   const row1 = brands.slice(0, brandsPerRow)
   const row2 = brands.slice(brandsPerRow, brandsPerRow * 2)
   const row3 = brands.slice(brandsPerRow * 2)
-  
-  // Duplicar cada fila para crear un loop infinito
-  const duplicatedRow1 = [...row1, ...row1]
-  const duplicatedRow2 = [...row2, ...row2]
-  const duplicatedRow3 = [...row3, ...row3]
+
+  // Crear múltiples copias para scroll infinito realmente suave (10 copias para buffer muy largo)
+  const duplicatedRow1 = [...row1, ...row1, ...row1, ...row1, ...row1, ...row1, ...row1, ...row1, ...row1, ...row1]
+  const duplicatedRow2 = [...row2, ...row2, ...row2, ...row2, ...row2, ...row2, ...row2, ...row2, ...row2, ...row2]
+  const duplicatedRow3 = [...row3, ...row3, ...row3, ...row3, ...row3, ...row3, ...row3, ...row3, ...row3, ...row3]
 
   // Crear refs para cada fila
   const sliderRef1 = useRef<HTMLDivElement>(null)
   const sliderRef2 = useRef<HTMLDivElement>(null)
   const sliderRef3 = useRef<HTMLDivElement>(null)
 
-  // Animación para cada fila
-  useEffect(() => {
-    const animateRow = (ref: React.RefObject<HTMLDivElement>, delay: number) => {
-      if (!ref.current) return
-      
-      const animate = () => {
-        if (ref.current) {
-          ref.current.style.animation = 'none'
-          ref.current.offsetHeight // Trigger reflow
-          ref.current.style.animation = 'scroll 20s linear infinite'
-        }
-      }
-      
-      return setTimeout(animate, delay)
+  // Función para scroll infinito realmente suave
+  const startInfiniteScroll = (ref: React.RefObject<HTMLDivElement>, speed: number) => {
+    if (!ref.current) return
+
+    const element = ref.current
+    let position = 0
+    let animationId: number
+
+    const animate = () => {
+      position += speed
+
+      // Aplicar transformación continua
+      element.style.transform = `translateX(${-position}px)`
+
+      animationId = requestAnimationFrame(animate)
     }
 
-    const timeout1 = animateRow(sliderRef1, 0)
-    const timeout2 = animateRow(sliderRef2, 100)
-    const timeout3 = animateRow(sliderRef3, 200)
+    animate()
 
     return () => {
-      clearTimeout(timeout1)
-      clearTimeout(timeout2)
-      clearTimeout(timeout3)
-      if (sliderRef1.current) sliderRef1.current.style.animation = 'none'
-      if (sliderRef2.current) sliderRef2.current.style.animation = 'none'
-      if (sliderRef3.current) sliderRef3.current.style.animation = 'none'
+      if (animationId) {
+        cancelAnimationFrame(animationId)
+      }
+    }
+  }
+
+  // Iniciar scroll infinito para cada fila
+  useEffect(() => {
+    if (brands.length === 0) return
+
+    // Velocidad aún más lenta para efecto más relajado
+    const cleanup1 = startInfiniteScroll(sliderRef1, 0.15)
+    const cleanup2 = startInfiniteScroll(sliderRef2, 0.15)
+    const cleanup3 = startInfiniteScroll(sliderRef3, 0.15)
+
+    return () => {
+      cleanup1?.()
+      cleanup2?.()
+      cleanup3?.()
     }
   }, [brands])
 
   const renderRow = (rowBrands: Brand[], rowRef: React.RefObject<HTMLDivElement>, rowIndex: number) => {
     if (rowBrands.length === 0) return null
-    
+
     return (
-      <div 
+      <div
         key={rowIndex}
         className="relative overflow-hidden w-full mb-4"
       >
-        <div 
+        <div
           ref={rowRef}
-          className="flex md:animate-scroll"
+          className="flex transition-transform duration-75 ease-linear"
           style={{
-            animation: 'scroll 20s linear infinite',
-            gap: '6px'
+            gap: '6px',
+            willChange: 'transform'
           }}
         >
           {rowBrands.map((brand, index) => (
@@ -198,6 +210,7 @@ export function BrandsSlider() {
                   src={getImageUrl(brand.logo)}
                   alt={brand.name}
                   className="max-h-16 max-w-full object-contain transition-all duration-300"
+                  loading="lazy"
                   onError={(e) => {
                     e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0yMCAxMkMxNi42ODYzIDEyIDE0IDE0LjY4NjMgMTQgMThDMTQgMjEuMzEzNyAxNi42ODYzIDI0IDIwIDI0QzIzLjMxMzcgMjQgMjYgMjEuMzEzNyAyNiAxOEMyNiAxNC42ODYzIDIzLjMxMzcgMTIgMjAgMTJaIiBmaWxsPSIjOUI5QjlCIi8+Cjwvc3ZnPgo='
                     e.currentTarget.alt = `${brand.name} logo`
