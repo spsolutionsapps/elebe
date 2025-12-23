@@ -125,33 +125,39 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     }
   }, [pathname, router])
 
-  // Proteger rutas restringidas para usuarios con rol "clientes"
+  // Proteger rutas para usuarios con rol "clientes"
   useEffect(() => {
     if (!user) return
 
-    const restrictedRoutes = [
-      '/admin',
-      '/admin/slides',
-      '/admin/categories',
-      '/admin/products',
-      '/admin/featured-products',
-      '/admin/services',
-      '/admin/about',
-      '/admin/brands',
+    // Rutas permitidas para usuarios clientes
+    const allowedClientRoutes = [
+      '/admin/inquiries',
+      '/admin/clients',
+      '/admin/newsletter',
+      '/admin/reminders',
+      '/admin/tasks'
     ]
 
-    // PARA USUARIOS CLIENTES: NUNCA mostrar modal de acceso restringido
-    // Si intentan acceder a rutas restringidas, redirigir silenciosamente
+    // PARA USUARIOS CLIENTES: Solo permitir ciertas rutas
     if (user && user.role === 'clientes') {
       console.log('👤 Usuario cliente detectado:', user.email, 'en ruta:', pathname)
 
-      if (restrictedRoutes.some(route => pathname === route || pathname.startsWith(route + '/'))) {
-        console.log('🚫 Usuario cliente en ruta restringida, redirigiendo silenciosamente a /admin/inquiries')
+      // Si están en el dashboard principal, redirigir a inquiries
+      if (pathname === '/admin') {
+        console.log('🏠 Usuario cliente en dashboard principal, redirigiendo a /admin/inquiries')
         router.push('/admin/inquiries')
         return
       }
-      // Si están en rutas permitidas, no hacer nada (no mostrar modal)
-      console.log('✅ Usuario cliente en ruta permitida')
+
+      // Si están en una ruta permitida, no hacer nada
+      if (allowedClientRoutes.some(route => pathname === route || pathname.startsWith(route + '/'))) {
+        console.log('✅ Usuario cliente en ruta permitida')
+        return
+      }
+
+      // Si están en cualquier otra ruta, redirigir a inquiries
+      console.log('🚫 Usuario cliente en ruta no permitida, redirigiendo a /admin/inquiries')
+      router.push('/admin/inquiries')
       return
     }
 
