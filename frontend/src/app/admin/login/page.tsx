@@ -51,12 +51,16 @@ export default function LoginPage() {
       setTimeout(() => {
         // Redirigir según el rol del usuario
         const userRole = response.data.user.role
+        console.log('🔄 Redirigiendo usuario con rol:', userRole)
+
         if (userRole === 'clientes') {
+          console.log('👤 Usuario cliente - redirigiendo a /admin/inquiries')
           router.push('/admin/inquiries')
         } else {
+          console.log('👑 Usuario admin - redirigiendo a /admin')
           router.push('/admin')
         }
-      }, 100)
+      }, 500) // Aumentar el delay para asegurar que se guarde correctamente
     } catch (err: any) {
       console.error('❌ Error en login:', err)
       const errorMessage = err.response?.data?.message || 'Error al iniciar sesión'
@@ -71,7 +75,7 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-darkGray">
       <div className="max-w-md w-full bg-white p-8 rounded-lg">
         <h1 className="text-2xl font-bold text-center mb-6 text-black">
-          Fashion Style - Admin
+          Elebe - Admin
         </h1>
         
         <form onSubmit={handleSubmit} className="space-y-4">

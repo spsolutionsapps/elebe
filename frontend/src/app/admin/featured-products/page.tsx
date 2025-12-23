@@ -32,7 +32,19 @@ export default function FeaturedProductsPage() {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch(getApiUrl('/products'))
+      const token = localStorage.getItem('access_token')
+
+      const headers: any = {
+        'Content-Type': 'application/json',
+      }
+
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`
+      }
+
+      const response = await fetch(getApiUrl('/products'), {
+        headers
+      })
       const data = await response.json()
       setAllProducts(Array.isArray(data) ? data : [])
     } catch (error) {
@@ -43,7 +55,19 @@ export default function FeaturedProductsPage() {
 
   const fetchFeaturedProducts = async () => {
     try {
-      const response = await fetch(getApiUrl('/products/featured'))
+      const token = localStorage.getItem('access_token')
+
+      const headers: any = {
+        'Content-Type': 'application/json',
+      }
+
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`
+      }
+
+      const response = await fetch(getApiUrl('/products/featured'), {
+        headers
+      })
       const data = await response.json()
       setFeaturedProducts(Array.isArray(data) ? data : [])
     } catch (error) {
@@ -56,11 +80,19 @@ export default function FeaturedProductsPage() {
 
   const addToFeatured = async (productId: string) => {
     try {
+      const token = localStorage.getItem('access_token')
+
+      const headers: any = {
+        'Content-Type': 'application/json',
+      }
+
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`
+      }
+
       const response = await fetch(getApiUrl(`/products/${productId}/feature`), {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers,
       })
 
       if (response.ok) {
@@ -77,11 +109,19 @@ export default function FeaturedProductsPage() {
 
   const removeFromFeatured = async (productId: string) => {
     try {
+      const token = localStorage.getItem('access_token')
+
+      const headers: any = {
+        'Content-Type': 'application/json',
+      }
+
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`
+      }
+
       const response = await fetch(getApiUrl(`/products/${productId}/unfeature`), {
         method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers,
       })
 
       if (response.ok) {
@@ -98,11 +138,19 @@ export default function FeaturedProductsPage() {
 
   const updateOrder = async (productId: string, newOrder: number) => {
     try {
+      const token = localStorage.getItem('access_token')
+
+      const headers: any = {
+        'Content-Type': 'application/json',
+      }
+
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`
+      }
+
       const response = await fetch(getApiUrl(`/products/${productId}/feature-order`), {
         method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers,
         body: JSON.stringify({ order: newOrder }),
       })
 

@@ -188,12 +188,20 @@ export function useProducts(): UseProductsReturn {
   const fetchProducts = async () => {
     try {
       setLoading(true)
-      
+
+      const token = localStorage.getItem('access_token')
+
+      const headers: any = {
+        'Content-Type': 'application/json',
+      }
+
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`
+      }
+
       const response = await fetch(`${getApiUrl('/products')}?t=${Date.now()}`, {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers,
       })
 
       if (response.ok) {

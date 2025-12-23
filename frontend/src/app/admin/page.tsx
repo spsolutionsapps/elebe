@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { getApiUrl } from '@/lib/config'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { 
   Package, 
@@ -74,11 +75,22 @@ export default function AdminDashboard() {
   const fetchDashboardData = async () => {
     try {
       setLoading(true)
+
+      const token = localStorage.getItem('access_token')
+
+      const headers: any = {
+        'Content-Type': 'application/json',
+      }
+
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`
+      }
+
       const [slidesRes, productsRes, servicesRes, inquiriesRes] = await Promise.all([
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/slides`),
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`),
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/services`),
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/inquiries`)
+        fetch(getApiUrl('/slides'), { headers }),
+        fetch(getApiUrl('/products'), { headers }),
+        fetch(getApiUrl('/services'), { headers }),
+        fetch(getApiUrl('/inquiries'), { headers })
       ])
 
       if (slidesRes.ok) setSlides(await slidesRes.json())

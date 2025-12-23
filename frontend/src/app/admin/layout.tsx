@@ -180,21 +180,22 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }, [pathname])
 
   const handleLogout = () => {
+    // Limpiar estado del usuario inmediatamente
+    setUser(null)
+
     // Limpiar datos de autenticación
     localStorage.removeItem('access_token')
     localStorage.removeItem('user')
-    
+
     // Mostrar mensaje de confirmación
     showAlert({
       title: 'Sesión cerrada',
       message: 'Sesión cerrada correctamente',
       type: 'success'
     })
-    
-    // Redirigir al login después de cerrar el modal
-    setTimeout(() => {
-      router.push('/admin/login')
-    }, 1500)
+
+    // Redirigir al login inmediatamente (sin delay)
+    router.push('/admin/login')
   }
 
   // Función para detectar si un link está activo
