@@ -140,6 +140,12 @@ function CatalogoContent() {
     const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          product.description.toLowerCase().includes(searchTerm.toLowerCase())
 
+    // Si hay búsqueda, buscar en TODOS los productos (ignorar filtro de categoría)
+    if (searchTerm && searchTerm.trim()) {
+      return matchesSearch
+    }
+
+    // Si no hay búsqueda pero hay categoryParam, filtrar por categoría
     if (categoryParam) {
       // Encontrar la categoría correspondiente por slug
       const selectedCategory = categories.find(cat => cat.slug === categoryParam)
@@ -178,14 +184,15 @@ function CatalogoContent() {
           return false
         })
 
-        return matchesSearch && matchesCategory
+        return matchesCategory
       }
 
       // Si no encuentra la categoría, no mostrar ningún producto
       return false
     }
 
-    return matchesSearch
+    // Si no hay búsqueda ni categoryParam, mostrar todos los productos
+    return true
   })
 
   if (loading) {
@@ -230,6 +237,11 @@ function CatalogoContent() {
                 className="w-full px-6 py-4 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white text-lg"
               />
               <button
+                onClick={() => {
+                  if (searchTerm.trim()) {
+                    window.location.href = `/catalogo?search=${encodeURIComponent(searchTerm.trim())}`
+                  }
+                }}
                 className="absolute right-2 top-1/2 -translate-y-1/2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 transition-colors"
               >
                 Buscar
@@ -271,8 +283,8 @@ function CatalogoContent() {
           </div>
         </div>
 
-        {/* Categories Grid - Solo mostrar si no hay búsqueda o categoría seleccionada */}
-        {!categoryParam && !searchParam && (
+        {/* Categories Grid - Solo mostrar si no hay búsqueda ni categoría seleccionada */}
+        {!categoryParam && !searchParam && !searchTerm && (
           <div className="mb-16">
             <div className="grid grid-cols-2 md:grid-cols-5 gap-0 w-full md:w-[1440px] mx-auto">
               {categories.map((category) => (
@@ -303,7 +315,7 @@ function CatalogoContent() {
           </div>
         )}
 
-        {/* Products Grid - Solo mostrar si hay búsqueda o categoría seleccionada */}
+        {/* Products Grid - Solo mostrar si hay búsqueda (searchParam) o categoría seleccionada */}
         {(categoryParam || searchParam) && (
           <>
             {filteredProducts.length === 0 ? (
