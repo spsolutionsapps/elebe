@@ -17,6 +17,11 @@ COPY package.json ./
 RUN npm install --legacy-peer-deps
 COPY . .
 
+# Crear archivo de configuración para Docker
+RUN echo "NEXT_PUBLIC_API_URL=https://elebe.agency/backend/api" > .env.local && \
+    echo "NEXT_PUBLIC_BACKEND_URL=https://elebe.agency/backend" >> .env.local && \
+    echo "NEXT_PUBLIC_ENV=production" >> .env.local
+
 # Construir la aplicación
 RUN npm run build
 
@@ -37,6 +42,9 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
 
 # Copiar archivos públicos
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+
+# Copiar archivos de configuración (si existen)
+COPY --from=builder --chown=nextjs:nodejs /app/.env.local ./
 
 # Copiar package.json para scripts
 COPY --from=builder --chown=nextjs:nodejs /app/package.json ./package.json

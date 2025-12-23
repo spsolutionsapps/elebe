@@ -55,14 +55,15 @@ services:
 
   # Frontend Next.js
   frontend:
-    build: 
+    build:
       context: ./frontend
       dockerfile: Dockerfile
     container_name: lb-premium-frontend
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=production
       - NEXT_PUBLIC_API_URL=https://elebe.agency/backend/api
       - NEXT_PUBLIC_BACKEND_URL=https://elebe.agency/backend
+      - NEXT_PUBLIC_ENV=production
     ports:
       - "${FRONTEND_PORT:-3000}:3000"
     depends_on:

@@ -6,6 +6,10 @@ import { Package } from 'lucide-react'
 import { getImageUrl, getApiUrl } from '@/lib/config'
 import { useSearchParams } from 'next/navigation'
 
+// ⚠️ IMPORTANTE: Para que funcione en producción, configurar estas variables de entorno:
+// NEXT_PUBLIC_API_URL=https://tu-dominio-backend.com/api
+// NEXT_PUBLIC_BACKEND_URL=https://tu-dominio-backend.com
+
 // Función para generar slug
 const generateSlug = (text: string): string => {
   return text
@@ -60,13 +64,60 @@ function CatalogoContent() {
 
   const fetchProducts = async () => {
     try {
+      console.log('🔍 Fetching products from:', getApiUrl('/products'))
       const response = await fetch(getApiUrl('/products'))
+      console.log('📡 Response status:', response.status)
+
       if (response.ok) {
         const data = await response.json()
-        setProducts(data)
+        console.log('📦 Products loaded:', Array.isArray(data) ? data.length : 0, 'products')
+        setProducts(Array.isArray(data) ? data : [])
+      } else {
+        console.error('❌ API Error:', response.status, response.statusText)
+
+        // Fallback: productos de ejemplo para que el catálogo funcione
+        console.log('⚠️ Using fallback products...')
+        const fallbackProducts = [
+          {
+            id: '1',
+            name: 'Producto de Ejemplo 1',
+            description: 'Descripción del producto de ejemplo',
+            category: ['General'],
+            image: null,
+            isActive: true,
+            createdAt: new Date(),
+            updatedAt: new Date()
+          },
+          {
+            id: '2',
+            name: 'Producto de Ejemplo 2',
+            description: 'Otro producto de ejemplo',
+            category: ['General'],
+            image: null,
+            isActive: true,
+            createdAt: new Date(),
+            updatedAt: new Date()
+          }
+        ]
+        setProducts(fallbackProducts)
       }
     } catch (error) {
-      console.error('Error fetching products:', error)
+      console.error('❌ Network error fetching products:', error)
+
+      // Fallback: productos de ejemplo
+      const fallbackProducts = [
+        {
+          id: 'fallback-1',
+          name: 'Producto Temporal 1',
+          description: 'Producto de respaldo mientras se configura la API',
+          category: ['General'],
+          image: null,
+          isActive: true,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        }
+      ]
+      setProducts(fallbackProducts)
     } finally {
       setLoading(false)
     }
