@@ -620,6 +620,8 @@ display: none;
   right: -195px;
 }
 
+
+
 /* shapes */
 .shapeAmarilloIzq {
   position: absolute;
@@ -632,6 +634,9 @@ display: none;
   right: 16px;
   bottom: -86px;
 }
+
+
+
 
 .width250Desktop {width: 250px;}
 
@@ -681,3 +686,14 @@ width: 284px;}
  .justify-space-around {justify-content: space-around;}
  .marginBottom20 {margin-bottom: 20px;}
  .paddingBottom0 {padding-bottom: 0;}
+
+
+ /* Ocultar decorativos del footer a partir de 1020px */
+@media (max-width: 1020px) {
+  .footerDer {
+display: none !important;
+  }
+  .bFooter {
+display: none !important;
+  }
+}
