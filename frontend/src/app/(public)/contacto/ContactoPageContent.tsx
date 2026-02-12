@@ -295,16 +295,12 @@ export default function ContactoPageContent() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <h5 className="font-semibold text-gray-900 text-sm">Email</h5>
-                      <p className="text-gray-600 text-sm">info@lbpremium.com</p>
+                      <p className="text-gray-600 text-sm">info@elebe.agency</p>
                     </div>
                     <div>
                       <h5 className="font-semibold text-gray-900 text-sm">Teléfono</h5>
-                      <p className="text-gray-600 text-sm">+1 (555) 123-4567</p>
+                      <p className="text-gray-600 text-sm">+54 9 11 6624-7880</p>
                     </div>
-                  </div>
-                  <div>
-                    <h5 className="font-semibold text-gray-900 text-sm">Horario de atención</h5>
-                    <p className="text-gray-600 text-sm">Lunes a Sábado: 10:00 AM - 8:00 PM</p>
                   </div>
                 </div>
               </div>

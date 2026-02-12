@@ -87,10 +87,10 @@ export function Footer() {
                   +54 9 11 6624-7880
                 </a>
                 <a 
-                  href="mailto:info@lbpremium.com" 
+                  href="mailto:info@elebe.agency" 
                   className="underline hover:text-[#004CAC]/80 transition-colors text-[#004CAC]"
                 >
-                  info@lbpremium.com
+                  info@elebe.agency
                 </a>
               </div>
             </div>
@@ -107,7 +107,7 @@ export function Footer() {
           {/* Copyright - abajo de todo */}
           <div className="mt-8 md:mt-0 pt-6 border-t border-gray-200 text-center">
             <p className="text-[#004CAC] text-sm">
-              © Copyright 2006, Todos los Derechos Reservados
+              © 2026 Todos los derechos reservados
             </p>
           </div>
         </div>
