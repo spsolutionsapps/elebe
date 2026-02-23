@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 import "@/styles/custom.css";
 import { Providers } from "@/components/Providers";
@@ -21,6 +22,19 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body>
+        {/* Google tag (gtag.js) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=AW-942575401"
+          strategy="afterInteractive"
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-942575401');
+          `}
+        </Script>
         <FontProvider>
           <Providers>
             {children}
